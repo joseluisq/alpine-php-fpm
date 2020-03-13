@@ -114,8 +114,8 @@ COPY nginx/conf.d/. /etc/nginx/conf.d/
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Configure PHP-FPM
-COPY config/php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY config/php.ini /usr/local/etc/php/conf.d/default-php.ini
+COPY php7/php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY php7/php.ini /usr/local/etc/php/conf.d/default-php.ini
 COPY public/. /usr/share/nginx/html/
 
 RUN set -eux \
