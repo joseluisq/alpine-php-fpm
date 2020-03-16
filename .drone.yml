@@ -3,7 +3,7 @@ pipeline:
     image: plugins/docker
     group: production
     repo: joseluisq/alpine-nginx-php-fpm
-    dockerfile: ./docker/Dockerfile
+    dockerfile: ./Dockerfile
     username:
       from_secret: dockerhub_username
     password:
