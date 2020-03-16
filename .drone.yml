@@ -1,0 +1,21 @@
+pipeline:
+  publish:
+    image: plugins/docker
+    group: production
+    repo: joseluisq/alpine-nginx-php-fpm
+    dockerfile: ./docker/Dockerfile
+    username:
+      from_secret: dockerhub_username
+    password:
+      from_secret: dockerhub_password
+    auto_tag: true
+    when:
+      event: tag
+
+  notification:
+    image: plugins/slack
+    webhook:
+      from_secret: slack_webhook
+    channel: ci-cd
+    when:
+      status: [success, failure]
