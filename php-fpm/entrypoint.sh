@@ -4,7 +4,7 @@ set -e
 
 # Check if incomming command contains flags.
 if [ "${1#-}" != "$1" ]; then
-    set -- nginx "$@"
+    set -- php-fpm "$@"
 fi
 
-php-fpm & exec "$@"
+exec "$@"

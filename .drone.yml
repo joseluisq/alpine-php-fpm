@@ -1,21 +1,53 @@
-pipeline:
-  publish:
-    image: plugins/docker
-    group: production
-    repo: joseluisq/alpine-nginx-php-fpm
-    dockerfile: ./Dockerfile
+---
+kind: pipeline
+type: docker
+name: production
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: php-fpm
+  image: plugins/docker
+  settings:
+    repo: joseluisq/php
+    dockerfile: ./php-fpm/Dockerfile
     username:
       from_secret: dockerhub_username
     password:
       from_secret: dockerhub_password
-    auto_tag: true
-    when:
-      event: tag
+    tags:
+      - "7"
+      - "7.4"
+    auto_tag_suffix: fpm
 
-  notification:
-    image: plugins/slack
+trigger:
+  target:
+  - production
+
+
+---
+kind: pipeline
+type: docker
+name: notification
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: notify
+  image: plugins/slack
+  settings:
     webhook:
       from_secret: slack_webhook
     channel: ci-cd
-    when:
-      status: [success, failure]
+
+depends_on:
+- production
+
+trigger:
+  status:
+  - success
+  - failure

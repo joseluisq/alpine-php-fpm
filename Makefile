@@ -3,7 +3,7 @@ dev:
 .PHONY: dev
 
 build:
-	@docker build -t alpine-nginx-php-fpm:latest .
+	@docker build -t alpine-php-fpm:latest -f php-fpm/Dockerfile .
 .PHONY: build
 
 run:
@@ -11,7 +11,7 @@ run:
 		-v $(PWD)/public:/usr/share/nginx/html \
 		--workdir /usr/share/nginx/html \
 		-p 8088:80 \
-		alpine-nginx-php-fpm:latest
+		alpine-php-fpm:latest
 .PHONY: run
 
 loadtest:
