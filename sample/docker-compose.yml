@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+  server:
+    image: nginx:1.17-alpine
+    ports:
+      - 8088:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./nginx/public:/usr/share/nginx/html/
+    depends_on:
+      - php-fpm
+    links:
+      - php-fpm
+
+  php-fpm:
+    image: alpine-php-fpm:latest
+    volumes:
+      - ./nginx/public:/usr/share/nginx/html/

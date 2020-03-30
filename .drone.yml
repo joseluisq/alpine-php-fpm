@@ -1,7 +1,7 @@
 ---
 kind: pipeline
 type: docker
-name: production
+name: php-fpm
 
 platform:
   os: linux
@@ -20,12 +20,13 @@ steps:
     tags:
       - "7"
       - "7.4"
-    auto_tag_suffix: fpm
+      - "fpm"
+      - "fpm-7"
+      - "fpm-7.4"
 
 trigger:
   target:
-  - production
-
+  - php-fpm
 
 ---
 kind: pipeline
@@ -45,7 +46,7 @@ steps:
     channel: ci-cd
 
 depends_on:
-- production
+- php-fpm
 
 trigger:
   status:

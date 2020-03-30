@@ -6,7 +6,8 @@ LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
 ARG PHP_VERSION=${PHP_VERSION}
 
 # Install dependencies
-RUN apk add --no-cache \
+RUN set -eux \
+	&& apk add --no-cache \
         make \
         freetype \
         libpng \
@@ -39,7 +40,8 @@ RUN apk add --no-cache \
 #############################################
 
 # Development dependencies
-RUN apk add --no-cache --virtual .build-deps \
+RUN set -eux \
+	&& apk add --no-cache --virtual .build-deps \
         gcc \
         pkgconf \
         autoconf \
@@ -70,19 +72,21 @@ RUN apk add --no-cache --virtual .build-deps \
         tidyhtml-dev \
         yaml-dev \
         icu-dev \
-        vips-dev
+        vips-dev \
 
 # Workaround for rabbitmq linking issue
-RUN ln -s /usr/lib /usr/local/lib64
-
+	&& ln -s /usr/lib /usr/local/lib64 \
 # Enable ffi if it exists
-RUN set -eux \
-	&& if [ -f /usr/local/etc/php/conf.d/docker-php-ext-ffi.ini ]; then \
+	&& set -eux \
+		&& if [ -f /usr/local/etc/php/conf.d/docker-php-ext-ffi.ini ]; then \
 			echo "ffi.enable = 1" >> /usr/local/etc/php/conf.d/docker-php-ext-ffi.ini; \
-		fi
+		fi \
+
+################################
+# Install PHP extensions
+################################
 
 # Install gd
-RUN set -eux \
     && ln -s /usr/lib/x86_64-linux-gnu/libXpm.* /usr/lib/ \
 	&& docker-php-ext-configure gd \
         --enable-gd \
@@ -92,162 +96,134 @@ RUN set -eux \
         --with-freetype \
         --enable-gd-jis-conv \
 	&& docker-php-ext-install gd \
-	&& true
+	&& true \
 
 # Install amqp
-RUN set -eux \
 	&& echo "/usr" | pecl install amqp \
 	&& docker-php-ext-enable amqp \
-	&& true
+	&& true \
 
 # Install gettext
-RUN set -eux \
 	&& docker-php-ext-install gettext \
-	&& true
+	&& true \
 
 # Install gmp
-RUN set -eux \
 	&& docker-php-ext-install gmp \
-	&& true
+	&& true \
 
 # Install bcmath
-RUN set -eux \
 	&& docker-php-ext-install bcmath \
-	&& true
+	&& true \
 
 # Install exif
-RUN set -eux \
 	&& docker-php-ext-install exif \
-	&& true
+	&& true \
 
 # Install imagick
-RUN set -eux \
 	&& pecl install imagick \
 	&& docker-php-ext-enable imagick \
-	&& true
+	&& true \
 
 # Install intl
-RUN set -eux \
 	&& docker-php-ext-install intl \
-	&& true
+	&& true \
 
 # Install mcrypt
-RUN set -eux \
 	&& pecl install mcrypt \
 	&& docker-php-ext-enable mcrypt \
-	&& true
+	&& true \
 
 # Install xmlrpc
-RUN set -eux \
 	&& docker-php-ext-configure xmlrpc --with-iconv-dir=/usr \
 	&& docker-php-ext-install xmlrpc \
-	&& true
+	&& true \
 
 # Install memcache
-RUN set -eux \
 	&& pecl install memcache \
 	&& docker-php-ext-enable memcache \
-	&& true
+	&& true \
 
 # Install mysqli
-RUN set -eux \
 	&& docker-php-ext-install mysqli \
-	&& true
+	&& true \
 
 # Install oauth
-RUN set -eux \
 	&& pecl install oauth \
 	&& docker-php-ext-enable oauth \
-	&& true
+	&& true \
 
 # Install pdo_mysql
-RUN set -eux \
 	&& docker-php-ext-configure pdo_mysql --with-zlib-dir=/usr \
 	&& docker-php-ext-install pdo_mysql \
-	&& true
+	&& true \
 
 # Install pdo_dblib
-RUN set -eux \
 	&& docker-php-ext-install pdo_dblib \
-	&& true
+	&& true \
 
 # Install pcntl
-RUN set -eux \
 	&& docker-php-ext-install pcntl \
-	&& true
+	&& true \
 
 # Install pdo_pgsql
-RUN set -eux \
 	&& docker-php-ext-install pdo_pgsql \
-	&& true
+	&& true \
 
 # Install pgsql
-RUN set -eux \
 	&& docker-php-ext-install pgsql \
-	&& true
+	&& true \
 
 # Install psr
-RUN set -eux \
 	&& pecl install psr \
 	&& docker-php-ext-enable psr \
-	&& true
+	&& true \
 
 # Install soap
-RUN set -eux \
 	&& docker-php-ext-install soap \
-	&& true
+	&& true \
 
 # Install ssh2
-RUN set -eux \
 	&& pecl install ssh2-1.2 \
 	&& docker-php-ext-enable ssh2 \
-	&& true
+	&& true \
 
 # Install tidy
-RUN set -eux \
 	&& docker-php-ext-install tidy \
-	&& true
+	&& true \
 
 # Install xsl
-RUN set -eux \
 	&& docker-php-ext-install xsl \
-	&& true
+	&& true \
 
 # Install yaml
-RUN set -eux \
 	&& pecl install yaml \
 	&& docker-php-ext-enable yaml \
-	&& true
+	&& true \
 
 # Install vips
-RUN set -eux \
 	&& pecl install vips \
 	&& docker-php-ext-enable vips \
-	&& true
+	&& true \
 
 # Install zip
-RUN set -eux \
 	&& docker-php-ext-configure zip --with-zip \
 	&& docker-php-ext-install zip \
-	&& true
+	&& true \
 
+# Clean up build packages
+    && apk del .build-deps
+
+RUN set -eux \
 # Fix php.ini settings for enabled extensions
-RUN set -eux \
-	&& chmod +x "$(php -r 'echo ini_get("extension_dir");')"/*
-
-# Shrink everything down
-RUN set -eux \
+	&& chmod +x "$(php -r 'echo ini_get("extension_dir");')"/* \
+# Shrink binaries
 	&& (find /usr/local/bin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
 	&& (find /usr/local/lib -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
 	&& (find /usr/local/sbin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true)
 
-# Clean up build packages
 RUN set -eux \
-    && docker-php-source delete \
-    && apk del .build-deps
 
 # Perform PHP-FPM testing
-RUN set -eux \
 	&& echo "date.timezone=UTC" > /usr/local/etc/php/php.ini \
 	&& php -v | grep -oE 'PHP\s[.0-9]+' | grep -oE '[.0-9]+' | grep '^7.4' \
 	&& /usr/local/sbin/php-fpm --test \
@@ -261,13 +237,18 @@ RUN set -eux \
 	&& if [ -n "${PHP_FPM_ERROR}" ]; then echo "${PHP_FPM_ERROR}"; false; fi \
 	&& PHP_FPM_ERROR="$( php-fpm -i 2>&1 1>/dev/null )" \
 	&& if [ -n "${PHP_FPM_ERROR}" ]; then echo "${PHP_FPM_ERROR}"; false; fi \
-	&& rm -f /usr/local/etc/php/php.ini
+	&& rm -f /usr/local/etc/php/php.ini \
+
+# PHP-FPM templates directory
+	&& mkdir -p /var/data/php-fpm
 
 # Copy PHP-FPM configuration files
-COPY php-fpm/php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY php-fpm/php.ini /usr/local/etc/php/conf.d/default-php.ini
+COPY php-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
+COPY php-fpm/www.tmpl.conf /var/data/php-fpm/www.tmpl.conf
+COPY php-fpm/php.tmpl.ini /var/data/php-fpm/default-php.tmpl.ini
 
-# Copy services entrypoint script
+# Copy util scripts
+COPY php-fpm/envsubst.sh /envsubst.sh
 COPY php-fpm/entrypoint.sh /entrypoint.sh
 
 STOPSIGNAL SIGQUIT
@@ -280,8 +261,8 @@ CMD ["php-fpm"]
 
 # Metadata
 LABEL org.opencontainers.image.vendor="Jose Quintana" \
-    org.opencontainers.image.url="https://github.com/joseluisq/alpine-nginx-php-fpm" \
+    org.opencontainers.image.url="https://github.com/joseluisq/alpine-php-fpm" \
     org.opencontainers.image.title="PHP-FPM v7.4 Alpine" \
     org.opencontainers.image.description="PHP-FPM v7.4 with essential extensions on top of Alpine Linux." \
     org.opencontainers.image.version="$PHP_VERSION" \
-    org.opencontainers.image.documentation="https://github.com/joseluisq/alpine-nginx-php-fpm"
+    org.opencontainers.image.documentation="https://github.com/joseluisq/alpine-php-fpm"

@@ -2,9 +2,13 @@ dev:
 	@php -S localhost:8088 -t .
 .PHONY: dev
 
-build:
+build-php-fpm:
 	@docker build -t alpine-php-fpm:latest -f php-fpm/Dockerfile .
-.PHONY: build
+.PHONY: build-php-fpm
+
+build-php-fpm-nginx:
+	@docker build -t alpine-php-fpm-nginx:latest -f php-fpm-nginx/Dockerfile .
+.PHONY: build-php-fpm-nginx
 
 run:
 	@docker run --rm -it \
@@ -13,6 +17,10 @@ run:
 		-p 8088:80 \
 		alpine-php-fpm:latest
 .PHONY: run
+
+promote:
+	@drone build promote joseluisq/alpine-php-fpm $(BUILD) $(ENV)
+.PHONY: p
 
 loadtest:
 	@echo "GET http://localhost:8088" | \
