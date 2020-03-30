@@ -1,18 +1,18 @@
 ---
 kind: pipeline
 type: docker
-name: php-fpm
+name: php-fpm-74
 
 platform:
   os: linux
   arch: amd64
 
 steps:
-- name: php-fpm
+- name: php-fpm-74
   image: plugins/docker
   settings:
     repo: joseluisq/php
-    dockerfile: ./php-fpm/Dockerfile
+    dockerfile: ./7.4-fpm/Dockerfile
     username:
       from_secret: dockerhub_username
     password:
@@ -26,7 +26,7 @@ steps:
 
 trigger:
   target:
-  - php-fpm
+  - php-fpm-74
 
 ---
 kind: pipeline
@@ -46,7 +46,7 @@ steps:
     channel: ci-cd
 
 depends_on:
-- php-fpm
+- php-fpm-74
 
 trigger:
   status:
