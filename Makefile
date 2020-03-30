@@ -2,13 +2,9 @@ dev:
 	@php -S localhost:8088 -t .
 .PHONY: dev
 
-build-php-fpm:
-	@docker build -t alpine-php-fpm:latest -f php-fpm/Dockerfile .
-.PHONY: build-php-fpm
-
-build-php-fpm-nginx:
-	@docker build -t alpine-php-fpm-nginx:latest -f php-fpm-nginx/Dockerfile .
-.PHONY: build-php-fpm-nginx
+fpm-74:
+	@docker build -t alpine-php-fpm:latest -f 7.4-fpm/Dockerfile .
+.PHONY: fpm-74
 
 run:
 	@docker run --rm -it \
@@ -17,6 +13,10 @@ run:
 		-p 8088:80 \
 		alpine-php-fpm:latest
 .PHONY: run
+
+compose:
+	@docker-compose -f sample/docker-compose.yml up
+.PHONY: compose
 
 promote:
 	@drone build promote joseluisq/alpine-php-fpm $(BUILD) $(ENV)

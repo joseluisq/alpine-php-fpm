@@ -15,6 +15,12 @@ services:
       - php-fpm
 
   php-fpm:
-    image: alpine-php-fpm:latest
+    image: joseluisq/php:fpm-7.4
+    environment:
+      - "ENV_SUBSTITUTION_ENABLE=true"
+      - "PHP_MEMORY_LIMIT=128M"
+      - "PHP_FPM_LISTEN=9090"
+    expose:
+      - "9090"
     volumes:
       - ./nginx/public:/usr/share/nginx/html/

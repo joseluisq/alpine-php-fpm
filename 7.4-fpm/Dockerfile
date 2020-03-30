@@ -221,7 +221,17 @@ RUN set -eux \
 	&& (find /usr/local/lib -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
 	&& (find /usr/local/sbin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true)
 
+# Copy PHP-FPM configuration files
+COPY 7.4-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
+COPY 7.4-fpm/www.tmpl.conf /var/data/php-fpm/www.tmpl.conf
+COPY 7.4-fpm/php.tmpl.ini /var/data/php-fpm/default-php.tmpl.ini
+
 RUN set -eux \
+# PHP-FPM templates directory
+	&& mkdir -p /var/data/php-fpm \
+# Remove few PHP-FPM default config files
+	&& rm -rf /usr/local/etc/php-fpm.d/zz-docker.conf \
+	&& rm -rf /usr/local/etc/php-fpm.d/docker.conf \
 
 # Perform PHP-FPM testing
 	&& echo "date.timezone=UTC" > /usr/local/etc/php/php.ini \
@@ -237,19 +247,11 @@ RUN set -eux \
 	&& if [ -n "${PHP_FPM_ERROR}" ]; then echo "${PHP_FPM_ERROR}"; false; fi \
 	&& PHP_FPM_ERROR="$( php-fpm -i 2>&1 1>/dev/null )" \
 	&& if [ -n "${PHP_FPM_ERROR}" ]; then echo "${PHP_FPM_ERROR}"; false; fi \
-	&& rm -f /usr/local/etc/php/php.ini \
-
-# PHP-FPM templates directory
-	&& mkdir -p /var/data/php-fpm
-
-# Copy PHP-FPM configuration files
-COPY php-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
-COPY php-fpm/www.tmpl.conf /var/data/php-fpm/www.tmpl.conf
-COPY php-fpm/php.tmpl.ini /var/data/php-fpm/default-php.tmpl.ini
+	&& rm -f /usr/local/etc/php/php.ini
 
 # Copy util scripts
-COPY php-fpm/envsubst.sh /envsubst.sh
-COPY php-fpm/entrypoint.sh /entrypoint.sh
+COPY 7.4-fpm/envsubst.sh /envsubst.sh
+COPY 7.4-fpm/entrypoint.sh /entrypoint.sh
 
 STOPSIGNAL SIGQUIT
 
