@@ -55,14 +55,13 @@ steps:
   image: joseluisq/drone-docker
   privileged: true
   settings:
-    repo: joseluisq/php
+    repo: joseluisq/php-fpm
     dockerfile: ./7.4-fpm/Dockerfile
     username:
       from_secret: dockerhub_username
     password:
       from_secret: dockerhub_password
     auto_tag: true
-    auto_tag_suffix: "fpm"
     auto_tag_aliases:
       - "latest"
 

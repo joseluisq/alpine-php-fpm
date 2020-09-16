@@ -1,8 +1,6 @@
-# Alpine / PHP-FPM v7 [![Build Status](https://travis-ci.com/joseluisq/alpine-php-fpm.svg?branch=master)](https://travis-ci.com/joseluisq/alpine-php-fpm) ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php/fpm-7.4) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php/fpm-7.4) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php.svg)](https://hub.docker.com/r/joseluisq/php/)
+# Alpine / PHP-FPM v7 [![Build Status](https://travis-ci.com/joseluisq/alpine-php-fpm.svg?branch=master)](https://travis-ci.com/joseluisq/alpine-php-fpm) ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/7.4) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/7.4) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/)
 
 > [PHP-FPM (PHP v7.4)](https://www.php.net/manual/en/install.fpm.php) with essential extensions on top of [Alpine Linux v3.11](https://alpinelinux.org/).
-
-🐳 Available on Docker Hub → [hub.docker.com/r/joseluisq/php](https://hub.docker.com/r/joseluisq/php/)
 
 ## Features
 
@@ -52,8 +50,16 @@
 
 ## Install
 
+🐳 Available on Docker Hub → [hub.docker.com/r/joseluisq/php-fpm](https://hub.docker.com/r/joseluisq/php/)
+
 ```sh
-docker pull joseluisq/php:fpm-7.4
+docker pull joseluisq/php-fpm:7.4
+```
+
+__Dockerfile__
+
+```Dockerfile
+FROM joseluisq/php-fpm:7.4
 ```
 
 ## Environment variables

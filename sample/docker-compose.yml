@@ -15,11 +15,12 @@ services:
       - php-fpm
 
   php-fpm:
-    image: joseluisq/php:fpm-7.4
+    image: joseluisq/php-fpm
     environment:
       - "ENV_SUBSTITUTION_ENABLE=true"
-      - "PHP_MEMORY_LIMIT=128M"
+      - "PHP_MEMORY_LIMIT=512M"
       - "PHP_FPM_LISTEN=9090"
+      - "PHP_SESSION_GC_MAXLIFETIME=7200"
     expose:
       - "9090"
     volumes:
