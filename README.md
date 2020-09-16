@@ -1,4 +1,4 @@
-# Alpine / PHP-FPM v7 ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php/fpm-7.4) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php/fpm-7.4) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php.svg)](https://hub.docker.com/r/joseluisq/php/)
+# Alpine / PHP-FPM v7 [![Build Status](https://travis-ci.com/joseluisq/alpine-php-fpm.svg?branch=master)](https://travis-ci.com/joseluisq/alpine-php-fpm) ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php/fpm-7.4) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php/fpm-7.4) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php.svg)](https://hub.docker.com/r/joseluisq/php/)
 
 > [PHP-FPM (PHP v7.4)](https://www.php.net/manual/en/install.fpm.php) with essential extensions on top of [Alpine Linux v3.11](https://alpinelinux.org/).
 
@@ -65,6 +65,8 @@ Below the environment variables with their default values:
 
 #### PHP-FPM
 
+Settings replaced into `www.conf` file.
+
 - `PHP_FPM_LISTEN=9000`
 - `PHP_FPM_USER=www-data`
 - `PHP_FPM_GROUP=www-data`
@@ -73,7 +75,10 @@ Below the environment variables with their default values:
 
 #### PHP Config
 
+Settings replaced into `php.ini` file.
+
 - `PHP_MEMORY_LIMIT=512M`
+- `PHP_SESSION_GC_MAXLIFETIME=1440`
 
 ## Example
 

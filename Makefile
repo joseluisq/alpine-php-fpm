@@ -2,9 +2,9 @@ dev:
 	@php -S localhost:8088 -t .
 .PHONY: dev
 
-fpm-74:
+build-fpm-74:
 	@docker build -t alpine-php-fpm:latest -f 7.4-fpm/Dockerfile .
-.PHONY: fpm-74
+.PHONY: build-fpm-74
 
 run:
 	@docker run --rm -it \

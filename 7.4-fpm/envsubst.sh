@@ -2,7 +2,7 @@
 
 set -e
 
-# 1. PHP-FPM default settings
+# 1. PHP-FPM default settings (www.conf)
 XUSER=www-data
 XGROUP=www-data
 XLISTEN=9000
@@ -20,9 +20,16 @@ CWD=/var/data/php-fpm
 envsubst < "$CWD/php-fpm.tmpl.conf" > "/usr/local/etc/php-fpm.conf"
 envsubst < "$CWD/www.tmpl.conf" > "/usr/local/etc/php-fpm.d/www.conf"
 
-# 2. PHP default settings
+
+# 2. PHP default settings (default-php.ini)
+# 2.1 [PHP]
 XMEMORY_LIMIT=512M
+# 2.2 [Session]
+XGC_MAXLIFETIME=1440
 
-if [[ -z "$PHP_MEMORY_LIMIT" ]]; then export PHP_MEMORY_LIMIT=$XMEMORY_LIMIT; fi
+if [[ -z "$PHP_MEMORY_LIMIT" ]];
+    then export PHP_MEMORY_LIMIT=$XMEMORY_LIMIT; fi
+if [[ -z "$PHP_SESSION_GC_MAXLIFETIME" ]];
+    then export PHP_SESSION_GC_MAXLIFETIME=$XGC_MAXLIFETIME; fi
 
-envsubst < "$CWD/default-php.tmpl.ini" > "/usr/local/etc/php/conf.d/default-php.ini"
+envsubst < "$CWD/default-php.tmpl.ini" > "${PHP_INI_DIR}/conf.d/default-php.ini"

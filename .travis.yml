@@ -1,0 +1,15 @@
+language: minimal
+
+services:
+  - docker
+
+notifications:
+  email: false
+
+git:
+  depth: 1
+
+script:
+  - echo "Building alpine-php-fpm:latest image..."
+  - docker build -t alpine-php-fpm:latest -f 7.4-fpm/Dockerfile .
+  - docker run --rm -v $PWD/7.4-fpm/:/var/www/share/project -w /var/www/share/project alpine-php-fpm:latest ./php_fpm_test.sh

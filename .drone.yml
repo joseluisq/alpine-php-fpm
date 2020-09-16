@@ -1,7 +1,50 @@
 ---
 kind: pipeline
 type: docker
-name: php-fpm-74
+name: development
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: build
+  image: docker
+  volumes:
+  - name: dockersock
+    path: /var/run/docker.sock
+  commands:
+    - echo "Building alpine-php-fpm:latest image..."
+    - docker build -t alpine-php-fpm:latest -f 7.4-fpm/Dockerfile .
+
+- name: test
+  image: alpine-php-fpm:latest
+  pull: if-not-exists
+  commands:
+    - ./7.4-fpm/php_fpm_test.sh
+
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
+
+trigger:
+  event:
+    - push
+    - pull_request
+  branch:
+    - master
+    - develop
+    - feature/*
+    - bugfix/*
+    - hotfix/*
+
+
+
+---
+kind: pipeline
+type: docker
+name: production
 
 platform:
   os: linux
@@ -9,7 +52,8 @@ platform:
 
 steps:
 - name: php-fpm-74
-  image: plugins/docker
+  image: joseluisq/drone-docker
+  privileged: true
   settings:
     repo: joseluisq/php
     dockerfile: ./7.4-fpm/Dockerfile
@@ -17,16 +61,23 @@ steps:
       from_secret: dockerhub_username
     password:
       from_secret: dockerhub_password
-    tags:
-      - "7"
-      - "7.4"
-      - "fpm"
-      - "fpm-7"
-      - "fpm-7.4"
+    auto_tag: true
+    auto_tag_suffix: "fpm"
+    auto_tag_aliases:
+      - "latest"
 
 trigger:
-  target:
-  - php-fpm-74
+  ref:
+    include:
+    - refs/tags/v*
+    exclude:
+    - refs/tags/**rc**
+    - refs/tags/**alpha**
+    - refs/tags/**beta**
+    - refs/tags/**latest**
+    - refs/tags/**dev**
+
+
 
 ---
 kind: pipeline
@@ -46,7 +97,8 @@ steps:
     channel: ci-cd
 
 depends_on:
-- php-fpm-74
+- development
+- production
 
 trigger:
   status:
