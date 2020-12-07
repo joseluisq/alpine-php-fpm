@@ -9,15 +9,15 @@ notifications:
 git:
   depth: 1
 
-matrix:
-  allow_failures:
-    - env: DOCKER_PHP_VERSION=7.4
+jobs:
   fast_finish: true
-
-env:
-  matrix:
-    - DOCKER_PHP_VERSION="7.4"
-    - DOCKER_PHP_VERSION="8.0"
+  allow_failures:
+  - name: "php 7.4"
+  include:
+  - name: "php 8.0"
+    env: DOCKER_PHP_VERSION=8.0
+  - name: "php 7.4"
+    env: DOCKER_PHP_VERSION=7.4
 
 script:
   - echo "Building alpine-php-fpm:php$DOCKER_PHP_VERSION image..."
