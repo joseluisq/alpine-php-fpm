@@ -1,7 +1,7 @@
 ---
 kind: pipeline
 type: docker
-name: development
+name: development-php74
 
 platform:
   os: linux
@@ -25,6 +25,34 @@ steps:
   commands:
     - ./7.4-fpm/php_fpm_test.sh
 
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
+
+trigger:
+  event:
+    - push
+    - pull_request
+  branch:
+    - master
+    - develop
+    - feature/*
+    - bugfix/*
+    - hotfix/*
+
+
+
+---
+kind: pipeline
+type: docker
+name: development-php80
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
 - name: build-php80
   image: docker
   volumes:
@@ -136,7 +164,8 @@ steps:
     channel: ci-cd
 
 depends_on:
-- development
+- development-php74
+- development-php80
 - production-php74
 - production-php80
 
