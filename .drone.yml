@@ -19,7 +19,7 @@ steps:
     - docker build -t alpine-php-fpm:php74 -f 7.4-fpm/Dockerfile .
 
 - name: test-php74
-  image: alpine-php-fpm:latest
+  image: alpine-php-fpm:php74
   failure: ignore
   pull: if-not-exists
   commands:
