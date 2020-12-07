@@ -8,7 +8,7 @@ echo
 php -v
 echo
 
-PHP_VERSION=$(php -v | grep -oE 'PHP\s[.0-9]+' | grep -oE '[.0-9]+' | grep '^7.4')
+PHP_VERSION=$(php -v | grep -oE 'PHP\s[.0-9]+' | grep -oE '[.0-9]+' | grep '^8.0')
 
 echo "Using PHP v$PHP_VERSION"
 echo
