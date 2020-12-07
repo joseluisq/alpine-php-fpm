@@ -96,6 +96,7 @@ platform:
   os: linux
   arch: amd64
 
+steps:
 - name: php-fpm-80
   image: joseluisq/drone-docker
   privileged: true
@@ -114,6 +115,8 @@ trigger:
   ref:
     include:
     - refs/tags/v8.0*
+
+
 
 ---
 kind: pipeline
