@@ -57,7 +57,7 @@
 | zip        |   ✓    |      ✓ |
 | &nbsp;     | &nbsp; | &nbsp; |
 | **Others** |        |        |
-| composer   |  v1.9  |  v1.10 |
+| composer   |  v1.9  |   v2.0 |
 
 ## Install
 

@@ -6,32 +6,32 @@ LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
 # Install dependencies
 RUN set -eux \
     && apk add --no-cache \
-    libxslt \
-    ca-certificates \
-    composer \
-    freetds \
-    freetype \
-    gettext \
-    gmp \
-    icu-libs \
-    imagemagick \
-    libffi \
-    libgmpxx \
-    libintl \
-    libjpeg-turbo \
-    libmcrypt \
-    libpng \
-    libpq \
-    libssh2 \
-    libtool \
-    libxpm \
-    libzip \
-    make \
-    rabbitmq-c \
-    tidyhtml \
-    tzdata \
-    vips \
-    yaml
+        ca-certificates \
+        # composer \
+        freetds \
+        freetype \
+        gettext \
+        gmp \
+        icu-libs \
+        # imagemagick \
+        libffi \
+        libgmpxx \
+        libintl \
+        libjpeg-turbo \
+        libmcrypt \
+        libpng \
+        libpq \
+        # libssh2 \
+        libtool \
+        libxpm \
+        libxslt \
+        libzip \
+        make \
+        # rabbitmq-c \
+        tidyhtml \
+        tzdata \
+        vips \
+        yaml
 
 #############################################
 ### Install and enable PHP extensions
@@ -40,204 +40,185 @@ RUN set -eux \
 # Development dependencies
 RUN set -eux \
     && apk add --no-cache --virtual .build-deps \
-    autoconf \
-    cmake \
-    freetds-dev \
-    freetype-dev \
-    gcc \
-    gettext-dev \
-    git \
-    gmp-dev \
-    icu-dev \
-    imagemagick-dev \
-    libc-dev \
-    libjpeg-turbo-dev \
-    libmcrypt-dev \
-    libpng-dev \
-    libressl-dev \
-    libssh2-dev \
-    libwebp-dev \
-    libxml2-dev \
-    libxpm-dev \
-    libxslt-dev \
-    libzip-dev \
-    linux-headers \
-    openssl-dev \
-    pcre-dev \
-    pkgconf \
-    postgresql-dev \
-    rabbitmq-c-dev \
-    tidyhtml-dev \
-    vips-dev \
-    yaml-dev \
-    zlib-dev
-
-RUN set -eux \
+        autoconf \
+        cmake \
+        freetds-dev \
+        freetype-dev \
+        gcc \
+        gettext-dev \
+        git \
+        gmp-dev \
+        icu-dev \
+        # imagemagick-dev \
+        libc-dev \
+        libjpeg-turbo-dev \
+        libmcrypt-dev \
+        libpng-dev \
+        libressl-dev \
+        # libssh2-dev \
+        libwebp-dev \
+        libxml2-dev \
+        libxpm-dev \
+        libxslt-dev \
+        libzip-dev \
+        # linux-headers \
+        openssl-dev \
+        pcre-dev \
+        pkgconf \
+        postgresql-dev \
+        # rabbitmq-c-dev \
+        tidyhtml-dev \
+        vips-dev \
+        yaml-dev \
+        zlib-dev \
+\
     # Workaround for rabbitmq linking issue
     && ln -s /usr/lib /usr/local/lib64 \
     # Enable ffi if it exists
     && set -eux \
     && if [ -f /usr/local/etc/php/conf.d/docker-php-ext-ffi.ini ]; then \
-    echo "ffi.enable = 1" >> /usr/local/etc/php/conf.d/docker-php-ext-ffi.ini; \
-    fi
-
+        echo "ffi.enable = 1" >> /usr/local/etc/php/conf.d/docker-php-ext-ffi.ini; \
+    fi \
+\
 ################################
 # Install PHP extensions
 ################################
-
+\
 # Install gd
-RUN set -eux \
     && ln -s /usr/lib/x86_64-linux-gnu/libXpm.* /usr/lib/ \
     && docker-php-ext-configure gd \
-    --enable-gd \
-    --with-webp \
-    --with-jpeg \
-    --with-xpm \
-    --with-freetype \
-    --enable-gd-jis-conv \
+        --enable-gd \
+        --with-webp \
+        --with-jpeg \
+        --with-xpm \
+        --with-freetype \
+        --enable-gd-jis-conv \
     && docker-php-ext-install gd \
-    && true
-
+    && true \
+\
 # # Install amqp
-# RUN set -eux \
 #     && echo "/usr" | pecl install amqp \
 #     && docker-php-ext-enable amqp \
-#     && true
-
+#     && true \
+\
 # Install gettext
-RUN set -eux \
     && docker-php-ext-install gettext \
-    && true
-
-RUN set -eux \
+    && true \
+\
     # Install gmp
     && docker-php-ext-install gmp \
-    && true
-
+    && true \
+\
 # Install bcmath
-RUN set -eux \
     && docker-php-ext-install bcmath \
-    && true
-
+    && true \
+\
 # Install exif
-RUN set -eux \
     && docker-php-ext-install exif \
-    && true
-
+    && true \
+\
 # # Install imagick
-# RUN set -eux \
 #     && pecl install imagick \
 #     && docker-php-ext-enable imagick \
-#     && true 
-
+#     && true \ 
+\
 # Install intl
-RUN set -eux \
     && docker-php-ext-install intl \
-    && true
-
+    && true \
+\
 # Install mcrypt
-RUN set -eux \
     && pecl install mcrypt \
     && docker-php-ext-enable mcrypt \
-    && true
-
+    && true \
+\
 # # Install xmlrpc
-# RUN set -eux \
 #     && docker-php-ext-configure xmlrpc --with-iconv-dir=/usr \
 #     && docker-php-ext-install xmlrpc \
-#     && true
-
+#     && true \
+\
 # Install memcache
-RUN set -eux \
     && pecl install memcache \
     && docker-php-ext-enable memcache \
-    && true
-
+    && true \
+\
 # Install mysqli
-RUN set -eux \
     && docker-php-ext-install mysqli \
-    && true
-
+    && true \
+\
 # Install oauth
-RUN set -eux \
     && pecl install oauth \
     && docker-php-ext-enable oauth \
-    && true
-
+    && true \
+\
 # Install pdo_mysql
-RUN set -eux \
     && docker-php-ext-configure pdo_mysql --with-zlib-dir=/usr \
     && docker-php-ext-install pdo_mysql \
-    && true
-
+    && true \
+\
 # Install pdo_dblib
-RUN set -eux \
     && docker-php-ext-install pdo_dblib \
-    && true
-
+    && true \
+\
 # Install pcntl
-RUN set -eux \
     && docker-php-ext-install pcntl \
-    && true
-
+    && true \
+\
 # Install pdo_pgsql
-RUN set -eux \
     && docker-php-ext-install pdo_pgsql \
-    && true
-
+    && true \
+\
 # Install pgsql
-RUN set -eux \
     && docker-php-ext-install pgsql \
-    && true
-
+    && true \
+\
 # Install psr
-RUN set -eux \
     && pecl install psr \
     && docker-php-ext-enable psr \
-    && true
-
+    && true \
+\
 # Install soap
-RUN set -eux \
     && docker-php-ext-install soap \
-    && true
-
+    && true \
+\
 # # Install ssh2
-# RUN set -eux \
 #     && pecl install ssh2-1.2 \
 #     && docker-php-ext-enable ssh2 \
-#     && true
-
+#     && true \
+\
 # Install tidy
-RUN set -eux \
     && docker-php-ext-install tidy \
-    && true
-
+    && true \
+\
 # Install xsl
-RUN set -eux \
     && docker-php-ext-install xsl \
-    && true
-
+    && true \
+\
 # Install yaml
-RUN set -eux \
     && pecl install yaml \
     && docker-php-ext-enable yaml \
-    && true
-
+    && true \
+\
 # Install vips
-RUN set -eux \
     && pecl install vips \
     && docker-php-ext-enable vips \
-    && true
-
+    && true \
+\
 # Install zip
-RUN set -eux \
     && docker-php-ext-configure zip --with-zip \
     && docker-php-ext-install zip \
-    && true
-
-RUN set -eux \
+    && true \
+\
     # Clean up build packages
     && apk del .build-deps
+
+# Install Composer
+RUN set -eux \
+    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
+    && php composer-setup.php --filename=composer --install-dir=/usr/local/bin \
+    && php -r "unlink('composer-setup.php');" \
+    && composer --version \
+    && true
 
 RUN set -eux \
     # Fix php.ini settings for enabled extensions
