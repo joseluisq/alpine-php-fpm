@@ -6,6 +6,10 @@ build-fpm-74:
 	@docker build -t alpine-php-fpm:latest -f 7.4-fpm/Dockerfile .
 .PHONY: build-fpm-74
 
+build-fpm-80:
+	@docker build -t alpine-php-fpm:latest -f 8.0-fpm/Dockerfile .
+.PHONY: build-fpm-80
+
 run:
 	@docker run --rm -it \
 		-v $(PWD)/public:/usr/share/nginx/html \

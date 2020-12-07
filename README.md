@@ -1,52 +1,63 @@
-# Alpine / PHP-FPM v7 [![Build Status](https://travis-ci.com/joseluisq/alpine-php-fpm.svg?branch=master)](https://travis-ci.com/joseluisq/alpine-php-fpm) ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/7.4) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/7.4) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/)
+# Alpine PHP-FPM [![Build Status](https://travis-ci.com/joseluisq/alpine-php-fpm.svg?branch=master)](https://travis-ci.com/joseluisq/alpine-php-fpm) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/)
 
-> [PHP-FPM (PHP v7.4)](https://www.php.net/manual/en/install.fpm.php) with essential extensions on top of [Alpine Linux v3.11](https://alpinelinux.org/).
+> PHP-FPM (PHP [v7.4](https://www.php.net/ChangeLog-7.php#PHP_7_4) and [v8.0](https://www.php.net/ChangeLog-8.php#PHP_8_0)) with essential extensions on top of [Alpine Linux v3.12](https://alpinelinux.org/).
 
-## Features
+### PHP 7.4
 
-- **PHP v7.4**
-- **Composer v1.9**
-- **Built-in extensions**
-    - curl
-    - ftp
-    - hash (mhash)
-    - libedit
-    - libsodium
-    - mbstring
-    - mysqlnd
-    - openssl
-    - password-argon2
-    - pdo-sqlite
-    - pear
-    - sqlite3
-    - zlib
-- **Additional provided extensions**
-    - amqp
-    - bcmath
-    - exif
-    - gd
-    - gettext
-    - gmp
-    - imagick
-    - intl
-    - mcrypt
-    - memcache
-    - mysqli
-    - oauth
-    - pcntl
-    - pdo_dblib
-    - pdo_mysql
-    - pdo_pgsql
-    - pgsql
-    - psr
-    - soap
-    - ssh2
-    - tidy
-    - vips
-    - xmlrpc
-    - xsl
-    - yaml
-    - zip
+![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/7.4) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/7.4)
+
+### PHP 8.0
+
+![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.0) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.0)
+
+### Built-in extensions
+  - curl
+  - ftp
+  - hash (mhash)
+  - libedit
+  - libsodium
+  - mbstring
+  - mysqlnd
+  - openssl
+  - password-argon2
+  - pdo-sqlite
+  - pear
+  - sqlite3
+  - zlib
+
+### Additional extensions
+
+| Extension  |  v7.4  |   v8.0 |
+| ---------- | :----: | -----: |
+| amqp       |   ✓    |      ? |
+| bcmath     |   ✓    |      ✓ |
+| exif       |   ✓    |      ✓ |
+| gd         |   ✓    |      ✓ |
+| gettext    |   ✓    |      ✓ |
+| gmp        |   ✓    |      ✓ |
+| imagick    |   ✓    |      ? |
+| intl       |   ✓    |      ✓ |
+| mcrypt     |   ✓    |      ✓ |
+| memcache   |   ✓    |      ✓ |
+| mysqli     |   ✓    |      ✓ |
+| oauth      |   ✓    |      ✓ |
+| pcntl      |   ✓    |      ✓ |
+| pdo_dblib  |   ✓    |      ✓ |
+| pdo_mysql  |   ✓    |      ✓ |
+| pdo_pgsql  |   ✓    |      ✓ |
+| pgsql      |   ✓    |      ✓ |
+| psr        |   ✓    |      ✓ |
+| soap       |   ✓    |      ✓ |
+| ssh2       |   ✓    |      ? |
+| tidy       |   ✓    |      ✓ |
+| vips       |   ✓    |      ✓ |
+| xmlrpc     |   ✓    |      ? |
+| xsl        |   ✓    |      ✓ |
+| yaml       |   ✓    |      ✓ |
+| zip        |   ✓    |      ✓ |
+| &nbsp;     | &nbsp; | &nbsp; |
+| **Others** |        |        |
+| composer   |  v1.9  |  v1.10 |
 
 ## Install
 
@@ -54,12 +65,16 @@
 
 ```sh
 docker pull joseluisq/php-fpm:7.4
+# Or
+docker pull joseluisq/php-fpm:8.0
 ```
 
 __Dockerfile__
 
 ```Dockerfile
 FROM joseluisq/php-fpm:7.4
+# Or
+FROM joseluisq/php-fpm:8.0
 ```
 
 ## Environment variables
