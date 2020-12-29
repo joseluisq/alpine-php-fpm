@@ -137,7 +137,7 @@ RUN set -eux \
     && true \
 \
 # Install memcache
-    && pecl install memcache \
+    && pecl install memcache-4.0.5.2 \
     && docker-php-ext-enable memcache \
     && true \
 \
