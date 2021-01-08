@@ -1,19 +1,24 @@
-FROM php:8.0.0-fpm-alpine
+FROM php:8.0.1-fpm-alpine
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v8.0 with essential extensions on top of Alpine Linux."
 
+# Composer - https://getcomposer.org/download/
+ARG COMPOSER_VERSION="2.0.8"
+ARG COMPOSER_SUM="2021f0d52b446e0efe3c548cc058ab5671fa38cdbcf814e7911c7e9d71d61538"
+
 # Install dependencies
 RUN set -eux \
     && apk add --no-cache \
+        # imagemagick \
+        # libssh2 \
+        # rabbitmq-c \
         ca-certificates \
-        # composer \
         freetds \
         freetype \
         gettext \
         gmp \
         icu-libs \
-        # imagemagick \
         libffi \
         libgmpxx \
         libintl \
@@ -21,13 +26,11 @@ RUN set -eux \
         libmcrypt \
         libpng \
         libpq \
-        # libssh2 \
         libtool \
         libxpm \
         libxslt \
         libzip \
         make \
-        # rabbitmq-c \
         tidyhtml \
         tzdata \
         vips \
@@ -40,6 +43,10 @@ RUN set -eux \
 # Development dependencies
 RUN set -eux \
     && apk add --no-cache --virtual .build-deps \
+        # imagemagick-dev \
+        # libssh2-dev \
+        # linux-headers \
+        # rabbitmq-c-dev \
         autoconf \
         cmake \
         freetds-dev \
@@ -49,24 +56,20 @@ RUN set -eux \
         git \
         gmp-dev \
         icu-dev \
-        # imagemagick-dev \
         libc-dev \
         libjpeg-turbo-dev \
         libmcrypt-dev \
         libpng-dev \
         libressl-dev \
-        # libssh2-dev \
         libwebp-dev \
         libxml2-dev \
         libxpm-dev \
         libxslt-dev \
         libzip-dev \
-        # linux-headers \
         openssl-dev \
         pcre-dev \
         pkgconf \
         postgresql-dev \
-        # rabbitmq-c-dev \
         tidyhtml-dev \
         vips-dev \
         yaml-dev \
@@ -213,10 +216,10 @@ RUN set -eux \
 
 # Install Composer
 RUN set -eux \
-    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
-    && php composer-setup.php --filename=composer --install-dir=/usr/local/bin \
-    && php -r "unlink('composer-setup.php');" \
+    && curl -LO "https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar" \
+    && echo "${COMPOSER_SUM}  composer.phar" | sha256sum -c - \
+    && chmod +x composer.phar \
+    && mv composer.phar /usr/local/bin/composer \
     && composer --version \
     && true
 
