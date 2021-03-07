@@ -1,24 +1,22 @@
-FROM php:8.0.2-fpm-alpine
+FROM php:8.0.3-fpm-alpine
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v8.0 with essential extensions on top of Alpine Linux."
 
 # Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.0.8"
-ARG COMPOSER_SUM="2021f0d52b446e0efe3c548cc058ab5671fa38cdbcf814e7911c7e9d71d61538"
+ARG COMPOSER_VERSION="2.0.11"
+ARG COMPOSER_SUM="eabf2917072096a94679193762501319e621e2b369a4a1256b2c27f4e6984477"
 
 # Install dependencies
 RUN set -eux \
     && apk add --no-cache \
-        # imagemagick \
-        # libssh2 \
-        # rabbitmq-c \
         ca-certificates \
         freetds \
         freetype \
         gettext \
         gmp \
         icu-libs \
+        imagemagick \
         libffi \
         libgmpxx \
         libintl \
@@ -26,11 +24,13 @@ RUN set -eux \
         libmcrypt \
         libpng \
         libpq \
+        libssh2 \
         libtool \
         libxpm \
         libxslt \
         libzip \
         make \
+        rabbitmq-c \
         tidyhtml \
         tzdata \
         vips \
@@ -43,10 +43,6 @@ RUN set -eux \
 # Development dependencies
 RUN set -eux \
     && apk add --no-cache --virtual .build-deps \
-        # imagemagick-dev \
-        # libssh2-dev \
-        # linux-headers \
-        # rabbitmq-c-dev \
         autoconf \
         cmake \
         freetds-dev \
@@ -56,11 +52,13 @@ RUN set -eux \
         git \
         gmp-dev \
         icu-dev \
+        imagemagick-dev \
         libc-dev \
         libjpeg-turbo-dev \
         libmcrypt-dev \
         libpng-dev \
         libressl-dev \
+        libssh2-dev \
         libwebp-dev \
         libxml2-dev \
         libxpm-dev \
@@ -70,6 +68,7 @@ RUN set -eux \
         pcre-dev \
         pkgconf \
         postgresql-dev \
+        rabbitmq-c-dev \
         tidyhtml-dev \
         vips-dev \
         yaml-dev \
@@ -99,10 +98,17 @@ RUN set -eux \
     && docker-php-ext-install gd \
     && true \
 \
-# # Install amqp
-#     && echo "/usr" | pecl install amqp \
-#     && docker-php-ext-enable amqp \
-#     && true \
+# Install amqp
+# Note: Build from source until the pecl release is ready for PHP 8
+    && git clone --depth=1 https://github.com/php-amqp/php-amqp \
+    && cd php-amqp \
+    && phpize && ./configure \
+    && make \
+    && make install \
+    && cd ../ \
+    && rm -rf php-amqp \
+    && docker-php-ext-enable amqp \
+    && true \
 \
 # Install gettext
     && docker-php-ext-install gettext \
@@ -120,10 +126,17 @@ RUN set -eux \
     && docker-php-ext-install exif \
     && true \
 \
-# # Install imagick
-#     && pecl install imagick \
-#     && docker-php-ext-enable imagick \
-#     && true \ 
+# Install imagick
+# Note: Build from source until the pecl release is ready for PHP 8
+    && git clone --depth=1 https://github.com/Imagick/imagick \
+    && cd imagick \
+    && phpize && ./configure \
+    && make \
+    && make install \
+    && cd ../ \
+    && rm -rf imagick \
+    && docker-php-ext-enable imagick \
+    && true \
 \
 # Install intl
     && docker-php-ext-install intl \
@@ -133,11 +146,6 @@ RUN set -eux \
     && pecl install mcrypt \
     && docker-php-ext-enable mcrypt \
     && true \
-\
-# # Install xmlrpc
-#     && docker-php-ext-configure xmlrpc --with-iconv-dir=/usr \
-#     && docker-php-ext-install xmlrpc \
-#     && true \
 \
 # Install memcache
     && pecl install memcache \
@@ -183,10 +191,10 @@ RUN set -eux \
     && docker-php-ext-install soap \
     && true \
 \
-# # Install ssh2
-#     && pecl install ssh2-1.2 \
-#     && docker-php-ext-enable ssh2 \
-#     && true \
+# Install ssh2
+    && pecl install ssh2-1.3.1 \
+    && docker-php-ext-enable ssh2 \
+    && true \
 \
 # Install tidy
     && docker-php-ext-install tidy \

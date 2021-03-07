@@ -29,13 +29,13 @@
 
 | Extension  |  v7.4  |   v8.0 |
 | ---------- | :----: | -----: |
-| amqp       |   ✓    |      ? |
+| amqp       |   ✓    |      ✓ |
 | bcmath     |   ✓    |      ✓ |
 | exif       |   ✓    |      ✓ |
 | gd         |   ✓    |      ✓ |
 | gettext    |   ✓    |      ✓ |
 | gmp        |   ✓    |      ✓ |
-| imagick    |   ✓    |      ? |
+| imagick    |   ✓    |      ✓ |
 | intl       |   ✓    |      ✓ |
 | mcrypt     |   ✓    |      ✓ |
 | memcache   |   ✓    |      ✓ |
@@ -48,10 +48,10 @@
 | pgsql      |   ✓    |      ✓ |
 | psr        |   ✓    |      ✓ |
 | soap       |   ✓    |      ✓ |
-| ssh2       |   ✓    |      ? |
+| ssh2       |   ✓    |      ✓ |
 | tidy       |   ✓    |      ✓ |
 | vips       |   ✓    |      ✓ |
-| xmlrpc     |   ✓    |      ? |
+| xmlrpc     |   ✓    |        |
 | xsl        |   ✓    |      ✓ |
 | yaml       |   ✓    |      ✓ |
 | zip        |   ✓    |      ✓ |
