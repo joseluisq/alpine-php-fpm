@@ -48,12 +48,17 @@
 | pgsql      |   ✓    |      ✓ |
 | psr        |   ✓    |      ✓ |
 | soap       |   ✓    |      ✓ |
+| sockets    |   ?    |      ✓ |
 | ssh2       |   ✓    |      ✓ |
 | tidy       |   ✓    |      ✓ |
 | vips       |   ✓    |      ✓ |
 | xmlrpc     |   ✓    |        |
 | xsl        |   ✓    |      ✓ |
 | yaml       |   ✓    |      ✓ |
+| swoole     |   ?    |      ✓ |
+| sysvmsg    |   ?    |      ✓ |
+| sysvsem    |   ?    |      ✓ |
+| sysvshm    |   ?    |      ✓ |
 | zip        |   ✓    |      ✓ |
 | &nbsp;     | &nbsp; | &nbsp; |
 | **Others** |        |        |
@@ -61,7 +66,7 @@
 
 ## Install
 
-🐳 Available on Docker Hub → [hub.docker.com/r/joseluisq/php-fpm](https://hub.docker.com/r/joseluisq/php/)
+🐳 Available on Docker Hub → [hub.docker.com/r/joseluisq/php-fpm](https://hub.docker.com/r/joseluisq/php-fpm/)
 
 ```sh
 docker pull joseluisq/php-fpm:7.4
