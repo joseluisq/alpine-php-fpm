@@ -6,6 +6,8 @@ LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
 # Composer - https://getcomposer.org/download/
 ARG COMPOSER_VERSION="2.0.11"
 ARG COMPOSER_SUM="d6eee0d4637f4bd82bdae098fceda300dcb3ec35bf502604fbe7510933b8f952"
+
+# Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="4.6.4"
 
 # Install dependencies
@@ -195,6 +197,11 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) soap \
     && true \
 \
+# Install ssh2
+    && pecl install ssh2-1.3.1 \
+    && docker-php-ext-enable ssh2 \
+    && true \
+\
 # Install sockets, sysvmsg, sysvsem, sysvshm (also needed by swoole)
     && docker-php-ext-install -j$(nproc) \
         sockets \
@@ -218,11 +225,6 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) swoole \
     && rm -rf swoole.tar.gz $HOME/.composer/*-old.phar \
     && docker-php-ext-enable swoole \
-    && true \
-\
-# Install ssh2
-    && pecl install ssh2-1.3.1 \
-    && docker-php-ext-enable ssh2 \
     && true \
 \
 # Install tidy
@@ -250,7 +252,8 @@ RUN set -eux \
 \
 # Clean up build packages
     && docker-php-source delete \
-    && apk del .build-deps
+    && apk del .build-deps \
+    && true
 
 # Install Composer
 RUN set -eux \
@@ -262,12 +265,13 @@ RUN set -eux \
     && true
 
 RUN set -eux \
-    # Fix php.ini settings for enabled extensions
+# Fix php.ini settings for enabled extensions
     && chmod +x "$(php -r 'echo ini_get("extension_dir");')"/* \
-    # Shrink binaries
+# Shrink binaries
     && (find /usr/local/bin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
     && (find /usr/local/lib -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
-    && (find /usr/local/sbin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true)
+    && (find /usr/local/sbin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
+    && true
 
 # Copy PHP-FPM configuration files
 COPY 8.0-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
@@ -275,27 +279,28 @@ COPY 8.0-fpm/www.tmpl.conf /var/data/php-fpm/www.tmpl.conf
 COPY 8.0-fpm/php.tmpl.ini /var/data/php-fpm/default-php.tmpl.ini
 
 RUN set -eux \
-    # PHP-FPM templates directory
+# PHP-FPM templates directory
     && mkdir -p /var/data/php-fpm \
-    # Remove few PHP-FPM default config files
+# Remove few PHP-FPM default config files
     && rm -rf /usr/local/etc/php-fpm.d/zz-docker.conf \
     && rm -rf /usr/local/etc/php-fpm.d/docker.conf \
-    \
-    # Perform PHP-FPM testing
+\
+# Perform PHP-FPM testing
     && echo "date.timezone=UTC" > /usr/local/etc/php/php.ini \
     && php -v | grep -oE 'PHP\s[.0-9]+' | grep -oE '[.0-9]+' | grep '^8.0' \
     && /usr/local/sbin/php-fpm --test \
-    \
+\
     && PHP_ERROR="$( php -v 2>&1 1>/dev/null )" \
     && if [ -n "${PHP_ERROR}" ]; then echo "${PHP_ERROR}"; false; fi \
     && PHP_ERROR="$( php -i 2>&1 1>/dev/null )" \
     && if [ -n "${PHP_ERROR}" ]; then echo "${PHP_ERROR}"; false; fi \
-    \
+\
     && PHP_FPM_ERROR="$( php-fpm -v 2>&1 1>/dev/null )" \
     && if [ -n "${PHP_FPM_ERROR}" ]; then echo "${PHP_FPM_ERROR}"; false; fi \
     && PHP_FPM_ERROR="$( php-fpm -i 2>&1 1>/dev/null )" \
     && if [ -n "${PHP_FPM_ERROR}" ]; then echo "${PHP_FPM_ERROR}"; false; fi \
-    && rm -f /usr/local/etc/php/php.ini
+    && rm -f /usr/local/etc/php/php.ini \
+    && true
 
 # Copy util scripts
 COPY 8.0-fpm/envsubst.sh /envsubst.sh
