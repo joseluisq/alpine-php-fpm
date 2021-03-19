@@ -3,11 +3,17 @@ FROM php:7.4.16-fpm-alpine
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v7.4 with essential extensions on top of Alpine Linux."
 
+# Composer - https://getcomposer.org/download/
+ARG COMPOSER_VERSION="2.0.11"
+ARG COMPOSER_SUM="d6eee0d4637f4bd82bdae098fceda300dcb3ec35bf502604fbe7510933b8f952"
+
+# Swoole - https://github.com/swoole/swoole-src
+ARG SWOOLE_VERSION="4.6.4"
+
 # Install dependencies
 RUN set -eux \
     && apk add --no-cache \
         ca-certificates \
-        composer \
         freetds \
         freetype \
         gettext \
@@ -22,6 +28,7 @@ RUN set -eux \
         libpng \
         libpq \
         libssh2 \
+        libstdc++ \
         libtool \
         libxpm \
         libxslt \
@@ -42,6 +49,7 @@ RUN set -eux \
     && apk add --no-cache --virtual .build-deps \
         autoconf \
         cmake \
+        curl-dev \
         freetds-dev \
         freetype-dev \
         gcc \
@@ -93,7 +101,7 @@ RUN set -eux \
         --with-xpm \
         --with-freetype \
         --enable-gd-jis-conv \
-    && docker-php-ext-install gd \
+    && docker-php-ext-install -j$(nproc) gd \
     && true \
 \
 # Install amqp
@@ -102,19 +110,19 @@ RUN set -eux \
     && true \
 \
 # Install gettext
-    && docker-php-ext-install gettext \
+    && docker-php-ext-install -j$(nproc) gettext \
     && true \
 \
 # Install gmp
-    && docker-php-ext-install gmp \
+    && docker-php-ext-install -j$(nproc) gmp \
     && true \
 \
 # Install bcmath
-    && docker-php-ext-install bcmath \
+    && docker-php-ext-install -j$(nproc) bcmath \
     && true \
 \
 # Install exif
-    && docker-php-ext-install exif \
+    && docker-php-ext-install -j$(nproc) exif \
     && true \
 \
 # Install imagick
@@ -123,7 +131,7 @@ RUN set -eux \
     && true \
 \
 # Install intl
-    && docker-php-ext-install intl \
+    && docker-php-ext-install -j$(nproc) intl \
     && true \
 \
 # Install mcrypt
@@ -133,7 +141,7 @@ RUN set -eux \
 \
 # Install xmlrpc
     && docker-php-ext-configure xmlrpc --with-iconv-dir=/usr \
-    && docker-php-ext-install xmlrpc \
+    && docker-php-ext-install -j$(nproc) xmlrpc \
     && true \
 \
 # Install memcache
@@ -142,7 +150,7 @@ RUN set -eux \
     && true \
 \
 # Install mysqli
-    && docker-php-ext-install mysqli \
+    && docker-php-ext-install -j$(nproc) mysqli \
     && true \
 \
 # Install oauth
@@ -152,23 +160,23 @@ RUN set -eux \
 \
 # Install pdo_mysql
     && docker-php-ext-configure pdo_mysql --with-zlib-dir=/usr \
-    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install -j$(nproc) pdo_mysql \
     && true \
 \
 # Install pdo_dblib
-    && docker-php-ext-install pdo_dblib \
+    && docker-php-ext-install -j$(nproc) pdo_dblib \
     && true \
 \
 # Install pcntl
-    && docker-php-ext-install pcntl \
+    && docker-php-ext-install -j$(nproc) pcntl \
     && true \
 \
 # Install pdo_pgsql
-    && docker-php-ext-install pdo_pgsql \
+    && docker-php-ext-install -j$(nproc) pdo_pgsql \
     && true \
 \
 # Install pgsql
-    && docker-php-ext-install pgsql \
+    && docker-php-ext-install -j$(nproc) pgsql \
     && true \
 \
 # Install psr
@@ -177,7 +185,7 @@ RUN set -eux \
     && true \
 \
 # Install soap
-    && docker-php-ext-install soap \
+    && docker-php-ext-install -j$(nproc) soap \
     && true \
 \
 # Install ssh2
@@ -185,12 +193,37 @@ RUN set -eux \
     && docker-php-ext-enable ssh2 \
     && true \
 \
+# Install sockets, sysvmsg, sysvsem, sysvshm (also needed by swoole)
+    && docker-php-ext-install -j$(nproc) \
+        sockets \
+        sysvmsg \
+        sysvsem \
+        sysvshm \
+    && docker-php-source extract \
+    && true \
+\
+# Install swoole
+    && mkdir /usr/src/php/ext/swoole \
+    && curl -Lo swoole.tar.gz https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz \
+    && tar xfz swoole.tar.gz --strip-components=1 -C /usr/src/php/ext/swoole \
+    && docker-php-ext-configure swoole \
+            --enable-mysqlnd \
+            --enable-sockets \
+            --enable-openssl \
+            --enable-http2 \
+            --enable-swoole-json \
+            --enable-swoole-curl \
+    && docker-php-ext-install -j$(nproc) swoole \
+    && rm -rf swoole.tar.gz $HOME/.composer/*-old.phar \
+    && docker-php-ext-enable swoole \
+    && true \
+\
 # Install tidy
-    && docker-php-ext-install tidy \
+    && docker-php-ext-install -j$(nproc) tidy \
     && true \
 \
 # Install xsl
-    && docker-php-ext-install xsl \
+    && docker-php-ext-install -j$(nproc) xsl \
     && true \
 \
 # Install yaml
@@ -205,11 +238,22 @@ RUN set -eux \
 \
 # Install zip
     && docker-php-ext-configure zip --with-zip \
-    && docker-php-ext-install zip \
+    && docker-php-ext-install -j$(nproc) zip \
     && true \
 \
 # Clean up build packages
-    && apk del .build-deps
+    && docker-php-source delete \
+    && apk del .build-deps \
+    && true
+
+# Install Composer
+RUN set -eux \
+    && curl -LO "https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar" \
+    && echo "${COMPOSER_SUM}  composer.phar" | sha256sum -c - \
+    && chmod +x composer.phar \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer --version \
+    && true
 
 RUN set -eux \
 # Fix php.ini settings for enabled extensions
@@ -217,7 +261,8 @@ RUN set -eux \
 # Shrink binaries
     && (find /usr/local/bin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
     && (find /usr/local/lib -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
-    && (find /usr/local/sbin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true)
+    && (find /usr/local/sbin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
+    && true
 
 # Copy PHP-FPM configuration files
 COPY 7.4-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
@@ -235,17 +280,18 @@ RUN set -eux \
     && echo "date.timezone=UTC" > /usr/local/etc/php/php.ini \
     && php -v | grep -oE 'PHP\s[.0-9]+' | grep -oE '[.0-9]+' | grep '^7.4' \
     && /usr/local/sbin/php-fpm --test \
-    \
+\
     && PHP_ERROR="$( php -v 2>&1 1>/dev/null )" \
     && if [ -n "${PHP_ERROR}" ]; then echo "${PHP_ERROR}"; false; fi \
     && PHP_ERROR="$( php -i 2>&1 1>/dev/null )" \
     && if [ -n "${PHP_ERROR}" ]; then echo "${PHP_ERROR}"; false; fi \
-    \
+\
     && PHP_FPM_ERROR="$( php-fpm -v 2>&1 1>/dev/null )" \
     && if [ -n "${PHP_FPM_ERROR}" ]; then echo "${PHP_FPM_ERROR}"; false; fi \
     && PHP_FPM_ERROR="$( php-fpm -i 2>&1 1>/dev/null )" \
     && if [ -n "${PHP_FPM_ERROR}" ]; then echo "${PHP_FPM_ERROR}"; false; fi \
-    && rm -f /usr/local/etc/php/php.ini
+    && rm -f /usr/local/etc/php/php.ini \
+    && true
 
 # Copy util scripts
 COPY 7.4-fpm/envsubst.sh /envsubst.sh

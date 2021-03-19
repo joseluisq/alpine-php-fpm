@@ -55,14 +55,14 @@
 | xmlrpc     |   ✓    |        |
 | xsl        |   ✓    |      ✓ |
 | yaml       |   ✓    |      ✓ |
-| swoole     |   ?    |      ✓ |
-| sysvmsg    |   ?    |      ✓ |
-| sysvsem    |   ?    |      ✓ |
-| sysvshm    |   ?    |      ✓ |
+| swoole     |   ✓    |      ✓ |
+| sysvmsg    |   ✓    |      ✓ |
+| sysvsem    |   ✓    |      ✓ |
+| sysvshm    |   ✓    |      ✓ |
 | zip        |   ✓    |      ✓ |
 | &nbsp;     | &nbsp; | &nbsp; |
 | **Others** |        |        |
-| composer   |  v1.9  |   v2.0 |
+| composer   |  v2.0  |   v2.0 |
 
 ## Install
 
