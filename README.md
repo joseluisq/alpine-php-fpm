@@ -48,7 +48,7 @@
 | pgsql      |   ✓    |      ✓ |
 | psr        |   ✓    |      ✓ |
 | soap       |   ✓    |      ✓ |
-| sockets    |   ?    |      ✓ |
+| sockets    |   ✓    |      ✓ |
 | ssh2       |   ✓    |      ✓ |
 | tidy       |   ✓    |      ✓ |
 | vips       |   ✓    |      ✓ |
