@@ -1,6 +1,6 @@
 # Alpine PHP-FPM [![CI](https://github.com/joseluisq/alpine-php-fpm/workflows/CI/badge.svg)](https://github.com/joseluisq/alpine-php-fpm/actions?query=workflow%3ACI) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/)
 
-> PHP-FPM (PHP [v7.4](https://www.php.net/ChangeLog-7.php#PHP_7_4) and [v8.0](https://www.php.net/ChangeLog-8.php#PHP_8_0)) with essential extensions on top of [Alpine Linux v3.12](https://alpinelinux.org/).
+> PHP-FPM (PHP [v7.4](https://www.php.net/ChangeLog-7.php#PHP_7_4) and [v8.0](https://www.php.net/ChangeLog-8.php#PHP_8_0)) with essential extensions on top of [Alpine Linux v3.14](https://alpinelinux.org/).
 
 ### PHP 7.4
 
