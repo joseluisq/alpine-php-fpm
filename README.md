@@ -62,7 +62,7 @@
 | zip        |   ✓    |      ✓ |
 | &nbsp;     | &nbsp; | &nbsp; |
 | **Others** |        |        |
-| composer   |  v2.0  |   v2.0 |
+| composer   |  v2.1  |   v2.1 |
 
 ## Install
 
