@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  server:
+    image: nginx:1.17-alpine
+    ports:
+      - 8088:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./conf.d/:/etc/nginx/conf.d/
+      - ../public:/usr/share/nginx/html/
+    depends_on:
+      - php-fpm
+    links:
+      - php-fpm
+
+  php-fpm:
+    # NOTE: change it with the preferred PHP version
+    image: joseluisq/php-fpm
+    environment:
+      - "ENV_SUBSTITUTION_ENABLE=true"
+      - "PHP_MEMORY_LIMIT=512M"
+      - "PHP_FPM_LISTEN=9090"
+      - "PHP_SESSION_GC_MAXLIFETIME=7200"
+    expose:
+      - "9090"
+    volumes:
+      - ../public:/usr/share/nginx/html/

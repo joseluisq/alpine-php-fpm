@@ -81,6 +81,8 @@ docker run --rm -p 8787:80 joseluisq/php-fpm:8.0 sh -c "echo '<?php phpinfo();' 
 docker run --rm -p 8787:80 joseluisq/php-fpm:7.4 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
 ```
 
+[View Docker Compose Examples](#docker-compose-examples)
+
 ## Default Paths
 
 - Default Docker working directory: `/var/www/html`
@@ -111,9 +113,21 @@ Settings replaced into `php.ini` file.
 - `PHP_MEMORY_LIMIT=512M`
 - `PHP_SESSION_GC_MAXLIFETIME=1440`
 
-## Docker Compose Example
+## Docker Compose Examples
 
-A `docker-compose` example using a **Nginx server** can be found under [./sample](./sample) directory.
+[docker-compose](https://docs.docker.com/compose/) examples for [Nginx](https://hub.docker.com/_/nginx) and [Apache](https://hub.docker.com/_/httpd) servers can be found under the [./examples](./examples) directory.
+
+### Nginx
+
+```sh
+docker-compose -f examples/nginx/docker-compose.yml up
+```
+
+### Apache
+
+```sh
+docker-compose -f examples/apache/docker-compose.yml up
+```
 
 ## Contributions
 
