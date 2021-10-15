@@ -73,12 +73,12 @@ FROM joseluisq/php-fpm:8.0
 
 ### Run a container
 
-To give it a quick try just execute any of those commands and then navigate to [localhost:8787](http://localhost:8787)
+To give it a quick try just execute any of those commands and then navigate to [localhost:8088](http://localhost:8088)
 
 ```sh
-docker run --rm -p 8787:80 joseluisq/php-fpm:8.0 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
+docker run --rm -p 8088:80 joseluisq/php-fpm:8.0 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
 # Or
-docker run --rm -p 8787:80 joseluisq/php-fpm:7.4 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
+docker run --rm -p 8088:80 joseluisq/php-fpm:7.4 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
 ```
 
 [View Docker Compose Examples](#docker-compose-examples)
