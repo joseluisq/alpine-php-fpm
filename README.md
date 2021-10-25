@@ -98,7 +98,16 @@ Below the environment variables with their default values:
 
 ### PHP-FPM
 
-Settings replaced into `www.conf` file.
+#### Global FPM
+
+Settings replaced into `/usr/local/etc/php-fpm.conf` file.
+
+- `PHP_FPM_ERROR_LOG=/proc/self/fd/2`
+- `PHP_FPM_LOG_LEVEL=error`
+
+#### FPM WWW Pool
+
+Settings replaced into `/usr/local/etc/php-fpm.d/www.conf` file.
 
 - `PHP_FPM_LISTEN=9000`
 - `PHP_FPM_USER=www-data`
@@ -108,9 +117,10 @@ Settings replaced into `www.conf` file.
 
 ### PHP Config
 
-Settings replaced into `php.ini` file.
+Settings replaced into `/usr/local/etc/php/conf.d/default-php.ini` file (`php.ini`).
 
 - `PHP_MEMORY_LIMIT=512M`
+- `PHP_EXPOSE_PHP=On`
 - `PHP_SESSION_GC_MAXLIFETIME=1440`
 
 ## Docker Compose Examples
