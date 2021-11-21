@@ -1,14 +1,14 @@
-FROM php:7.4.25-fpm-alpine3.14
+FROM php:7.4.26-fpm-alpine3.14
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v7.4 with essential extensions on top of Alpine Linux."
 
 # Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.1.9"
-ARG COMPOSER_SUM="4d00b70e146c17d663ad2f9a21ebb4c9d52b021b1ac15f648b4d371c04d648ba"
+ARG COMPOSER_VERSION="2.1.12"
+ARG COMPOSER_SUM="ae3ec292dd04b4e468aea1e5db4d085f169d8a803aabeb99707f69e9454bf218"
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="4.8.0"
+ARG SWOOLE_VERSION="4.8.2"
 
 # Install dependencies
 RUN set -eux \
