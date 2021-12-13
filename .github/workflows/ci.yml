@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [7.4-fpm, 8.0-fpm]
+        php: [7.4-fpm, 8.0-fpm, 8.1-fpm]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:

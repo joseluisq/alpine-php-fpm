@@ -12,6 +12,11 @@ buildx-fpm-80:
 	@docker buildx build -t joseluisq/php-fpm:8.0 --platform linux/amd64,linux/arm64 -f 8.0-fpm/Dockerfile .
 .PHONY: buildx-fpm-80
 
+buildx-fpm-81:
+	@echo "Building PHP 8.1 Docker images (linux/amd64,linux/arm64)..."
+	@docker buildx build -t joseluisq/php-fpm:8.1 --platform linux/amd64,linux/arm64 -f 8.1-fpm/Dockerfile .
+.PHONY: buildx-fpm-81
+
 run:
 	@docker run --rm -it \
 		-v $(PWD)/public:/usr/share/nginx/html \

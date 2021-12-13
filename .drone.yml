@@ -89,6 +89,49 @@ trigger:
 ---
 kind: pipeline
 type: docker
+name: development-php81
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: build-php81
+  image: docker
+  volumes:
+  - name: dockersock
+    path: /var/run/docker.sock
+  commands:
+    - echo "Building alpine-php-fpm:php81 image..."
+    - docker build -t alpine-php-fpm:php81 -f 8.1-fpm/Dockerfile .
+
+- name: test-php81
+  image: alpine-php-fpm:php81
+  pull: if-not-exists
+  commands:
+    - ./8.1-fpm/php_fpm_test.sh
+
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
+
+trigger:
+  event:
+    - push
+    - pull_request
+  branch:
+    - master
+    - develop
+    - feature/*
+    - bugfix/*
+    - hotfix/*
+
+
+
+---
+kind: pipeline
+type: docker
 name: production-php74
 
 platform:
@@ -136,13 +179,42 @@ steps:
     password:
       from_secret: dockerhub_password
     auto_tag: true
+
+trigger:
+  ref:
+    include:
+    - refs/tags/v8.0*
+
+
+
+---
+kind: pipeline
+type: docker
+name: production-php81
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: php-fpm-81
+  image: joseluisq/drone-docker
+  privileged: true
+  settings:
+    repo: joseluisq/php-fpm
+    dockerfile: ./8.1-fpm/Dockerfile
+    username:
+      from_secret: dockerhub_username
+    password:
+      from_secret: dockerhub_password
+    auto_tag: true
     auto_tag_aliases:
       - "latest"
 
 trigger:
   ref:
     include:
-    - refs/tags/v8.0*
+    - refs/tags/v8.1*
 
 
 
@@ -169,8 +241,10 @@ steps:
 depends_on:
 - development-php74
 - development-php80
+- development-php81
 - production-php74
 - production-php80
+- production-php81
 
 trigger:
   status:
