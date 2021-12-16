@@ -13,6 +13,7 @@ ARG SWOOLE_VERSION="4.8.2"
 # Install dependencies
 RUN set -eux \
     && apk add --no-cache \
+        c-client \
         ca-certificates \
         freetds \
         freetype \
@@ -20,6 +21,7 @@ RUN set -eux \
         gmp \
         icu-libs \
         imagemagick \
+        imap \
         libffi \
         libgmpxx \
         libintl \
@@ -48,6 +50,7 @@ RUN set -eux \
 RUN set -eux \
     && apk add --no-cache --virtual .build-deps \
         autoconf \
+        bzip2-dev \
         cmake \
         curl-dev \
         freetds-dev \
@@ -58,6 +61,8 @@ RUN set -eux \
         gmp-dev \
         icu-dev \
         imagemagick-dev \
+        imap-dev \
+        krb5-dev \
         libc-dev \
         libjpeg-turbo-dev \
         libmcrypt-dev \
@@ -115,6 +120,11 @@ RUN set -eux \
     && docker-php-ext-enable amqp \
     && true \
 \
+# Install apcu
+    && pecl install apcu \
+    && docker-php-ext-enable apcu \
+    && true \
+\
 # Install gettext
     && docker-php-ext-install -j$(nproc) gettext \
     && true \
@@ -127,8 +137,17 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) bcmath \
     && true \
 \
+# Install bz2
+    && docker-php-ext-install -j$(nproc) bz2 \
+    && true \
+\
 # Install exif
     && docker-php-ext-install -j$(nproc) exif \
+    && true \
+\
+# Install imap
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl --with-imap \
+    && docker-php-ext-install -j$(nproc) imap \
     && true \
 \
 # Install imagick
@@ -155,6 +174,11 @@ RUN set -eux \
 # Install memcache
     && pecl install memcache \
     && docker-php-ext-enable memcache \
+    && true \
+\
+# Install mongodb
+    && pecl install mongodb \
+    && docker-php-ext-enable mongodb \
     && true \
 \
 # Install mysqli
@@ -285,6 +309,7 @@ RUN set -eux \
     && rm -rf /usr/local/etc/php-fpm.d/docker.conf \
 \
 # Perform PHP-FPM testing
+    && echo "Performing PHP-FPM tests..." \
     && echo "date.timezone=UTC" > /usr/local/etc/php/php.ini \
     && php -v | grep -oE 'PHP\s[.0-9]+' | grep -oE '[.0-9]+' | grep '^8.0' \
     && /usr/local/sbin/php-fpm --test \

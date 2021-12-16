@@ -23,15 +23,19 @@
 | Extension  |  v7.4  |   v8.0 |   v8.1 |
 | ---------- | :----: | -----: | -----: |
 | amqp       |   ✓    |      ✓ |      ✓ |
+| apcu       |   ✓    |      ✓ |      ✓ |
 | bcmath     |   ✓    |      ✓ |      ✓ |
+| bz2        |   ✓    |      ✓ |      ✓ |
 | exif       |   ✓    |      ✓ |      ✓ |
 | gd         |   ✓    |      ✓ |      ✓ |
 | gettext    |   ✓    |      ✓ |      ✓ |
 | gmp        |   ✓    |      ✓ |      ✓ |
 | imagick    |   ✓    |      ✓ |      ✓ |
+| imap       |   ✓    |      ✓ |      ✓ |
 | intl       |   ✓    |      ✓ |      ✓ |
-| mcrypt     |   ✓    |      ✓ |        |
+| mcrypt     |   ✓    |      ✓ |      ? |
 | memcache   |   ✓    |      ✓ |      ✓ |
+| mongodb    |   ✓    |      ✓ |      ✓ |
 | mysqli     |   ✓    |      ✓ |      ✓ |
 | oauth      |   ✓    |      ✓ |      ✓ |
 | pcntl      |   ✓    |      ✓ |      ✓ |
@@ -45,10 +49,10 @@
 | ssh2       |   ✓    |      ✓ |      ✓ |
 | tidy       |   ✓    |      ✓ |      ✓ |
 | vips       |   ✓    |      ✓ |      ✓ |
-| xmlrpc     |   ✓    |        |        |
+| xmlrpc     |   ✓    |      ? |      ? |
 | xsl        |   ✓    |      ✓ |      ✓ |
 | yaml       |   ✓    |      ✓ |      ✓ |
-| swoole     |   ✓    |      ✓ |        |
+| swoole     |   ✓    |      ✓ |      ? |
 | sysvmsg    |   ✓    |      ✓ |      ✓ |
 | sysvsem    |   ✓    |      ✓ |      ✓ |
 | sysvshm    |   ✓    |      ✓ |      ✓ |
@@ -56,6 +60,10 @@
 | &nbsp;     | &nbsp; | &nbsp; | &nbsp; |
 | **Others** |        |        |        |
 | composer   |  v2.1  |   v2.1 |   v2.1 |
+
+**Footnotes**
+
+(?) It means that this extension is obsolete/unmaintained/discourage or simply is not supported yet.
 
 ## Usage
 
