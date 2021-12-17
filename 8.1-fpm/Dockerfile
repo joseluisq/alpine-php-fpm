@@ -8,7 +8,7 @@ ARG COMPOSER_VERSION="2.1.14"
 ARG COMPOSER_SUM="d44a904520f9aaa766e8b4b05d2d9a766ad9a6f03fa1a48518224aad703061a4"
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="4.8.3"
+ARG SWOOLE_VERSION="4.8.4"
 
 # Install dependencies
 RUN set -eux \
@@ -220,21 +220,20 @@ RUN set -eux \
     && true \
 \
 # Install swoole
-# NOTE: Temporarily disabled until supported. See https://github.com/swoole/swoole-src/issues/4508
-    # && mkdir /usr/src/php/ext/swoole \
-    # && curl -Lo swoole.tar.gz https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz \
-    # && tar xfz swoole.tar.gz --strip-components=1 -C /usr/src/php/ext/swoole \
-    # && docker-php-ext-configure swoole \
-    #         --enable-mysqlnd \
-    #         --enable-sockets \
-    #         --enable-openssl \
-    #         --enable-http2 \
-    #         --enable-swoole-json \
-    #         --enable-swoole-curl \
-    # && docker-php-ext-install -j$(nproc) swoole \
-    # && rm -rf swoole.tar.gz $HOME/.composer/*-old.phar \
-    # && docker-php-ext-enable swoole \
-    # && true \
+    && mkdir /usr/src/php/ext/swoole \
+    && curl -Lo swoole.tar.gz https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz \
+    && tar xfz swoole.tar.gz --strip-components=1 -C /usr/src/php/ext/swoole \
+    && docker-php-ext-configure swoole \
+            --enable-mysqlnd \
+            --enable-sockets \
+            --enable-openssl \
+            --enable-http2 \
+            --enable-swoole-json \
+            --enable-swoole-curl \
+    && docker-php-ext-install -j$(nproc) swoole \
+    && rm -rf swoole.tar.gz $HOME/.composer/*-old.phar \
+    && docker-php-ext-enable swoole \
+    && true \
 \
 # Install tidy
     && docker-php-ext-install -j$(nproc) tidy \
