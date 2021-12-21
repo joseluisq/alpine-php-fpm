@@ -52,7 +52,7 @@
 | xmlrpc     |   ✓    |      ? |      ? |
 | xsl        |   ✓    |      ✓ |      ✓ |
 | yaml       |   ✓    |      ✓ |      ✓ |
-| swoole     |   ✓    |      ✓ |      ? |
+| swoole     |   ✓    |      ✓ |      ✓ |
 | sysvmsg    |   ✓    |      ✓ |      ✓ |
 | sysvsem    |   ✓    |      ✓ |      ✓ |
 | sysvshm    |   ✓    |      ✓ |      ✓ |
