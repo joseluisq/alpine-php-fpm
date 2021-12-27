@@ -278,9 +278,9 @@ RUN set -eux \
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Copy PHP-FPM configuration files
-COPY php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
-COPY www.tmpl.conf /var/data/php-fpm/www.tmpl.conf
-COPY php.tmpl.ini /var/data/php-fpm/default-php.tmpl.ini
+COPY 7.4-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
+COPY 7.4-fpm/www.tmpl.conf /var/data/php-fpm/www.tmpl.conf
+COPY 7.4-fpm/php.tmpl.ini /var/data/php-fpm/default-php.tmpl.ini
 
 RUN set -eux \
 # PHP-FPM templates directory
@@ -308,8 +308,8 @@ RUN set -eux \
     && true
 
 # Copy util scripts
-COPY envsubst.sh /envsubst.sh
-COPY entrypoint.sh /entrypoint.sh
+COPY 7.4-fpm/envsubst.sh /envsubst.sh
+COPY 7.4-fpm/entrypoint.sh /entrypoint.sh
 
 STOPSIGNAL SIGQUIT
 
