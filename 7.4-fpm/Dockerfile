@@ -3,9 +3,6 @@ FROM php:7.4.27-fpm-alpine3.14
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v7.4 with essential extensions on top of Alpine Linux."
 
-# Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.1.14"
-
 # Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="4.8.4"
 
