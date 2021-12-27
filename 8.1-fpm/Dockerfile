@@ -3,9 +3,6 @@ FROM php:8.1.1-fpm-alpine3.14
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux."
 
-# Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.1.14"
-
 # Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="4.8.4"
 
@@ -272,12 +269,12 @@ RUN set -eux \
     && true
 
 # Install Composer
-COPY --from=composer:${COMPOSER_VERSION} /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Copy PHP-FPM configuration files
-COPY 8.1-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
-COPY 8.1-fpm/www.tmpl.conf /var/data/php-fpm/www.tmpl.conf
-COPY 8.1-fpm/php.tmpl.ini /var/data/php-fpm/default-php.tmpl.ini
+COPY php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
+COPY www.tmpl.conf /var/data/php-fpm/www.tmpl.conf
+COPY php.tmpl.ini /var/data/php-fpm/default-php.tmpl.ini
 
 RUN set -eux \
 # PHP-FPM templates directory
@@ -305,8 +302,8 @@ RUN set -eux \
     && true
 
 # Copy util scripts
-COPY 8.1-fpm/envsubst.sh /envsubst.sh
-COPY 8.1-fpm/entrypoint.sh /entrypoint.sh
+COPY envsubst.sh /envsubst.sh
+COPY entrypoint.sh /entrypoint.sh
 
 STOPSIGNAL SIGQUIT
 
