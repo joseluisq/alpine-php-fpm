@@ -1,3 +1,7 @@
+# Composer - https://hub.docker.com/_/composer
+ARG COMPOSER_VERSION="2.1.14"
+FROM composer:${COMPOSER_VERSION} as composer
+
 FROM php:8.0.14-fpm-alpine3.14
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
@@ -284,7 +288,8 @@ RUN set -eux \
     && true
 
 # Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+RUN composer --version
 
 # Copy PHP-FPM configuration files
 COPY 8.0-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
