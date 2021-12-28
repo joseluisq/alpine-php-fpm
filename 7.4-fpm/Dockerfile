@@ -1,11 +1,11 @@
+# Composer - https://hub.docker.com/_/composer
+ARG COMPOSER_VERSION="2.1.14"
+FROM composer:${COMPOSER_VERSION} as composer
+
 FROM php:7.4.27-fpm-alpine3.14
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v7.4 with essential extensions on top of Alpine Linux."
-
-# Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.1.14"
-ARG COMPOSER_SUM="d44a904520f9aaa766e8b4b05d2d9a766ad9a6f03fa1a48518224aad703061a4"
 
 # Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="4.8.4"
@@ -269,15 +269,6 @@ RUN set -eux \
     && apk del .build-deps \
     && true
 
-# Install Composer
-RUN set -eux \
-    && curl -LO "https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar" \
-    && echo "${COMPOSER_SUM}  composer.phar" | sha256sum -c - \
-    && chmod +x composer.phar \
-    && mv composer.phar /usr/local/bin/composer \
-    && composer --version \
-    && true
-
 RUN set -eux \
 # Fix php.ini settings for enabled extensions
     && chmod +x "$(php -r 'echo ini_get("extension_dir");')"/* \
@@ -286,6 +277,10 @@ RUN set -eux \
     && (find /usr/local/lib -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
     && (find /usr/local/sbin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
     && true
+
+# Install Composer
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+RUN composer --version
 
 # Copy PHP-FPM configuration files
 COPY 7.4-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
