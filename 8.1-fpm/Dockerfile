@@ -1,14 +1,14 @@
 # Composer - https://hub.docker.com/_/composer
-ARG COMPOSER_VERSION="2.1.14"
+ARG COMPOSER_VERSION="2.2.5"
 FROM composer:${COMPOSER_VERSION} as composer
 
-FROM php:8.1.1-fpm-alpine3.14
+FROM php:8.1.2-fpm-alpine3.15
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux."
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="4.8.4"
+ARG SWOOLE_VERSION="4.8.6"
 
 # Install dependencies
 RUN set -eux \
@@ -211,7 +211,7 @@ RUN set -eux \
     && true \
 \
 # Install sockets, sysvmsg, sysvsem, sysvshm (also needed by swoole)
-    && docker-php-ext-install -j$(nproc) \
+    && CFLAGS="${CFLAGS:=} -D_GNU_SOURCE" docker-php-ext-install -j$(nproc) \
         sockets \
         sysvmsg \
         sysvsem \
