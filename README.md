@@ -159,14 +159,9 @@ docker-compose -f examples/apache/docker-compose.yml up
 
 ## Contributions
 
-Feel free to send a [pull request](https://github.com/joseluisq/alpine-php-fpm/pulls) or file some [issue](https://github.com/joseluisq/alpine-php-fpm/issues).
-
-
-## Contributions
-
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in current work by you, as defined in the Apache-2.0 license, shall be dual licensed as described below, without any additional terms or conditions.
 
-Feel free to send some [Pull request](https://github.com/joseluisq/alpine-php-fpm/pulls) or [issue](https://github.com/joseluisq/alpine-php-fpm/issues).
+Feel free to send some [pull request](https://github.com/joseluisq/alpine-php-fpm/pulls) or file some [issue](https://github.com/joseluisq/alpine-php-fpm/issues).
 
 ## License
 
