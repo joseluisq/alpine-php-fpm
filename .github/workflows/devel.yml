@@ -10,7 +10,10 @@ jobs:
     name: PHP test
     strategy:
       matrix:
-        php: [7.4-fpm, 8.0-fpm, 8.1-fpm]
+        php:
+          - 7.4-fpm
+          - 8.0-fpm
+          - 8.1-fpm
         arch:
           - linux/amd64
           - linux/386

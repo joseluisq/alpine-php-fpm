@@ -2,13 +2,13 @@
 ARG COMPOSER_VERSION="2.2.6"
 FROM composer:${COMPOSER_VERSION} as composer
 
-FROM php:7.4.27-fpm-alpine3.15
+FROM php:7.4.28-fpm-alpine3.15
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v7.4 with essential extensions on top of Alpine Linux."
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="4.8.4"
+ARG SWOOLE_VERSION="4.8.7"
 
 # Install dependencies
 RUN set -eux \
@@ -217,7 +217,7 @@ RUN set -eux \
     && true \
 \
 # Install sockets, sysvmsg, sysvsem, sysvshm (also needed by swoole)
-    && CFLAGS="${CFLAGS:=} -D_GNU_SOURCE" docker-php-ext-install -j$(nproc) \
+    && docker-php-ext-install -j$(nproc) \
         sockets \
         sysvmsg \
         sysvsem \
