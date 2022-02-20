@@ -13,6 +13,9 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
         name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -37,5 +40,7 @@ jobs:
         with:
           push: true
           context: .
+          platforms: linux/amd64,linux/386
+          # platforms: linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6
           file: 8.1-fpm/Dockerfile
           tags: ${{ steps.meta.outputs.tags }}

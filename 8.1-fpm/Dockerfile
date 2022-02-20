@@ -1,8 +1,8 @@
 # Composer - https://hub.docker.com/_/composer
-ARG COMPOSER_VERSION="2.2.5"
+ARG COMPOSER_VERSION="2.2.6"
 FROM composer:${COMPOSER_VERSION} as composer
 
-FROM php:8.1.2-fpm-alpine3.15
+FROM php:8.1.3-fpm-alpine3.15
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux."
