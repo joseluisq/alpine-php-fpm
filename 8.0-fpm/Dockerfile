@@ -1,14 +1,14 @@
 # Composer - https://hub.docker.com/_/composer
-ARG COMPOSER_VERSION="2.2.6"
+ARG COMPOSER_VERSION="2.2.9"
 FROM composer:${COMPOSER_VERSION} as composer
 
-FROM php:8.0.16-fpm-alpine3.15
+FROM php:8.0.17-fpm-alpine3.15
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v8.0 with essential extensions on top of Alpine Linux."
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="4.8.7"
+ARG SWOOLE_VERSION="4.8.8"
 
 # Install dependencies
 RUN set -eux \
@@ -151,14 +151,7 @@ RUN set -eux \
     && true \
 \
 # Install imagick
-# Note: Build from source until the pecl release is ready for PHP 8
-    && git clone --depth=1 https://github.com/Imagick/imagick \
-    && cd imagick \
-    && phpize && ./configure \
-    && make -j$(nproc) \
-    && make install \
-    && cd ../ \
-    && rm -rf imagick \
+    && pecl install imagick \
     && docker-php-ext-enable imagick \
     && true \
 \
