@@ -1,14 +1,14 @@
 # Composer - https://hub.docker.com/_/composer
-ARG COMPOSER_VERSION="2.2.9"
+ARG COMPOSER_VERSION="2.3.5"
 FROM composer:${COMPOSER_VERSION} as composer
 
-FROM php:7.4.28-fpm-alpine3.15
+FROM php:7.4.29-fpm-alpine3.15
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v7.4 with essential extensions on top of Alpine Linux."
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="4.8.8"
+ARG SWOOLE_VERSION="4.8.9"
 
 # Install dependencies
 RUN set -eux \
