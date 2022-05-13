@@ -2,7 +2,7 @@
 ARG COMPOSER_VERSION="2.3.5"
 FROM composer:${COMPOSER_VERSION} as composer
 
-FROM php:8.0.18-fpm-alpine3.15
+FROM php:8.0.19-fpm-alpine3.15
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v8.0 with essential extensions on top of Alpine Linux."
