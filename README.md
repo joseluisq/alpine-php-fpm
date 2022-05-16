@@ -167,4 +167,4 @@ Feel free to send some [pull request](https://github.com/joseluisq/alpine-php-fp
 
 This work is primarily distributed under the terms of both the [MIT license](LICENSE-MIT) and the [Apache License (Version 2.0)](LICENSE-APACHE).
 
-© 2020-present [Jose Quintana](https://git.io/joseluisq)
+© 2020-present [Jose Quintana](https://joseluisq.net)

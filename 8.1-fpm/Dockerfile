@@ -2,13 +2,13 @@
 ARG COMPOSER_VERSION="2.3.5"
 FROM composer:${COMPOSER_VERSION} as composer
 
-FROM php:8.1.5-fpm-alpine3.15
+FROM php:8.1.6-fpm-alpine3.15
 
-LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
+LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux."
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="4.8.9"
+ARG SWOOLE_VERSION="4.8.10"
 
 # Install dependencies
 RUN set -eux \
