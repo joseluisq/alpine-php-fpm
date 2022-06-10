@@ -1,11 +1,11 @@
-# Composer - https://hub.docker.com/_/composer
-ARG COMPOSER_VERSION="2.3.5"
-FROM composer:${COMPOSER_VERSION} as composer
-
-FROM php:8.0.19-fpm-alpine3.15
+FROM php:8.0.20-fpm-alpine3.15
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v8.0 with essential extensions on top of Alpine Linux."
+
+# Composer - https://getcomposer.org/download/
+ARG COMPOSER_VERSION="2.3.7"
+ARG COMPOSER_SUM="3f2d46787d51070f922bf991aa08324566f726f186076c2a5e4e8b01a8ea3fd0"
 
 # Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="4.8.10"
@@ -281,8 +281,13 @@ RUN set -eux \
     && true
 
 # Install Composer
-COPY --from=composer /usr/bin/composer /usr/local/bin/composer
-RUN composer --version
+RUN set -eux \
+    && curl -LO "https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar" \
+    && echo "${COMPOSER_SUM}  composer.phar" | sha256sum -c - \
+    && chmod +x composer.phar \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer --version \
+    && true
 
 # Copy PHP-FPM configuration files
 COPY 8.0-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
