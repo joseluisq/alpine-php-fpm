@@ -59,7 +59,7 @@
 | zip        |   ✓    |      ✓ |      ✓ |
 | &nbsp;     | &nbsp; | &nbsp; | &nbsp; |
 | **Others** |        |        |        |
-| composer   |  v2.1  |   v2.2 |   v2.2 |
+| composer   |  v2.4  |   v2.4 |   v2.4 |
 
 **Footnotes**
 
