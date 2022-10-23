@@ -1,0 +1,11 @@
+version: '3'
+services:
+  php-fpm:
+    ports:
+        - '8088:80'
+    image: 'joseluisq/php-fpm:8.0'
+    command: php -S 0.0.0.0:80 -t .
+    container_name: php-fpm
+    working_dir: /var/www/html
+    volumes:
+        - .:/var/www/html
