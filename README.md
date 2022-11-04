@@ -1,4 +1,4 @@
-# Alpine PHP-FPM [![CI](https://github.com/joseluisq/alpine-php-fpm/workflows/CI/badge.svg)](https://github.com/joseluisq/alpine-php-fpm/actions?query=workflow%3ACI) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/)
+# Alpine PHP-FPM [![Build Status](https://api.cirrus-ci.com/github/joseluisq/alpine-php-fpm.svg)](https://cirrus-ci.com/github/joseluisq/alpine-php-fpm) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/)
 
 > [PHP-FPM](https://www.php.net/manual/en/install.fpm.php) (PHP [7.4](https://www.php.net/ChangeLog-7.php#PHP_7_4), [8.0](https://www.php.net/ChangeLog-8.php#PHP_8_0) and [8.1](https://www.php.net/ChangeLog-8.php#PHP_8_1)) with essential extensions on top of [Alpine Linux 3.15](https://alpinelinux.org/).
 

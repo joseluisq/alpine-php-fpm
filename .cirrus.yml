@@ -1,0 +1,46 @@
+task:
+  only_if: $CIRRUS_TAG == ''
+  timeout_in: 120m
+  matrix:
+    - name: linux-amd64
+      env:
+        LINUX_ARCH: amd64
+      compute_engine_instance:
+        image_project: cirrus-images
+        image: family/docker-builder
+        platform: linux
+        cpu: 4
+        memory: 6G
+
+    - name: linux-arm64
+      env:
+        LINUX_ARCH: arm64
+      compute_engine_instance:
+        image_project: cirrus-images
+        image: family/docker-builder-arm64
+        architecture: arm64
+        platform: linux
+        cpu: 4
+        memory: 6G
+
+  matrix:
+    - env:
+        PHP_VERSION: 7.4
+    - env:
+        PHP_VERSION: 8.0
+    - env:
+        PHP_VERSION: 8.1
+
+  docker_cache:
+    folder: /tmp/.buildx-cache
+    fingerprint_key: php-${PHP_VERSION}-${LINUX_ARCH}-key
+  build_script: |
+    docker buildx create --use
+    docker buildx build \
+      -t joseluisq/php-fpm:${PHP_VERSION} \
+      --cache-from=type=local,src=/tmp/.buildx-cache \
+      --cache-to=type=local,dest=/tmp/.buildx-cache-new,mode=max \
+      -f ${PHP_VERSION}-fpm/Dockerfile .
+  cache_swap_script: |
+      rm -rf /tmp/.buildx-cache
+      mv /tmp/.buildx-cache-new /tmp/.buildx-cache
