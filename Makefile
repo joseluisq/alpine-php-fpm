@@ -1,3 +1,13 @@
+REPOSITORY ?= joseluisq
+TAG ?= latest
+
+
+build:
+	docker build \
+		-t $(REPOSITORY)/php-fpm:$(TAG) \
+		-f Dockerfile .
+.PHONY: build
+
 dev:
 	@php -S localhost:8088 -t .
 .PHONY: dev
