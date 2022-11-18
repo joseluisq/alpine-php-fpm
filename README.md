@@ -1,6 +1,6 @@
 # Alpine PHP-FPM [![Build Status](https://api.cirrus-ci.com/github/joseluisq/alpine-php-fpm.svg)](https://cirrus-ci.com/github/joseluisq/alpine-php-fpm) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/)
 
-> [PHP-FPM](https://www.php.net/manual/en/install.fpm.php) (PHP [7.4](https://www.php.net/ChangeLog-7.php#PHP_7_4), [8.0](https://www.php.net/ChangeLog-8.php#PHP_8_0) and [8.1](https://www.php.net/ChangeLog-8.php#PHP_8_1)) with essential extensions on top of [Alpine Linux 3.15](https://alpinelinux.org/).
+> Lightweight & optimized [PHP-FPM](https://www.php.net/manual/en/install.fpm.php) (PHP [7.4](https://www.php.net/ChangeLog-7.php#PHP_7_4), [8.0](https://www.php.net/ChangeLog-8.php#PHP_8_0) and [8.1](https://www.php.net/ChangeLog-8.php#PHP_8_1)) Multi-Arch Docker images (`x86_64`/`arm`/`arm64`) with essential extensions on top of latest [Alpine Linux](https://alpinelinux.org/).
 
 ### PHP 7.4
 
@@ -65,9 +65,17 @@
 
 (?) It means that this extension is obsolete/unmaintained/discourage or simply is not supported yet.
 
-## Usage
+### List all extensions included
 
-🐳 Available on Docker Hub → [hub.docker.com/r/joseluisq/php-fpm](https://hub.docker.com/r/joseluisq/php-fpm/)
+If you want to know the whole list of the included extensions then use `php -m` as follow.
+
+```
+docker run --rm joseluisq/php-fpm:8.1 php -m
+```
+
+Or use `php -i` to get a more detailed information.
+
+## Usage
 
 ```sh
 docker pull joseluisq/php-fpm:7.4
@@ -75,7 +83,10 @@ docker pull joseluisq/php-fpm:7.4
 docker pull joseluisq/php-fpm:8.0
 # Or
 docker pull joseluisq/php-fpm:8.1
+
 ```
+
+🐳 Available on Docker Hub → [hub.docker.com/r/joseluisq/php-fpm](https://hub.docker.com/r/joseluisq/php-fpm/)
 
 ### Dockerfile
 
@@ -89,7 +100,7 @@ FROM joseluisq/php-fpm:8.1
 
 ### Run a container
 
-To give it a quick try just execute any of those commands and then navigate to [localhost:8088](http://localhost:8088)
+To give a Docker image a quick try, just execute any of those commands and then navigate to [localhost:8088](http://localhost:8088)
 
 ```sh
 docker run --rm -p 8088:80 joseluisq/php-fpm:8.1 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
@@ -145,13 +156,13 @@ Settings replaced into `/usr/local/etc/php/conf.d/default-php.ini` file (`php.in
 
 [docker-compose](https://docs.docker.com/compose/) examples for [Nginx](https://hub.docker.com/_/nginx) and [Apache](https://hub.docker.com/_/httpd) servers can be found under the [./examples](./examples) directory.
 
-### Nginx
+### Nginx example
 
 ```sh
 docker-compose -f examples/nginx/docker-compose.yml up
 ```
 
-### Apache
+### Apache example
 
 ```sh
 docker-compose -f examples/apache/docker-compose.yml up
