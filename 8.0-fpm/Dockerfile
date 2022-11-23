@@ -29,6 +29,7 @@ RUN set -eux \
         libmcrypt \
         libpng \
         libpq \
+        librdkafka \
         libssh2 \
         libstdc++ \
         libtool \
@@ -39,6 +40,7 @@ RUN set -eux \
         rabbitmq-c \
         tidyhtml \
         tzdata \
+        unixodbc \
         vips \
         yaml
 
@@ -55,6 +57,7 @@ RUN set -eux \
         curl-dev \
         freetds-dev \
         freetype-dev \
+        g++ \
         gcc \
         gettext-dev \
         git \
@@ -67,6 +70,7 @@ RUN set -eux \
         libjpeg-turbo-dev \
         libmcrypt-dev \
         libpng-dev \
+        librdkafka-dev \
         libssh2-dev \
         libwebp-dev \
         libxml2-dev \
@@ -79,6 +83,7 @@ RUN set -eux \
         postgresql-dev \
         rabbitmq-c-dev \
         tidyhtml-dev \
+        unixodbc-dev \
         vips-dev \
         yaml-dev \
         zlib-dev \
@@ -97,7 +102,7 @@ RUN set -eux \
 ################################
 \
 # Install gd
-    && ln -s /usr/lib/x86_64-linux-gnu/libXpm.* /usr/lib/ \
+    && ln -s /usr/lib/$(apk --print-arch)-linux-gnu/libXpm.* /usr/lib/ \
     && docker-php-ext-configure gd \
         --enable-gd \
         --with-webp \
@@ -183,6 +188,10 @@ RUN set -eux \
     && docker-php-ext-enable oauth \
     && true \
 \
+# Install opcache
+    && docker-php-ext-install -j$(nproc) opcache \
+    && true \
+\
 # Install pdo_mysql
     && docker-php-ext-configure pdo_mysql --with-zlib-dir=/usr \
     && docker-php-ext-install -j$(nproc) pdo_mysql \
@@ -204,9 +213,29 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) pgsql \
     && true \
 \
+# Install sqlsrv
+    && pecl install sqlsrv \
+    && docker-php-ext-enable sqlsrv \
+    && true \
+\
+# Install pdo_sqlsrv
+    && pecl install pdo_sqlsrv \
+    && docker-php-ext-enable pdo_sqlsrv \
+    && true \
+\
 # Install psr
     && pecl install psr \
     && docker-php-ext-enable psr \
+    && true \
+\
+# Install redis
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && true \
+\
+# Install rdkafka
+    && pecl install rdkafka \
+    && docker-php-ext-enable rdkafka \
     && true \
 \
 # Install soap
