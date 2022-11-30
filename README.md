@@ -45,6 +45,7 @@
 | pdo_pgsql  |   ✓    |      ✓ |      ✓ |
 | pdo_sqlsrv |   ✓    |      ✓ |      ✓ |
 | pgsql      |   ✓    |      ✓ |      ✓ |
+| phalcon    |   ✓    |      ✓ |      ✓ |
 | psr        |   ✓    |      ✓ |      ✓ |
 | redis      |   ✓    |      ✓ |      ✓ |
 | rdkafka    |   ✓    |      ✓ |      ✓ |
