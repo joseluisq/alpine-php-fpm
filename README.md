@@ -43,7 +43,7 @@
 | pdo_dblib  |   ✓    |      ✓ |      ✓ |
 | pdo_mysql  |   ✓    |      ✓ |      ✓ |
 | pdo_pgsql  |   ✓    |      ✓ |      ✓ |
-| pdo_sqlsrv |   ✓    |      ✓ |      ✓ |
+| pdo_sqlsrv |   ✓    |      ✓ |      ✓ <sup>(64-bit only)</sub> |
 | pgsql      |   ✓    |      ✓ |      ✓ |
 | phalcon    |   ✓    |      ✓ |      ✓ |
 | psr        |   ✓    |      ✓ |      ✓ |
@@ -51,7 +51,7 @@
 | rdkafka    |   ✓    |      ✓ |      ✓ |
 | soap       |   ✓    |      ✓ |      ✓ |
 | sockets    |   ✓    |      ✓ |      ✓ |
-| sqlsrv     |   ✓    |      ✓ |      ✓ |
+| sqlsrv     |   ✓    |      ✓ |      ✓ <sup>(64-bit only)</sub> |
 | ssh2       |   ✓    |      ✓ |      ✓ |
 | swoole     |   ✓    |      ✓ |      ✓ |
 | sysvmsg    |   ✓    |      ✓ |      ✓ |

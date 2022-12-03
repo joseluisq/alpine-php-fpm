@@ -13,8 +13,8 @@ task:
         image_project: cirrus-images
         image: family/docker-builder
         platform: linux
-        cpu: 4
-        memory: 4G
+        cpu: 8
+        memory: 8G
     - name: linux-386
       env:
         LINUX_ARCH: 386
@@ -23,8 +23,8 @@ task:
         image_project: cirrus-images
         image: family/docker-builder
         platform: linux
-        cpu: 4
-        memory: 4G
+        cpu: 8
+        memory: 8G
     - name: linux-arm64
       env:
         LINUX_ARCH: arm64
@@ -42,8 +42,8 @@ task:
         LINUX_PLATFORM: linux/arm/v6
       compute_engine_instance:
         image_project: cirrus-images
-        image: family/docker-builder-arm64
-        architecture: arm64
+        image: family/docker-builder
+        architecture: amd64
         platform: linux
         cpu: 8
         memory: 8G
@@ -53,8 +53,8 @@ task:
         LINUX_PLATFORM: linux/arm/v7
       compute_engine_instance:
         image_project: cirrus-images
-        image: family/docker-builder-arm64
-        architecture: arm64
+        image: family/docker-builder
+        architecture: amd64
         platform: linux
         cpu: 8
         memory: 8G

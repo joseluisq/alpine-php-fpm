@@ -216,15 +216,17 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) pgsql \
     && true \
 \
-# Install sqlsrv
-    && pecl install sqlsrv \
-    && docker-php-ext-enable sqlsrv \
-    && true \
-\
-# Install pdo_sqlsrv
-    && pecl install pdo_sqlsrv \
-    && docker-php-ext-enable pdo_sqlsrv \
-    && true \
+# ONLY 64-bit targets
+    && if [ "$(uname -m)" = "x86_64" ] || [ "$(uname -m)" = "aarch64" ]; then \
+    # Install sqlsrv
+        pecl install sqlsrv; \
+        docker-php-ext-enable sqlsrv; \
+        true; \
+    # Install pdo_sqlsrv
+        pecl install pdo_sqlsrv; \
+        docker-php-ext-enable pdo_sqlsrv; \
+        true; \
+    fi \
 \
 # Install psr
     && pecl install psr \
