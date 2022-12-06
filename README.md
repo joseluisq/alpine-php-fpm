@@ -1,10 +1,6 @@
-# Alpine PHP-FPM [![devel](https://github.com/joseluisq/alpine-php-fpm/workflows/devel/badge.svg)](https://github.com/joseluisq/alpine-php-fpm/actions?query=workflow%3Adevel) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/)
+# Alpine PHP-FPM [![devel](https://github.com/joseluisq/alpine-php-fpm/workflows/devel/badge.svg)](https://github.com/joseluisq/alpine-php-fpm/actions?query=workflow%3Adevel) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/)
 
-> Lightweight & optimized [PHP-FPM](https://www.php.net/manual/en/install.fpm.php) (PHP [7.4](https://www.php.net/ChangeLog-7.php#PHP_7_4), [8.0](https://www.php.net/ChangeLog-8.php#PHP_8_0) and [8.1](https://www.php.net/ChangeLog-8.php#PHP_8_1)) Multi-Arch Docker images (`x86_64`/`arm`/`arm64`) with essential extensions on top of latest [Alpine Linux](https://alpinelinux.org/).
-
-### PHP 7.4
-
-![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/7.4) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/7.4)
+> Lightweight & optimized [PHP-FPM](https://www.php.net/manual/en/install.fpm.php) (PHP [8.0](https://www.php.net/ChangeLog-8.php#PHP_8_0) and [8.1](https://www.php.net/ChangeLog-8.php#PHP_8_1)) Multi-Arch Docker images (`x86_64`/`arm`/`arm64`) with essential extensions on top of latest [Alpine Linux](https://alpinelinux.org/).
 
 ### PHP 8.0
 
@@ -20,52 +16,51 @@
 
 ### Additional extensions
 
-| Extension  |  v7.4  |   v8.0 |   v8.1 |
-| ---------- | :----: | -----: | -----: |
-| amqp       |   ✓    |      ✓ |      ✓ |
-| apcu       |   ✓    |      ✓ |      ✓ |
-| bcmath     |   ✓    |      ✓ |      ✓ |
-| bz2        |   ✓    |      ✓ |      ✓ |
-| exif       |   ✓    |      ✓ |      ✓ |
-| gd         |   ✓    |      ✓ |      ✓ |
-| gettext    |   ✓    |      ✓ |      ✓ |
-| gmp        |   ✓    |      ✓ |      ✓ |
-| imagick    |   ✓    |      ✓ |      ✓ |
-| imap       |   ✓    |      ✓ |      ✓ |
-| intl       |   ✓    |      ✓ |      ✓ |
-| mcrypt     |   ✓    |      ✓ |      ? |
-| memcache   |   ✓    |      ✓ |      ✓ |
-| mongodb    |   ✓    |      ✓ |      ✓ |
-| mysqli     |   ✓    |      ✓ |      ✓ |
-| oauth      |   ✓    |      ✓ |      ✓ |
-| opcache    |   ✓    |      ✓ |      ✓ |
-| pcntl      |   ✓    |      ✓ |      ✓ |
-| pdo_dblib  |   ✓    |      ✓ |      ✓ |
-| pdo_mysql  |   ✓    |      ✓ |      ✓ |
-| pdo_pgsql  |   ✓    |      ✓ |      ✓ |
-| pdo_sqlsrv |   ✓    |      ✓ |      ✓ <sup>(64-bit only)</sub> |
-| pgsql      |   ✓    |      ✓ |      ✓ |
-| phalcon    |   ✓    |      ✓ |      ✓ |
-| psr        |   ✓    |      ✓ |      ✓ |
-| redis      |   ✓    |      ✓ |      ✓ |
-| rdkafka    |   ✓    |      ✓ |      ✓ |
-| soap       |   ✓    |      ✓ |      ✓ |
-| sockets    |   ✓    |      ✓ |      ✓ |
-| sqlsrv     |   ✓    |      ✓ |      ✓ <sup>(64-bit only)</sub> |
-| ssh2       |   ✓    |      ✓ |      ✓ |
-| swoole     |   ✓    |      ✓ |      ✓ |
-| sysvmsg    |   ✓    |      ✓ |      ✓ |
-| sysvsem    |   ✓    |      ✓ |      ✓ |
-| sysvshm    |   ✓    |      ✓ |      ✓ |
-| tidy       |   ✓    |      ✓ |      ✓ |
-| vips       |   ✓    |      ✓ |      ✓ |
-| xmlrpc     |   ✓    |      ? |      ? |
-| xsl        |   ✓    |      ✓ |      ✓ |
-| yaml       |   ✓    |      ✓ |      ✓ |
-| zip        |   ✓    |      ✓ |      ✓ |
-| &nbsp;     | &nbsp; | &nbsp; | &nbsp; |
-| **Others** |        |        |        |
-| composer   |  v2.4  |   v2.4 |   v2.4 |
+| Extension  |   v8.0 |   v8.1 |
+| ---------- | -----: | -----: |
+| amqp       |      ✓ |      ✓ |
+| apcu       |      ✓ |      ✓ |
+| bcmath     |      ✓ |      ✓ |
+| bz2        |      ✓ |      ✓ |
+| exif       |      ✓ |      ✓ |
+| gd         |      ✓ |      ✓ |
+| gettext    |      ✓ |      ✓ |
+| gmp        |      ✓ |      ✓ |
+| imagick    |      ✓ |      ✓ |
+| imap       |      ✓ |      ✓ |
+| intl       |      ✓ |      ✓ |
+| mcrypt     |      ✓ |      ? |
+| memcache   |      ✓ |      ✓ |
+| mongodb    |      ✓ |      ✓ |
+| mysqli     |      ✓ |      ✓ |
+| oauth      |      ✓ |      ✓ |
+| opcache    |      ✓ |      ✓ |
+| pcntl      |      ✓ |      ✓ |
+| pdo_dblib  |      ✓ |      ✓ |
+| pdo_mysql  |      ✓ |      ✓ |
+| pdo_pgsql  |      ✓ |      ✓ |
+| pdo_sqlsrv |      ✓ |      ✓ <sup>(64-bit only)</sub> |
+| pgsql      |      ✓ |      ✓ |
+| phalcon    |      ? |        |
+| psr        |      ✓ |      ✓ |
+| redis      |      ✓ |      ✓ |
+| rdkafka    |      ✓ |      ✓ |
+| soap       |      ✓ |      ✓ |
+| sockets    |      ✓ |      ✓ |
+| sqlsrv     |      ✓ |      ✓ <sup>(64-bit only)</sub> |
+| ssh2       |      ✓ |      ✓ |
+| swoole     |      ✓ |      ✓ |
+| sysvmsg    |      ✓ |      ✓ |
+| sysvsem    |      ✓ |      ✓ |
+| sysvshm    |      ✓ |      ✓ |
+| tidy       |      ✓ |      ✓ |
+| vips       |      ✓ |      ✓ |
+| xsl        |      ✓ |      ✓ |
+| yaml       |      ✓ |      ✓ |
+| zip        |      ✓ |      ✓ |
+| &nbsp;     | &nbsp; | &nbsp; |
+| **Others** |        |        |
+| composer   |   v2.4 |   v2.4 |
 
 **Footnotes**
 
@@ -84,8 +79,6 @@ Or use `php -i` to get a more detailed information.
 ## Usage
 
 ```sh
-docker pull joseluisq/php-fpm:7.4
-# Or
 docker pull joseluisq/php-fpm:8.0
 # Or
 docker pull joseluisq/php-fpm:8.1
@@ -97,8 +90,6 @@ docker pull joseluisq/php-fpm:8.1
 ### Dockerfile
 
 ```Dockerfile
-FROM joseluisq/php-fpm:7.4
-# Or
 FROM joseluisq/php-fpm:8.0
 # Or
 FROM joseluisq/php-fpm:8.1
@@ -112,8 +103,6 @@ To give a Docker image a quick try, just execute any of those commands and then 
 docker run --rm -p 8088:80 joseluisq/php-fpm:8.1 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
 # Or
 docker run --rm -p 8088:80 joseluisq/php-fpm:8.0 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
-# Or
-docker run --rm -p 8088:80 joseluisq/php-fpm:7.4 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
 ```
 
 [View Docker Compose Examples](#docker-compose-examples)
@@ -176,7 +165,7 @@ docker-compose -f examples/apache/docker-compose.yml up
 
 ## Contributions
 
-Unless you explideveltly state otherwise, any contribution intentionally submitted for inclusion in current work by you, as defined in the Apache-2.0 license, shall be dual licensed as described below, without any additional terms or conditions.
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in current work by you, as defined in the Apache-2.0 license, shall be dual licensed as described below, without any additional terms or conditions.
 
 Feel free to send some [pull request](https://github.com/joseluisq/alpine-php-fpm/pulls) or file some [issue](https://github.com/joseluisq/alpine-php-fpm/issues).
 

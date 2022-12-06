@@ -12,11 +12,6 @@ dev:
 	@php -S localhost:8088 -t .
 .PHONY: dev
 
-buildx-fpm-74:
-	@echo "Building PHP 7.4 Docker images (linux/amd64,linux/arm64)..."
-	@docker buildx build -t joseluisq/php-fpm:7.4 --platform linux/amd64,linux/arm64 -f 7.4-fpm/Dockerfile .
-.PHONY: buildx-fpm-74
-
 buildx-fpm-80:
 	@echo "Building PHP 8.0 Docker images (linux/amd64,linux/arm64)..."
 	@docker buildx build -t joseluisq/php-fpm:8.0 --platform linux/amd64,linux/arm64 -f 8.0-fpm/Dockerfile .
