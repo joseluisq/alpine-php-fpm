@@ -1,0 +1,145 @@
+name: release-v8.0
+on:
+  push:
+    tags:
+    - 'v8.0.[0-9]+'
+    - 'v8.0.[0-9]+-beta.[0-9]+'
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        build:
+          - amd64
+          - 386
+          - arm64
+          - armv7
+          - armv6
+        include:
+          - build: amd64
+            platform: linux/amd64
+          - build: 386
+            platform: linux/386
+          - build: arm64
+            platform: linux/arm64
+          - build: armv6
+            platform: linux/arm/v6
+          - build: armv7
+            platform: linux/arm/v7
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: joseluisq/php-fpm
+          flavor: |
+            latest=false
+          tags: |
+            type=semver,pattern={{major}}.{{minor}}-${{ matrix.build }}
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v2 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          context: .
+          platforms: ${{ matrix.platform }}
+          file: 8.0-fpm/Dockerfile
+          tags: ${{ steps.meta.outputs.tags }}
+
+  docker-manifest:
+    needs: docker-build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set envs
+        run: |
+          github_ref=${GITHUB_REF#refs/tags/}
+          SEMVER=${github_ref##*v}
+          echo "SEMVER=${SEMVER}" >> $GITHUB_ENV
+          echo "SEMVER_MAJOR=${SEMVER%.*.*}" >> $GITHUB_ENV
+          echo "SEMVER_MINOR=${SEMVER%.*}" >> $GITHUB_ENV
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Push latest per version
+        run: |
+          docker manifest create \
+            joseluisq/php-fpm:$SEMVER_MINOR \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-amd64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-386 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-arm64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
+          docker manifest push joseluisq/php-fpm:$SEMVER_MINOR
+      # -
+      #   name: Push latest (PHP 8.1+)
+      #   run: |
+      #     docker manifest create \
+      #       joseluisq/php-fpm:latest \
+      #         --amend joseluisq/php-fpm:$SEMVER_MINOR-amd64 \
+      #         --amend joseluisq/php-fpm:$SEMVER_MINOR-386 \
+      #         --amend joseluisq/php-fpm:$SEMVER_MINOR-arm64 \
+      #         --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
+      #         --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
+      #     docker manifest push joseluisq/php-fpm:latest
+      -
+        name: Pull all images
+        run: |
+          docker pull joseluisq/php-fpm:$SEMVER_MINOR-amd64
+          docker pull joseluisq/php-fpm:$SEMVER_MINOR-386
+          docker pull joseluisq/php-fpm:$SEMVER_MINOR-arm64
+          docker pull joseluisq/php-fpm:$SEMVER_MINOR-armv6
+          docker pull joseluisq/php-fpm:$SEMVER_MINOR-armv7
+      -
+        name: Push semver alias
+        run: |
+          docker manifest create \
+            joseluisq/php-fpm:${SEMVER} \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-amd64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-386 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-arm64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
+          docker manifest push joseluisq/php-fpm:${SEMVER}
+      -
+        name: Push semver major alias
+        run: |
+          docker manifest create \
+            joseluisq/php-fpm:${SEMVER_MAJOR} \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-amd64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-386 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-arm64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
+          docker manifest push joseluisq/php-fpm:${SEMVER_MAJOR}
+      -
+        name: Push semver minor alias
+        run: |
+          docker manifest create \
+            joseluisq/php-fpm:${SEMVER_MINOR} \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-amd64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-386 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-arm64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
+          docker manifest push joseluisq/php-fpm:${SEMVER_MINOR}

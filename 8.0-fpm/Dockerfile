@@ -1,4 +1,4 @@
-FROM php:8.0.25-fpm-alpine3.16
+FROM php:8.0.26-fpm-alpine3.16
 
 LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
     Description="PHP-FPM v8.0 with essential extensions on top of Alpine Linux."
@@ -22,6 +22,7 @@ RUN set -eux \
         icu-libs \
         imagemagick \
         imap \
+        libexecinfo \
         libffi \
         libgmpxx \
         libintl \
@@ -67,6 +68,7 @@ RUN set -eux \
         imap-dev \
         krb5-dev \
         libc-dev \
+        libexecinfo-dev \
         libjpeg-turbo-dev \
         libmcrypt-dev \
         libpng-dev \
@@ -205,11 +207,12 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) pcntl \
     && true \
 \
-# Install phalcon
-    && pecl install phalcon \
-    && docker-php-ext-enable phalcon \
-    && true \
-\
+# TEMPORARILY DDISABLED: https://github.com/joseluisq/alpine-php-fpm/issues/16#issuecomment-1338648898
+#  Install phalcon
+#     && pecl install phalcon \
+#     && docker-php-ext-enable phalcon \
+#     && true \
+# \
 # Install pdo_pgsql
     && docker-php-ext-install -j$(nproc) pdo_pgsql \
     && true \
