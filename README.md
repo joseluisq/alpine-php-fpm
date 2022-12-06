@@ -1,4 +1,4 @@
-# Alpine PHP-FPM [![Build Status](https://api.cirrus-ci.com/github/joseluisq/alpine-php-fpm.svg)](https://cirrus-ci.com/github/joseluisq/alpine-php-fpm) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/)
+# Alpine PHP-FPM [![devel](https://github.com/joseluisq/alpine-php-fpm/workflows/devel/badge.svg)](https://github.com/joseluisq/alpine-php-fpm/actions?query=workflow%3Adevel) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/) [![Docker Image](https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg)](https://hub.docker.com/r/joseluisq/php-fpm/)
 
 > Lightweight & optimized [PHP-FPM](https://www.php.net/manual/en/install.fpm.php) (PHP [7.4](https://www.php.net/ChangeLog-7.php#PHP_7_4), [8.0](https://www.php.net/ChangeLog-8.php#PHP_8_0) and [8.1](https://www.php.net/ChangeLog-8.php#PHP_8_1)) Multi-Arch Docker images (`x86_64`/`arm`/`arm64`) with essential extensions on top of latest [Alpine Linux](https://alpinelinux.org/).
 
@@ -176,7 +176,7 @@ docker-compose -f examples/apache/docker-compose.yml up
 
 ## Contributions
 
-Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in current work by you, as defined in the Apache-2.0 license, shall be dual licensed as described below, without any additional terms or conditions.
+Unless you explideveltly state otherwise, any contribution intentionally submitted for inclusion in current work by you, as defined in the Apache-2.0 license, shall be dual licensed as described below, without any additional terms or conditions.
 
 Feel free to send some [pull request](https://github.com/joseluisq/alpine-php-fpm/pulls) or file some [issue](https://github.com/joseluisq/alpine-php-fpm/issues).
 
