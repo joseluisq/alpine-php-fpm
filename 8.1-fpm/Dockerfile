@@ -1,4 +1,4 @@
-FROM php:8.1.12-fpm-alpine3.16
+FROM php:8.1.13-fpm-alpine3.16
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux."
@@ -9,6 +9,9 @@ ARG COMPOSER_SUM="c252c2a2219956f88089ffc242b42c8cb9300a368fd3890d63940e4fc96523
 
 # Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="4.8.12"
+
+# Phalcon - https://github.com/phalcon/cphalcon
+ARG PHALCON_VERSION="5.1.2"
 
 # Install dependencies
 RUN set -eux \
@@ -22,6 +25,7 @@ RUN set -eux \
         icu-libs \
         imagemagick \
         imap \
+        libexecinfo \
         libffi \
         libgmpxx \
         libintl \
@@ -66,6 +70,7 @@ RUN set -eux \
         imap-dev \
         krb5-dev \
         libc-dev \
+        libexecinfo-dev \
         libjpeg-turbo-dev \
         libpng-dev \
         librdkafka-dev \
@@ -198,7 +203,9 @@ RUN set -eux \
     && true \
 \
 # Install phalcon
-    && pecl install phalcon \
+    && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git \
+    && cd cphalcon/build \
+    && sh ./install \
     && docker-php-ext-enable phalcon \
     && true \
 \
