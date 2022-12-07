@@ -18,15 +18,16 @@ jobs:
           - armv6
         include:
           - build: amd64
-            platform: linux/amd64
+            arch: linux/amd64
           - build: 386
-            platform: linux/386
+            arch: linux/386
           - build: arm64
-            platform: linux/arm64
+            arch: linux/arm64
           - build: armv6
-            platform: linux/arm/v6
+            arch: linux/arm/v6
           - build: armv7
-            platform: linux/arm/v7
+            arch: linux/arm/v7
+    name: PHP 8.0 (${{ matrix.build }})
     steps:
       -
         name: Checkout
@@ -59,7 +60,7 @@ jobs:
         with:
           push: true
           context: .
-          platforms: ${{ matrix.platform }}
+          platforms: ${{ matrix.arch }}
           file: 8.0-fpm/Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
 

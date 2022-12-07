@@ -27,7 +27,7 @@ jobs:
             arch: linux/arm/v6
           - build: armv7
             arch: linux/arm/v7
-    name: Docker build PHP 8.1 (${{ matrix.build }})
+    name: PHP 8.1 (${{ matrix.build }})
     steps:
       -
         name: Checkout
