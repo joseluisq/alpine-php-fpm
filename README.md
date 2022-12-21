@@ -10,57 +10,61 @@
 
 ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.1) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.1)
 
+### PHP 8.2
+
+![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.2) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.2)
+
 ### Built-in extensions
 
 `curl`, `ftp`, `hash` (`mhash`), `libedit`, `libsodium`, `mbstring`, `mysqlnd`, `openssl`, `password-argon2`, `pdo-sqlite`, `pear`, `sqlite3`, `zlib`
 
 ### Additional extensions
 
-| Extension  |   v8.0 |   v8.1 |
-| ---------- | -----: | -----: |
-| amqp       |      ✓ |      ✓ |
-| apcu       |      ✓ |      ✓ |
-| bcmath     |      ✓ |      ✓ |
-| bz2        |      ✓ |      ✓ |
-| exif       |      ✓ |      ✓ |
-| gd         |      ✓ |      ✓ |
-| gettext    |      ✓ |      ✓ |
-| gmp        |      ✓ |      ✓ |
-| imagick    |      ✓ |      ✓ |
-| imap       |      ✓ |      ✓ |
-| intl       |      ✓ |      ✓ |
-| mcrypt     |      ✓ |      ? |
-| memcache   |      ✓ |      ✓ |
-| mongodb    |      ✓ |      ✓ |
-| mysqli     |      ✓ |      ✓ |
-| oauth      |      ✓ |      ✓ |
-| opcache    |      ✓ |      ✓ |
-| pcntl      |      ✓ |      ✓ |
-| pdo_dblib  |      ✓ |      ✓ |
-| pdo_mysql  |      ✓ |      ✓ |
-| pdo_pgsql  |      ✓ |      ✓ |
-| pdo_sqlsrv |      ✓ |      ✓ <sup>(64-bit only)</sub> |
-| pgsql      |      ✓ |      ✓ |
-| phalcon    |      ? |      ✓ |
-| psr        |      ✓ |      ✓ |
-| redis      |      ✓ |      ✓ |
-| rdkafka    |      ✓ |      ✓ |
-| soap       |      ✓ |      ✓ |
-| sockets    |      ✓ |      ✓ |
-| sqlsrv     |      ✓ |      ✓ <sup>(64-bit only)</sub> |
-| ssh2       |      ✓ |      ✓ |
-| swoole     |      ✓ |      ✓ |
-| sysvmsg    |      ✓ |      ✓ |
-| sysvsem    |      ✓ |      ✓ |
-| sysvshm    |      ✓ |      ✓ |
-| tidy       |      ✓ |      ✓ |
-| vips       |      ✓ |      ✓ |
-| xsl        |      ✓ |      ✓ |
-| yaml       |      ✓ |      ✓ |
-| zip        |      ✓ |      ✓ |
-| &nbsp;     | &nbsp; | &nbsp; |
-| **Others** |        |        |
-| composer   |   v2.4 |   v2.4 |
+| Extension  |   v8.0 |   v8.1 |   v8.2 |
+| ---------- | -----: | -----: | -----: |
+| amqp       |      ✓ |      ✓ |        ✓ |
+| apcu       |      ✓ |      ✓ |        ✓ |
+| bcmath     |      ✓ |      ✓ |        ✓ |
+| bz2        |      ✓ |      ✓ |        ✓ |
+| exif       |      ✓ |      ✓ |        ✓ |
+| gd         |      ✓ |      ✓ |        ✓ |
+| gettext    |      ✓ |      ✓ |        ✓ |
+| gmp        |      ✓ |      ✓ |        ✓ |
+| imagick    |      ✓ |      ✓ |        ✓ |
+| imap       |      ✓ |      ✓ |        ✓ |
+| intl       |      ✓ |      ✓ |        ✓ |
+| mcrypt     |      ✓ |      ? |        ✓ |
+| memcache   |      ✓ |      ✓ |        ✓ |
+| mongodb    |      ✓ |      ✓ |        ✓ |
+| mysqli     |      ✓ |      ✓ |        ✓ |
+| oauth      |      ✓ |      ✓ |        ✓ |
+| opcache    |      ✓ |      ✓ |        ✓ |
+| pcntl      |      ✓ |      ✓ |        ✓ |
+| pdo_dblib  |      ✓ |      ✓ |        ✓ |
+| pdo_mysql  |      ✓ |      ✓ |        ✓ |
+| pdo_pgsql  |      ✓ |      ✓ |        ✓ |
+| pdo_sqlsrv |      ✓ |      ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |
+| pgsql      |      ✓ |      ✓ |        ✓ |
+| phalcon    |      ? |      ✓ |        ✓ |
+| psr        |      ✓ |      ✓ |        ✓ |
+| redis      |      ✓ |      ✓ |        ✓ |
+| rdkafka    |      ✓ |      ✓ |        ✓ |
+| soap       |      ✓ |      ✓ |        ✓ |
+| sockets    |      ✓ |      ✓ |        ✓ |
+| sqlsrv     |      ✓ |      ✓ <sup>(64-bit only)</sub> |    ✓ <sup>(64-bit only)</sub> |
+| ssh2       |      ✓ |      ✓ |        ✓ |
+| swoole     |      ✓ |      ✓ |        ✓ |
+| sysvmsg    |      ✓ |      ✓ |        ✓ |
+| sysvsem    |      ✓ |      ✓ |        ✓ |
+| sysvshm    |      ✓ |      ✓ |        ✓ |
+| tidy       |      ✓ |      ✓ |        ✓ |
+| vips       |      ✓ |      ✓ |        ✓ |
+| xsl        |      ✓ |      ✓ |        ✓ |
+| yaml       |      ✓ |      ✓ |        ✓ |
+| zip        |      ✓ |      ✓ |        ✓ |
+| &nbsp;     | &nbsp; | &nbsp; |   &nbsp; |
+| **Others** |        |        |          |
+| composer   |   v2.4 |   v2.4 |     v2.4 |
 
 **Footnotes**
 
@@ -71,7 +75,7 @@
 If you want to know the whole list of the included extensions then use `php -m` as follow.
 
 ```
-docker run --rm joseluisq/php-fpm:8.1 php -m
+docker run --rm joseluisq/php-fpm:8.2 php -m
 ```
 
 Or use `php -i` to get a more detailed information.
@@ -82,6 +86,8 @@ Or use `php -i` to get a more detailed information.
 docker pull joseluisq/php-fpm:8.0
 # Or
 docker pull joseluisq/php-fpm:8.1
+# Or
+docker pull joseluisq/php-fpm:8.2
 
 ```
 
@@ -93,6 +99,8 @@ docker pull joseluisq/php-fpm:8.1
 FROM joseluisq/php-fpm:8.0
 # Or
 FROM joseluisq/php-fpm:8.1
+# Or
+FROM joseluisq/php-fpm:8.2
 ```
 
 ### Run a container
@@ -100,6 +108,8 @@ FROM joseluisq/php-fpm:8.1
 To give a Docker image a quick try, just execute any of those commands and then navigate to [localhost:8088](http://localhost:8088)
 
 ```sh
+docker run --rm -p 8088:80 joseluisq/php-fpm:8.2 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
+# Or
 docker run --rm -p 8088:80 joseluisq/php-fpm:8.1 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
 # Or
 docker run --rm -p 8088:80 joseluisq/php-fpm:8.0 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
