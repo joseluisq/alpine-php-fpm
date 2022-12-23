@@ -22,49 +22,49 @@
 
 | Extension  |   v8.0 |   v8.1 |   v8.2 |
 | ---------- | -----: | -----: | -----: |
-| amqp       |      ✓ |      ✓ |        ✓ |
-| apcu       |      ✓ |      ✓ |        ✓ |
-| bcmath     |      ✓ |      ✓ |        ✓ |
-| bz2        |      ✓ |      ✓ |        ✓ |
-| exif       |      ✓ |      ✓ |        ✓ |
-| gd         |      ✓ |      ✓ |        ✓ |
-| gettext    |      ✓ |      ✓ |        ✓ |
-| gmp        |      ✓ |      ✓ |        ✓ |
-| imagick    |      ✓ |      ✓ |        ✓ |
-| imap       |      ✓ |      ✓ |        ✓ |
-| intl       |      ✓ |      ✓ |        ✓ |
-| mcrypt     |      ✓ |      ? |        ✓ |
-| memcache   |      ✓ |      ✓ |        ✓ |
-| mongodb    |      ✓ |      ✓ |        ✓ |
-| mysqli     |      ✓ |      ✓ |        ✓ |
-| oauth      |      ✓ |      ✓ |        ✓ |
-| opcache    |      ✓ |      ✓ |        ✓ |
-| pcntl      |      ✓ |      ✓ |        ✓ |
-| pdo_dblib  |      ✓ |      ✓ |        ✓ |
-| pdo_mysql  |      ✓ |      ✓ |        ✓ |
-| pdo_pgsql  |      ✓ |      ✓ |        ✓ |
+| amqp       |      ✓ |      ✓ |      ✓ |
+| apcu       |      ✓ |      ✓ |      ✓ |
+| bcmath     |      ✓ |      ✓ |      ✓ |
+| bz2        |      ✓ |      ✓ |      ✓ |
+| exif       |      ✓ |      ✓ |      ✓ |
+| gd         |      ✓ |      ✓ |      ✓ |
+| gettext    |      ✓ |      ✓ |      ✓ |
+| gmp        |      ✓ |      ✓ |      ✓ |
+| imagick    |      ✓ |      ✓ |      ✓ |
+| imap       |      ✓ |      ✓ |      ✓ |
+| intl       |      ✓ |      ✓ |      ✓ |
+| mcrypt     |      ✓ |      ? |      ✓ |
+| memcache   |      ✓ |      ✓ |      ✓ |
+| mongodb    |      ✓ |      ✓ |      ✓ |
+| mysqli     |      ✓ |      ✓ |      ✓ |
+| oauth      |      ✓ |      ✓ |      ✓ |
+| opcache    |      ✓ |      ✓ |      ✓ |
+| pcntl      |      ✓ |      ✓ |      ✓ |
+| pdo_dblib  |      ✓ |      ✓ |      ✓ |
+| pdo_mysql  |      ✓ |      ✓ |      ✓ |
+| pdo_pgsql  |      ✓ |      ✓ |      ✓ |
 | pdo_sqlsrv |      ✓ |      ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |
-| pgsql      |      ✓ |      ✓ |        ✓ |
-| phalcon    |      ? |      ✓ |        ✓ |
-| psr        |      ✓ |      ✓ |        ✓ |
-| redis      |      ✓ |      ✓ |        ✓ |
-| rdkafka    |      ✓ |      ✓ |        ✓ |
-| soap       |      ✓ |      ✓ |        ✓ |
-| sockets    |      ✓ |      ✓ |        ✓ |
+| pgsql      |      ✓ |      ✓ |      ✓ |
+| phalcon    |      ? |      ✓ |      ? |
+| psr        |      ✓ |      ✓ |      ✓ |
+| redis      |      ✓ |      ✓ |      ✓ |
+| rdkafka    |      ✓ |      ✓ |      ✓ |
+| soap       |      ✓ |      ✓ |      ✓ |
+| sockets    |      ✓ |      ✓ |      ✓ |
 | sqlsrv     |      ✓ |      ✓ <sup>(64-bit only)</sub> |    ✓ <sup>(64-bit only)</sub> |
-| ssh2       |      ✓ |      ✓ |        ✓ |
-| swoole     |      ✓ |      ✓ |        ✓ |
-| sysvmsg    |      ✓ |      ✓ |        ✓ |
-| sysvsem    |      ✓ |      ✓ |        ✓ |
-| sysvshm    |      ✓ |      ✓ |        ✓ |
-| tidy       |      ✓ |      ✓ |        ✓ |
-| vips       |      ✓ |      ✓ |        ✓ |
-| xsl        |      ✓ |      ✓ |        ✓ |
-| yaml       |      ✓ |      ✓ |        ✓ |
-| zip        |      ✓ |      ✓ |        ✓ |
-| &nbsp;     | &nbsp; | &nbsp; |   &nbsp; |
-| **Others** |        |        |          |
-| composer   |   v2.4 |   v2.4 |     v2.4 |
+| ssh2       |      ✓ |      ✓ |      ✓ |
+| swoole     |      ✓ |      ✓ |      ✓ |
+| sysvmsg    |      ✓ |      ✓ |      ✓ |
+| sysvsem    |      ✓ |      ✓ |      ✓ |
+| sysvshm    |      ✓ |      ✓ |      ✓ |
+| tidy       |      ✓ |      ✓ |      ✓ |
+| vips       |      ✓ |      ✓ |      ✓ |
+| xsl        |      ✓ |      ✓ |      ✓ |
+| yaml       |      ✓ |      ✓ |      ✓ |
+| zip        |      ✓ |      ✓ |      ✓ |
+| &nbsp;     | &nbsp; | &nbsp; | &nbsp; |
+| **Others** |        |        |        |
+| composer   |   v2.4 |   v2.4 |   v2.5 |
 
 **Footnotes**
 

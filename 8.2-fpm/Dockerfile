@@ -1,17 +1,17 @@
 FROM php:8.2.0-fpm-alpine3.16
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
-    Description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux."
+    Description="PHP-FPM v8.2 with essential extensions on top of Alpine Linux."
 
 # Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.4.4"
-ARG COMPOSER_SUM="c252c2a2219956f88089ffc242b42c8cb9300a368fd3890d63940e4fc9652345"
+ARG COMPOSER_VERSION="2.5.1"
+ARG COMPOSER_SUM="f1b94fee11a5bd6a1aae5d77c8da269df27c705fcc806ebf4c8c2e6fa8645c20"
 
 # Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="4.8.12"
 
-# Phalcon - https://github.com/phalcon/cphalcon
-ARG PHALCON_VERSION="5.1.2"
+# # Phalcon - https://github.com/phalcon/cphalcon
+# ARG PHALCON_VERSION="5.1.2"
 
 # Install dependencies
 RUN set -eux \
@@ -160,12 +160,6 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) intl \
     && true \
 \
-## Install mcrypt
-## DEPRECATED: This dependency is dead so move to `libsodium` or `openssl`
-##     && pecl install mcrypt-1.0.4 \
-##     && docker-php-ext-enable mcrypt \
-##     && true \
-## \
 # Install memcache
     && pecl install memcache \
     && docker-php-ext-enable memcache \
@@ -202,13 +196,14 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) pcntl \
     && true \
 \
+# NOT SUPPORTED YET
 # Install phalcon
-    && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git \
-    && cd cphalcon/build \
-    && sh ./install \
-    && docker-php-ext-enable phalcon \
-    && true \
-\
+#     && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git \
+#     && cd cphalcon/build \
+#     && sh ./install \
+#     && docker-php-ext-enable phalcon \
+#     && true \
+# \
 # Install pdo_pgsql
     && docker-php-ext-install -j$(nproc) pdo_pgsql \
     && true \
@@ -370,6 +365,6 @@ CMD ["php-fpm"]
 LABEL org.opencontainers.image.vendor="Jose Quintana" \
     org.opencontainers.image.url="https://github.com/joseluisq/alpine-php-fpm" \
     org.opencontainers.image.title="PHP-FPM v8.2 Alpine" \
-    org.opencontainers.image.description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux." \
+    org.opencontainers.image.description="PHP-FPM v8.2 with essential extensions on top of Alpine Linux." \
     org.opencontainers.image.version="$PHP_VERSION" \
     org.opencontainers.image.documentation="https://github.com/joseluisq/alpine-php-fpm"
