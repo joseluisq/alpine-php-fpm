@@ -214,11 +214,11 @@ RUN set -eux \
 \
 # ONLY 64-bit targets
     && if [ "$(uname -m)" = "x86_64" ] || [ "$(uname -m)" = "aarch64" ]; then \
-    # Install sqlsrv
+        # Install sqlsrv
         pecl install sqlsrv; \
         docker-php-ext-enable sqlsrv; \
         true; \
-    # Install pdo_sqlsrv
+        # Install pdo_sqlsrv
         pecl install pdo_sqlsrv; \
         docker-php-ext-enable pdo_sqlsrv; \
         true; \

@@ -1,21 +1,21 @@
-name: devel
+name: devel-8.1
 on:
   pull_request:
     branches:
-    - master
+      - master
+    paths:
+      - 8.1-fpm/**
   push:
     branches:
-    - master
+      - master
+    paths:
+      - 8.1-fpm/**
 
 jobs:
   php:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        version:
-          - "8.0"
-          - "8.1"
-          - "8.2"
         build:
           - amd64
           - "386"
@@ -44,9 +44,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: ${{ matrix.version }}-${{ matrix.arch }}-buildx-${{ github.sha }}
+          key: 8.1-fpm-${{ matrix.arch }}-buildx-${{ github.sha }}
           restore-keys: |
-            ${{ matrix.version }}-${{ matrix.arch }}-buildx-
+            8.1-fpm-${{ matrix.arch }}-buildx-
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -60,7 +60,7 @@ jobs:
           push: false
           context: .
           platforms: ${{ matrix.arch }}
-          file: ${{ matrix.version }}-fpm/Dockerfile
+          file: 8.1-fpm/Dockerfile
           tags: joseluisq/php-fpm:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max

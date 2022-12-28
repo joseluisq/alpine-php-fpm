@@ -11,7 +11,7 @@ ARG COMPOSER_SUM="c252c2a2219956f88089ffc242b42c8cb9300a368fd3890d63940e4fc96523
 ARG SWOOLE_VERSION="4.8.12"
 
 # Phalcon - https://github.com/phalcon/cphalcon
-ARG PHALCON_VERSION="5.1.2"
+# ARG PHALCON_VERSION="5.1.2"
 
 # Install dependencies
 RUN set -eux \
@@ -210,13 +210,17 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) pcntl \
     && true \
 \
-# Install phalcon
-    && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git \
-    && cd cphalcon/build \
-    && sh ./install \
-    && docker-php-ext-enable phalcon \
-    && true \
-\
+# TEMPORARILY DDISABLED
+# # Install phalcon
+#     && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git \
+#     && cd cphalcon/ext \
+#     && phpize \
+#     && ./configure --enable-phalcon CFLAGS="-O2 -Wall -fvisibility=hidden -flto -DZEPHIR_RELEASE=1 --param ggc-min-expand=0 --param ggc-min-heapsize=8192" \
+#     && make -s \
+#     && make -s install \
+#     && docker-php-ext-enable phalcon \
+#     && true \
+# \
 # Install pdo_pgsql
     && docker-php-ext-install -j$(nproc) pdo_pgsql \
     && true \
