@@ -42,7 +42,7 @@ jobs:
         with:
           images: joseluisq/php-fpm
           flavor: |
-            latest=true
+            latest=false
           tags: |
             type=semver,pattern={{major}}.{{minor}}-${{ matrix.build }}
       -
@@ -92,17 +92,6 @@ jobs:
               --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
           docker manifest push joseluisq/php-fpm:$SEMVER_MINOR
-      -
-        name: Push latest (PHP 8.1 or newer)
-        run: |
-          docker manifest create \
-            joseluisq/php-fpm:latest \
-              --amend joseluisq/php-fpm:$SEMVER_MINOR-amd64 \
-              --amend joseluisq/php-fpm:$SEMVER_MINOR-386 \
-              --amend joseluisq/php-fpm:$SEMVER_MINOR-arm64 \
-              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
-              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
-          docker manifest push joseluisq/php-fpm:latest
       -
         name: Pull all images
         run: |
