@@ -1,16 +1,16 @@
-FROM php:8.0.26-fpm-alpine3.16
+FROM php:8.2.0-fpm-alpine3.16
 
-LABEL Maintainer="Jose Quintana <git.io/joseluisq>" \
-    Description="PHP-FPM v8.0 with essential extensions on top of Alpine Linux."
+LABEL Maintainer="Jose Quintana <joseluisq.net>" \
+    Description="PHP-FPM v8.2 with essential extensions on top of Alpine Linux."
 
 # Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.4.4"
-ARG COMPOSER_SUM="c252c2a2219956f88089ffc242b42c8cb9300a368fd3890d63940e4fc9652345"
+ARG COMPOSER_VERSION="2.5.1"
+ARG COMPOSER_SUM="f1b94fee11a5bd6a1aae5d77c8da269df27c705fcc806ebf4c8c2e6fa8645c20"
 
 # Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="4.8.12"
 
-# Phalcon - https://github.com/phalcon/cphalcon
+# # Phalcon - https://github.com/phalcon/cphalcon
 # ARG PHALCON_VERSION="5.1.2"
 
 # Install dependencies
@@ -30,7 +30,6 @@ RUN set -eux \
         libgmpxx \
         libintl \
         libjpeg-turbo \
-        libmcrypt \
         libpng \
         libpq \
         librdkafka \
@@ -73,7 +72,6 @@ RUN set -eux \
         libc-dev \
         libexecinfo-dev \
         libjpeg-turbo-dev \
-        libmcrypt-dev \
         libpng-dev \
         librdkafka-dev \
         libssh2-dev \
@@ -119,14 +117,7 @@ RUN set -eux \
     && true \
 \
 # Install amqp
-# Note: Build from source until the pecl release is ready for PHP 8
-    && git clone --depth=1 https://github.com/php-amqp/php-amqp \
-    && cd php-amqp \
-    && phpize && ./configure \
-    && make -j$(nproc) \
-    && make install \
-    && cd ../ \
-    && rm -rf php-amqp \
+    && pecl install amqp \
     && docker-php-ext-enable amqp \
     && true \
 \
@@ -169,11 +160,6 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) intl \
     && true \
 \
-# Install mcrypt
-    && pecl install mcrypt \
-    && docker-php-ext-enable mcrypt \
-    && true \
-\
 # Install memcache
     && pecl install memcache \
     && docker-php-ext-enable memcache \
@@ -210,14 +196,11 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) pcntl \
     && true \
 \
-# TEMPORARILY DDISABLED
-# # Install phalcon
+# NOT SUPPORTED YET
+# Install phalcon
 #     && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git \
-#     && cd cphalcon/ext \
-#     && phpize \
-#     && ./configure --enable-phalcon CFLAGS="-O2 -Wall -fvisibility=hidden -flto -DZEPHIR_RELEASE=1 --param ggc-min-expand=0 --param ggc-min-heapsize=8192" \
-#     && make -s \
-#     && make -s install \
+#     && cd cphalcon/build \
+#     && sh ./install \
 #     && docker-php-ext-enable phalcon \
 #     && true \
 # \
@@ -266,7 +249,7 @@ RUN set -eux \
     && true \
 \
 # Install sockets, sysvmsg, sysvsem, sysvshm (also needed by swoole)
-    && docker-php-ext-install -j$(nproc) \
+    && CFLAGS="${CFLAGS:=} -D_GNU_SOURCE" docker-php-ext-install -j$(nproc) \
         sockets \
         sysvmsg \
         sysvsem \
@@ -337,9 +320,9 @@ RUN set -eux \
     && true
 
 # Copy PHP-FPM configuration files
-COPY 8.0-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
-COPY 8.0-fpm/www.tmpl.conf /var/data/php-fpm/www.tmpl.conf
-COPY 8.0-fpm/php.tmpl.ini /var/data/php-fpm/default-php.tmpl.ini
+COPY 8.2-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
+COPY 8.2-fpm/www.tmpl.conf /var/data/php-fpm/www.tmpl.conf
+COPY 8.2-fpm/php.tmpl.ini /var/data/php-fpm/default-php.tmpl.ini
 
 RUN set -eux \
 # PHP-FPM templates directory
@@ -351,7 +334,7 @@ RUN set -eux \
 # Perform PHP-FPM testing
     && echo "Performing PHP-FPM tests..." \
     && echo "date.timezone=UTC" > /usr/local/etc/php/php.ini \
-    && php -v | grep -oE 'PHP\s[.0-9]+' | grep -oE '[.0-9]+' | grep '^8.0' \
+    && php -v | grep -oE 'PHP\s[.0-9]+' | grep -oE '[.0-9]+' | grep '^8.2' \
     && /usr/local/sbin/php-fpm --test \
 \
     && PHP_ERROR="$( php -v 2>&1 1>/dev/null )" \
@@ -367,8 +350,8 @@ RUN set -eux \
     && true
 
 # Copy util scripts
-COPY 8.0-fpm/envsubst.sh /envsubst.sh
-COPY 8.0-fpm/entrypoint.sh /entrypoint.sh
+COPY 8.2-fpm/envsubst.sh /envsubst.sh
+COPY 8.2-fpm/entrypoint.sh /entrypoint.sh
 
 STOPSIGNAL SIGQUIT
 
@@ -381,7 +364,7 @@ CMD ["php-fpm"]
 # Metadata
 LABEL org.opencontainers.image.vendor="Jose Quintana" \
     org.opencontainers.image.url="https://github.com/joseluisq/alpine-php-fpm" \
-    org.opencontainers.image.title="PHP-FPM v8.0 Alpine" \
-    org.opencontainers.image.description="PHP-FPM v8.0 with essential extensions on top of Alpine Linux." \
+    org.opencontainers.image.title="PHP-FPM v8.2 Alpine" \
+    org.opencontainers.image.description="PHP-FPM v8.2 with essential extensions on top of Alpine Linux." \
     org.opencontainers.image.version="$PHP_VERSION" \
     org.opencontainers.image.documentation="https://github.com/joseluisq/alpine-php-fpm"
