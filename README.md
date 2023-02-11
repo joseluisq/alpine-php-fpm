@@ -13,7 +13,7 @@
   </h4>
 
 <div align="center">
-<a href="https://github.com/joseluisq/alpine-php-fpm/actions/workflows/devel.yml" title="devel ci"><img src="https://github.com/joseluisq/alpine-php-fpm/workflows/devel/badge.svg?branch=master"></a> 
+<a href="https://github.com/joseluisq/alpine-php-fpm/actions/workflows/devel-8.2.yml" title="devel 8.2 (latest)"><img src="https://github.com/joseluisq/alpine-php-fpm/actions/workflows/devel-8.2.yml/badge.svg"></a> 
 <a href="https://hub.docker.com/r/joseluisq/php-fpm/" title="Docker Image Version (tag latest semver)"><img src="https://img.shields.io/docker/v/joseluisq/php-fpm/8"></a> 
 <a href="https://hub.docker.com/r/joseluisq/php-fpm/tags" title="Docker Image Size (tag)"><img src="https://img.shields.io/docker/image-size/joseluisq/php-fpm/8"></a> 
 <a href="https://hub.docker.com/r/joseluisq/php-fpm/" title="Docker Image"><img src="https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg"></a> 
