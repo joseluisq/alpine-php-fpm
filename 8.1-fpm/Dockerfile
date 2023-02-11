@@ -1,14 +1,14 @@
-FROM php:8.1.13-fpm-alpine3.16
+FROM php:8.1.15-fpm-alpine3.16
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux."
 
 # Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.4.4"
-ARG COMPOSER_SUM="c252c2a2219956f88089ffc242b42c8cb9300a368fd3890d63940e4fc9652345"
+ARG COMPOSER_VERSION="2.5.3"
+ARG COMPOSER_SUM="2e1061821951c6a5ece033a025d06296d4a1d056fee2f4bebd35815cf4b1b0f9"
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="4.8.12"
+ARG SWOOLE_VERSION="5.0.2"
 
 # Phalcon - https://github.com/phalcon/cphalcon
 ARG PHALCON_VERSION="5.1.2"
@@ -270,8 +270,6 @@ RUN set -eux \
             --enable-mysqlnd \
             --enable-sockets \
             --enable-openssl \
-            --enable-http2 \
-            --enable-swoole-json \
             --enable-swoole-curl \
     && docker-php-ext-install -j$(nproc) swoole \
     && rm -rf swoole.tar.gz $HOME/.composer/*-old.phar \
