@@ -1,17 +1,17 @@
-FROM php:8.2.2-fpm-alpine3.16
+FROM php:8.2.4-fpm-alpine3.16
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.2 with essential extensions on top of Alpine Linux."
 
 # Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.5.3"
-ARG COMPOSER_SUM="2e1061821951c6a5ece033a025d06296d4a1d056fee2f4bebd35815cf4b1b0f9"
+ARG COMPOSER_VERSION="2.5.5"
+ARG COMPOSER_SUM="566a6d1cf4be1cc3ac882d2a2a13817ffae54e60f5aa7c9137434810a5809ffc"
 
 # Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="5.0.2"
 
-# # Phalcon - https://github.com/phalcon/cphalcon
-# ARG PHALCON_VERSION="5.1.2"
+# Phalcon - https://github.com/phalcon/cphalcon
+ARG PHALCON_VERSION="5.2.1"
 
 # Install dependencies
 RUN set -eux \
@@ -196,14 +196,13 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) pcntl \
     && true \
 \
-# NOT SUPPORTED YET
 # Install phalcon
-#     && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git \
-#     && cd cphalcon/build \
-#     && sh ./install \
-#     && docker-php-ext-enable phalcon \
-#     && true \
-# \
+    && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git \
+    && cd cphalcon/build \
+    && sh ./install \
+    && docker-php-ext-enable phalcon \
+    && true \
+\
 # Install pdo_pgsql
     && docker-php-ext-install -j$(nproc) pdo_pgsql \
     && true \
