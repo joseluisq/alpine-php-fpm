@@ -82,7 +82,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Push latest per version
+        name: Push semver minor alias
         run: |
           docker manifest create \
             joseluisq/php-fpm:$SEMVER_MINOR \
@@ -115,32 +115,21 @@ jobs:
         name: Push semver alias
         run: |
           docker manifest create \
-            joseluisq/php-fpm:${SEMVER} \
+            joseluisq/php-fpm:$SEMVER \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-amd64 \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-386 \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-arm64 \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
-          docker manifest push joseluisq/php-fpm:${SEMVER}
+          docker manifest push joseluisq/php-fpm:$SEMVER
       -
-        name: Push semver major alias
+        name: Push semver major alias (PHP 8.2 or newer)
         run: |
           docker manifest create \
-            joseluisq/php-fpm:${SEMVER_MAJOR} \
+            joseluisq/php-fpm:$SEMVER_MAJOR \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-amd64 \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-386 \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-arm64 \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
-          docker manifest push joseluisq/php-fpm:${SEMVER_MAJOR}
-      -
-        name: Push semver minor alias
-        run: |
-          docker manifest create \
-            joseluisq/php-fpm:${SEMVER_MINOR} \
-              --amend joseluisq/php-fpm:$SEMVER_MINOR-amd64 \
-              --amend joseluisq/php-fpm:$SEMVER_MINOR-386 \
-              --amend joseluisq/php-fpm:$SEMVER_MINOR-arm64 \
-              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
-              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
-          docker manifest push joseluisq/php-fpm:${SEMVER_MINOR}
+          docker manifest push joseluisq/php-fpm:$SEMVER_MAJOR

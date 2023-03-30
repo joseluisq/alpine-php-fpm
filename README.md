@@ -1,9 +1,11 @@
 <div>
   <div align="center">
-    <img
-      src="https://raw.githubusercontent.com/docker-library/docs/01c12653951b2fe592c1f93a13b4e289ada0e3a1/php/logo.png"
-      width="140"
-    />
+    <a href="https://php.net">
+      <img
+        alt="PHP"
+        src="https://www.php.net/images/logos/new-php-logo.svg"
+        width="150">
+    </a>
   </div>
 
   <h1 align="center">Alpine PHP-FPM</h1>
@@ -12,12 +14,12 @@
     Lightweight & optimized <a href="https://www.docker.com/blog/how-to-rapidly-build-multi-architecture-images-with-buildx/">Multi-Arch Docker Images</a> (<code>x86_64</code>/<code>arm</code>/<code>arm64</code>) for <a href="https://www.php.net/manual/en/install.fpm.php">PHP-FPM</a> (PHP <a href="https://www.php.net/ChangeLog-8.php#PHP_8_0">8.0</a>, <a href="https://www.php.net/ChangeLog-8.php#PHP_8_1">8.1</a>, <a href="https://www.php.net/ChangeLog-8.php#PHP_8_2">8.2</a>) with essential extensions on top of latest Alpine Linux. 🐘
   </h4>
 
-<div align="center">
-<a href="https://github.com/joseluisq/alpine-php-fpm/actions/workflows/devel-8.2.yml" title="devel 8.2 (latest)"><img src="https://github.com/joseluisq/alpine-php-fpm/actions/workflows/devel-8.2.yml/badge.svg"></a> 
-<a href="https://hub.docker.com/r/joseluisq/php-fpm/" title="Docker Image Version (tag latest semver)"><img src="https://img.shields.io/docker/v/joseluisq/php-fpm/8"></a> 
-<a href="https://hub.docker.com/r/joseluisq/php-fpm/tags" title="Docker Image Size (tag)"><img src="https://img.shields.io/docker/image-size/joseluisq/php-fpm/8"></a> 
-<a href="https://hub.docker.com/r/joseluisq/php-fpm/" title="Docker Image"><img src="https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg"></a> 
-</div>
+  <div align="center">
+    <a href="https://github.com/joseluisq/alpine-php-fpm/actions/workflows/devel-8.2.yml" title="devel 8.2 (latest)"><img src="https://github.com/joseluisq/alpine-php-fpm/actions/workflows/devel-8.2.yml/badge.svg"></a> 
+    <a href="https://hub.docker.com/r/joseluisq/php-fpm/" title="Docker Image Version (tag latest semver)"><img src="https://img.shields.io/docker/v/joseluisq/php-fpm/8"></a> 
+    <a href="https://hub.docker.com/r/joseluisq/php-fpm/tags" title="Docker Image Size (tag)"><img src="https://img.shields.io/docker/image-size/joseluisq/php-fpm/8"></a> 
+    <a href="https://hub.docker.com/r/joseluisq/php-fpm/" title="Docker Image"><img src="https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg"></a> 
+  </div>
 </div>
 
 ## Stable versions
