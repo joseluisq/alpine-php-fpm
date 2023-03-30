@@ -58,7 +58,7 @@
 | pdo_pgsql  |      ✓ |      ✓ |      ✓ |
 | pdo_sqlsrv |      ✓ <sup>(64-bit only)</sub> |      ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |
 | pgsql      |      ✓ |      ✓ |      ✓ |
-| phalcon    |      ? |      ✓ |      ? |
+| phalcon    |      ? |      ✓ |      ✓ |
 | psr        |      ✓ |      ✓ |      ✓ |
 | redis      |      ✓ |      ✓ |      ✓ |
 | rdkafka    |      ✓ |      ✓ |      ✓ |
@@ -77,7 +77,7 @@
 | zip        |      ✓ |      ✓ |      ✓ |
 | &nbsp;     | &nbsp; | &nbsp; | &nbsp; |
 | **Others** |        |        |        |
-| composer   |   v2.4 |   v2.4 |   v2.5 |
+| composer   |   v2.5 |   v2.5 |   v2.5 |
 
 **Footnotes**
 
@@ -139,9 +139,9 @@ docker run --rm -p 8088:80 joseluisq/php-fpm:8.0 sh -c "echo '<?php phpinfo();' 
 ## Configurable Environment Variables
 
 **PHP-FPM** and **PHP** configurations can be overwritten using environment variables.
-To do it so, just indicates the substitution of values using `ENV_SUBSTITUTION_ENABLE=true` (since it is disabled by default).
+To do so, just indicate the substitution of values using `ENV_SUBSTITUTION_ENABLE=true` (since it is disabled by default).
 
-Below the environment variables with their default values:
+Below are the environment variables with their default values:
 
 ### PHP-FPM
 
