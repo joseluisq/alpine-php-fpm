@@ -1,4 +1,4 @@
-FROM php:8.2.5-fpm-alpine3.16
+FROM php:8.2.6-fpm-alpine3.17
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.2 with essential extensions on top of Alpine Linux."
@@ -8,7 +8,7 @@ ARG COMPOSER_VERSION="2.5.5"
 ARG COMPOSER_SUM="566a6d1cf4be1cc3ac882d2a2a13817ffae54e60f5aa7c9137434810a5809ffc"
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="5.0.2"
+ARG SWOOLE_VERSION="5.0.3"
 
 # Phalcon - https://github.com/phalcon/cphalcon
 ARG PHALCON_VERSION="5.2.1"
@@ -25,7 +25,6 @@ RUN set -eux \
         icu-libs \
         imagemagick \
         imap \
-        libexecinfo \
         libffi \
         libgmpxx \
         libintl \
@@ -70,7 +69,6 @@ RUN set -eux \
         imap-dev \
         krb5-dev \
         libc-dev \
-        libexecinfo-dev \
         libjpeg-turbo-dev \
         libpng-dev \
         librdkafka-dev \

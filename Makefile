@@ -18,9 +18,14 @@ buildx-fpm-80:
 .PHONY: buildx-fpm-80
 
 buildx-fpm-81:
-	@echo "Building PHP 8.1 Docker images (linux/amd64,linux/arm64)..."
+	@echo "Building PHP 8.1 Docker images ()..."
 	@docker buildx build -t joseluisq/php-fpm:8.1 --platform linux/amd64,linux/arm64 -f 8.1-fpm/Dockerfile .
 .PHONY: buildx-fpm-81
+
+buildx-fpm-82:
+	@echo "Building PHP 8.2 Docker images (linux/amd64,linux/arm64)..."
+	@docker buildx build -t joseluisq/php-fpm:8.2 --platform linux/amd64,linux/arm64 -f 8.2-fpm/Dockerfile .
+.PHONY: buildx-fpm-82
 
 run:
 	@docker run --rm -it \
