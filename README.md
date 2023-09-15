@@ -79,7 +79,7 @@
 | zip        |      ✓ |      ✓ |      ✓ |
 | &nbsp;     | &nbsp; | &nbsp; | &nbsp; |
 | **Others** |        |        |        |
-| composer   |   v2.5 |   v2.5 |   v2.5 |
+| composer   |   v2.5 |   v2.6 |   v2.6 |
 
 **Footnotes**
 
