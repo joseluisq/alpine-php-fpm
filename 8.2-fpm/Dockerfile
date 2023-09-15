@@ -276,6 +276,11 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) xsl \
     && true \
 \
+# Install xdebug
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && true \
+\
 # Install yaml
     && pecl install yaml \
     && docker-php-ext-enable yaml \

@@ -74,6 +74,7 @@
 | sysvshm    |      ✓ |      ✓ |      ✓ |
 | tidy       |      ✓ |      ✓ |      ✓ |
 | vips       |      ✓ |      ✓ |      ✓ |
+| xdebug     |      ✓ |      ✓ |      ✓ |
 | xsl        |      ✓ |      ✓ |      ✓ |
 | yaml       |      ✓ |      ✓ |      ✓ |
 | zip        |      ✓ |      ✓ |      ✓ |
