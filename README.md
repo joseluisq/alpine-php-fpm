@@ -68,7 +68,7 @@
 | sockets    |      ✓ |      ✓ |      ✓ |
 | sqlsrv     |      ✓ <sup>(64-bit only)</sub> |      ✓ <sup>(64-bit only)</sub> |    ✓ <sup>(64-bit only)</sub> |
 | ssh2       |      ✓ |      ✓ |      ✓ |
-| swoole     |      ✓ |      ✓ |      ✓ |
+| swoole     |      ✓ <sup>(64-bit only)</sub> |      ✓ <sup>(64-bit only)</sub> |      ✓ <sup>(64-bit only)</sub> |
 | sysvmsg    |      ✓ |      ✓ |      ✓ |
 | sysvsem    |      ✓ |      ✓ |      ✓ |
 | sysvshm    |      ✓ |      ✓ |      ✓ |

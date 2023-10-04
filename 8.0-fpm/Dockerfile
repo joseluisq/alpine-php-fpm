@@ -8,7 +8,7 @@ ARG COMPOSER_VERSION="2.5.8"
 ARG COMPOSER_SUM="f07934fad44f9048c0dc875a506cca31cc2794d6aebfc1867f3b1fbf48dce2c5"
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="5.0.3"
+ARG SWOOLE_VERSION="5.1.0"
 
 # Phalcon - https://github.com/phalcon/cphalcon
 # ARG PHALCON_VERSION="5.1.2"
@@ -274,19 +274,22 @@ RUN set -eux \
     && docker-php-source extract \
     && true \
 \
-# Install swoole
-    && mkdir /usr/src/php/ext/swoole \
-    && curl -Lo swoole.tar.gz https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz \
-    && tar xfz swoole.tar.gz --strip-components=1 -C /usr/src/php/ext/swoole \
-    && docker-php-ext-configure swoole \
-            --enable-mysqlnd \
-            --enable-sockets \
-            --enable-openssl \
-            --enable-swoole-curl \
-    && docker-php-ext-install -j$(nproc) swoole \
-    && rm -rf swoole.tar.gz $HOME/.composer/*-old.phar \
-    && docker-php-ext-enable swoole \
-    && true \
+# Install swoole (64-bit targets only)
+# https://github.com/swoole/swoole-src/issues/5158
+    && if [ "$(uname -m)" = "x86_64" ] || [ "$(uname -m)" = "aarch64" ]; then \
+        mkdir /usr/src/php/ext/swoole; \
+        curl -Lo swoole.tar.gz https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz; \
+        tar xfz swoole.tar.gz --strip-components=1 -C /usr/src/php/ext/swoole; \
+        docker-php-ext-configure swoole \
+                --enable-mysqlnd \
+                --enable-sockets \
+                --enable-openssl \
+                --enable-swoole-curl; \
+        docker-php-ext-install -j$(nproc) swoole; \
+        rm -rf swoole.tar.gz $HOME/.composer/*-old.phar; \
+        docker-php-ext-enable swoole; \
+        true; \
+    fi \
 \
 # Install tidy
     && docker-php-ext-install -j$(nproc) tidy \
