@@ -88,6 +88,7 @@ RUN set -eux \
         vips-dev \
         yaml-dev \
         zlib-dev \
+        zstd-dev \
 \
 # Workaround for rabbitmq linking issue
     && ln -s /usr/lib /usr/local/lib64 \
@@ -297,6 +298,11 @@ RUN set -eux \
 # Install zip
     && docker-php-ext-configure zip --with-zip \
     && docker-php-ext-install -j$(nproc) zip \
+    && true \
+\
+# Install zstd
+    && pecl install zstd \
+    && docker-php-ext-enable zstd \
     && true \
 \
 # Clean up build packages
