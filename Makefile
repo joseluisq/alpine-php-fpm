@@ -27,6 +27,11 @@ buildx-fpm-82:
 	@docker buildx build -t joseluisq/php-fpm:8.2 --platform linux/amd64,linux/arm64 -f 8.2-fpm/Dockerfile .
 .PHONY: buildx-fpm-82
 
+buildx-fpm-83:
+	@echo "Building PHP 8.3 Docker images (linux/amd64,linux/arm64)..."
+	@docker buildx build -t joseluisq/php-fpm:8.3 --platform linux/amd64,linux/arm64 -f 8.3-fpm/Dockerfile .
+.PHONY: buildx-fpm-83
+
 run:
 	@docker run --rm -it \
 		-v $(PWD)/public:/usr/share/nginx/html \
