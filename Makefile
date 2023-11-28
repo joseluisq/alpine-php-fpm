@@ -3,7 +3,7 @@ TAG ?= latest
 
 
 build:
-	docker build \
+	docker build --progress=plain --network=host \
 		-t $(REPOSITORY)/php-fpm:$(TAG) \
 		-f Dockerfile .
 .PHONY: build
@@ -26,6 +26,11 @@ buildx-fpm-82:
 	@echo "Building PHP 8.2 Docker images (linux/amd64,linux/arm64)..."
 	@docker buildx build -t joseluisq/php-fpm:8.2 --platform linux/amd64,linux/arm64 -f 8.2-fpm/Dockerfile .
 .PHONY: buildx-fpm-82
+
+buildx-fpm-83:
+	@echo "Building PHP 8.3 Docker images (linux/amd64,linux/arm64)..."
+	@docker buildx build -t joseluisq/php-fpm:8.3 --platform linux/amd64,linux/arm64 -f 8.3-fpm/Dockerfile .
+.PHONY: buildx-fpm-83
 
 run:
 	@docker run --rm -it \
