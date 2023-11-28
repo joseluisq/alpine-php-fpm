@@ -36,7 +36,7 @@ _**Note:** we only provide stable PHP versions._
 
 ## Additional extensions
 
-| Extension  |   v8.0 |   v8.1 |   v8.2 |   v8.2 |
+| Extension  |   v8.0 |   v8.1 |   v8.2 |   v8.3 |
 | ---------- | -----: | -----: | -----: | -----: |
 | amqp       |      ✓ |      ✓ |      ✓ |      ✓ |
 | apcu       |      ✓ |      ✓ |      ✓ |      ✓ |
@@ -93,7 +93,7 @@ _**Note:** we only provide stable PHP versions._
 If you want to know the whole list of the included extensions then use `php -m` as follows.
 
 ```
-docker run --rm joseluisq/php-fpm:8.2 php -m
+docker run --rm joseluisq/php-fpm:8.3 php -m
 ```
 
 Or use `php -i` to get more detailed information.
