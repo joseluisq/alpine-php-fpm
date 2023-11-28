@@ -3,7 +3,7 @@ TAG ?= latest
 
 
 build:
-	docker build \
+	docker build --progress=plain --network=host \
 		-t $(REPOSITORY)/php-fpm:$(TAG) \
 		-f Dockerfile .
 .PHONY: build

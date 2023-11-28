@@ -10,8 +10,8 @@ ARG COMPOSER_SUM="9a18e1a3aadbcb94c1bafd6c4a98ff931f4b43a456ef48575130466e19f05d
 # Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="5.1.1"
 
-# Phalcon - https://github.com/phalcon/cphalcon
-ARG PHALCON_VERSION="5.4.0"
+# # Phalcon - https://github.com/phalcon/cphalcon
+# ARG PHALCON_VERSION="5.4.0"
 
 # Install dependencies
 RUN set -eux \
@@ -150,10 +150,10 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) imap \
     && true \
 \
-# Install imagick
-    && pecl install imagick \
-    && docker-php-ext-enable imagick \
-    && true \
+# # Install imagick
+#     && pecl install imagick \
+#     && docker-php-ext-enable imagick \
+#     && true \
 \
 # Install intl
     && docker-php-ext-install -j$(nproc) intl \
@@ -195,13 +195,13 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) pcntl \
     && true \
 \
-# Install phalcon
-    && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git \
-    && cd cphalcon/build \
-    && sh ./install \
-    && docker-php-ext-enable phalcon \
-    && true \
-\
+# # Install phalcon
+#     && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git \
+#     && cd cphalcon/build \
+#     && sh ./install \
+#     && docker-php-ext-enable phalcon \
+#     && true \
+# \
 # Install pdo_pgsql
     && docker-php-ext-install -j$(nproc) pdo_pgsql \
     && true \
@@ -280,11 +280,11 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) xsl \
     && true \
 \
-# Install xdebug
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-    && true \
-\
+# # Install xdebug
+#     && pecl install xdebug \
+#     && docker-php-ext-enable xdebug \
+#     && true \
+# \
 # Install yaml
     && pecl install yaml \
     && docker-php-ext-enable yaml \
