@@ -5,11 +5,13 @@ on:
       - master
     paths:
       - 8.1-fpm/**
+      - .github/workflows/devel-8.1.yml
   push:
     branches:
       - master
     paths:
       - 8.1-fpm/**
+      - .github/workflows/devel-8.1.yml
 
 jobs:
   php:
