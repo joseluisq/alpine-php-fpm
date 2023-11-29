@@ -1,11 +1,12 @@
 REPOSITORY ?= joseluisq
 TAG ?= latest
+VERSION ?= 8.3
 
 
 build:
 	docker build --progress=plain --network=host \
 		-t $(REPOSITORY)/php-fpm:$(TAG) \
-		-f Dockerfile .
+		-f $(VERSION)-fpm/Dockerfile .
 .PHONY: build
 
 dev:

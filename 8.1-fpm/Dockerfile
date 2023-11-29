@@ -1,4 +1,4 @@
-FROM php:8.1.25-fpm-alpine3.17
+FROM php:8.1.26-fpm-alpine3.17
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux."
@@ -8,7 +8,7 @@ ARG COMPOSER_VERSION="2.6.5"
 ARG COMPOSER_SUM="9a18e1a3aadbcb94c1bafd6c4a98ff931f4b43a456ef48575130466e19f05dd6"
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="5.1.0"
+ARG SWOOLE_VERSION="5.1.1"
 
 # Phalcon - https://github.com/phalcon/cphalcon
 ARG PHALCON_VERSION="5.4.0"
@@ -38,13 +38,16 @@ RUN set -eux \
         libxpm \
         libxslt \
         libzip \
+        lz4-libs \
         make \
         rabbitmq-c \
         tidyhtml \
         tzdata \
         unixodbc \
         vips \
-        yaml
+        yaml \
+        zstd-libs \
+    && true
 
 #############################################
 ### Install and enable PHP extensions
@@ -78,6 +81,7 @@ RUN set -eux \
         libxpm-dev \
         libxslt-dev \
         libzip-dev \
+        lz4-dev \
         openssl-dev \
         pcre-dev \
         pkgconf \
@@ -155,8 +159,23 @@ RUN set -eux \
     && docker-php-ext-enable imagick \
     && true \
 \
+# Install igbinary
+    && pecl install igbinary \
+    && docker-php-ext-enable igbinary \
+\
 # Install intl
     && docker-php-ext-install -j$(nproc) intl \
+    && true \
+\
+# Install lz4
+    && git clone https://github.com/kjdev/php-ext-lz4 /tmp/lz4 \
+    && cd /tmp/lz4 \
+    && git checkout $(git tag | grep -E '^[.0-9]+$' | sort -V | tail -1) \
+    && phpize \
+    && ./configure --enable-lz4 --with-lz4-includedir=/usr \
+    && make -j$(nproc) \
+    && make install \
+    && docker-php-ext-enable lz4 \
     && true \
 \
 ## Install mcrypt
@@ -173,6 +192,11 @@ RUN set -eux \
 # Install mongodb
     && pecl install mongodb \
     && docker-php-ext-enable mongodb \
+    && true \
+\
+# Install msgpack
+    && pecl install msgpack \
+    && docker-php-ext-enable msgpack \
     && true \
 \
 # Install mysqli
@@ -202,8 +226,8 @@ RUN set -eux \
     && true \
 \
 # Install phalcon
-    && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git \
-    && cd cphalcon/build \
+    && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git /tmp/phalcon \
+    && cd /tmp/phalcon/build \
     && sh ./install \
     && docker-php-ext-enable phalcon \
     && true \
@@ -234,7 +258,9 @@ RUN set -eux \
     && true \
 \
 # Install redis
-    && pecl install redis \
+    && pecl install --configureoptions \
+        'enable-redis-igbinary="yes" enable-redis-zstd="yes" enable-redis-msgpack="yes" enable-redis-lz4="yes"' \
+        redis \
     && docker-php-ext-enable redis \
     && true \
 \
@@ -280,6 +306,11 @@ RUN set -eux \
 \
 # Install tidy
     && docker-php-ext-install -j$(nproc) tidy \
+    && true \
+\
+# Install uuid
+    && pecl install uuid \
+    && docker-php-ext-enable uuid \
     && true \
 \
 # Install xsl
