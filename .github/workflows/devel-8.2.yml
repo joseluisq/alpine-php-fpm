@@ -5,15 +5,17 @@ on:
       - master
     paths:
       - 8.2-fpm/**
+      - .github/workflows/devel-8.2.yml
   push:
     branches:
       - master
     paths:
       - 8.2-fpm/**
+      - .github/workflows/devel-8.2.yml
 
 jobs:
   php:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         build:
@@ -44,7 +46,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: 8.2-fpm-${{ matrix.arch }}-buildx-${{ github.sha }}
+          key: 8.2-fpm-${{ matrix.arch }}-buildx-${{ hashFiles('8.2-fpm/**') }}
           restore-keys: |
             8.2-fpm-${{ matrix.arch }}-buildx-
       -

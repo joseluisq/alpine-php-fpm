@@ -7,7 +7,7 @@ on:
 
 jobs:
   docker-build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         build:
@@ -66,7 +66,7 @@ jobs:
 
   docker-manifest:
     needs: docker-build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Set envs
         run: |
