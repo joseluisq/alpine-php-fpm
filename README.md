@@ -28,7 +28,10 @@
 | -----: | -----: | -----: |
 | ![Docker Image 8.1 (tag 8.1 semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.1)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.1) | ![Docker Image 8.2 (tag 8.2 semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.2)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.2) | ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.3)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.3) |
 
-_**Note:** we only provide stable PHP versions._
+### PHP versions support
+
+We **only** support stable PHP versions according to the [PHP Release Cycle](https://www.php.net/supported-versions.php). 
+However, you can still find legacy versions like `7.4.x` or `8.0.x` on [Releases](https://github.com/joseluisq/alpine-php-fpm/releases) and [Docker Hub](https://hub.docker.com/r/joseluisq/php-fpm/).
 
 ## Built-in extensions
 
@@ -47,14 +50,13 @@ _**Note:** we only provide stable PHP versions._
 | gettext    |      ✓ |      ✓ |      ✓ |
 | gmp        |      ✓ |      ✓ |      ✓ |
 | imagick    |      ✓ |      ✓ |      ? |
-| igbinary   |      ✓ |      ✓ |      ? |
+| igbinary   |      ✓ |      ✓ |      ✓ |
 | imap       |      ✓ |      ✓ |      ✓ |
 | intl       |      ✓ |      ✓ |      ✓ |
-| lz4        |      ✓ |      ✓ |      ? |
-| mcrypt     |      ? |      ? |      ? |
+| lz4        |      ✓ |      ✓ |      ✓ |
 | memcache   |      ✓ |      ✓ |      ✓ |
 | mongodb    |      ✓ |      ✓ |      ✓ |
-| msgpack    |      ✓ |      ✓ |      ? |
+| msgpack    |      ✓ |      ✓ |      ✓ |
 | mysqli     |      ✓ |      ✓ |      ✓ |
 | oauth      |      ✓ |      ✓ |      ✓ |
 | opcache    |      ✓ |      ✓ |      ✓ |
@@ -77,9 +79,9 @@ _**Note:** we only provide stable PHP versions._
 | sysvsem    |      ✓ |      ✓ |      ✓ |
 | sysvshm    |      ✓ |      ✓ |      ✓ |
 | tidy       |      ✓ |      ✓ |      ✓ |
-| uuid       |      ✓ |      ✓ |      ? |
+| uuid       |      ✓ |      ✓ |      ✓ |
 | vips       |      ✓ |      ✓ |      ✓ |
-| xdebug     |      ✓ |      ✓ |      ? |
+| xdebug     |      ✓ |      ✓ |      ✓ |
 | xsl        |      ✓ |      ✓ |      ✓ |
 | yaml       |      ✓ |      ✓ |      ✓ |
 | zip        |      ✓ |      ✓ |      ✓ |
@@ -90,13 +92,14 @@ _**Note:** we only provide stable PHP versions._
 
 **Footnotes**
 
-(?) It means that this extension is obsolete/unmaintained/discouraged or simply is not supported yet.
+- (?) It means that this extension is obsolete/unmaintained/discouraged or simply is not supported yet.
+- The `mcrypt` extension is obsolete. Use `libsodium` or `openssl` instead.
 
 ### List all extensions included
 
-If you want to know the whole list of the included extensions then use `php -m` as follows.
+If you want to know the whole list of the included extensions then type `php -m` as follows.
 
-```
+```sh
 docker run --rm joseluisq/php-fpm:8.3 php -m
 ```
 
@@ -138,13 +141,13 @@ docker run --rm -p 8088:80 joseluisq/php-fpm:8.1 sh -c "echo '<?php phpinfo();' 
 
 [View Docker Compose Examples](#docker-compose-examples)
 
-## Default Paths
+## Default paths
 
 - Default Docker working directory: `/var/www/html`
 - Additional PHP `.ini` files to load: `/usr/local/etc/php/conf.d`
 - Custom PHP `.ini` file generated (only if `ENV_SUBSTITUTION_ENABLE=true`): `/usr/local/etc/php/conf.d/default-php.ini`
 
-## Configurable Environment Variables
+## Configurable environment variables
 
 **PHP-FPM** and **PHP** configurations can be overwritten using environment variables.
 To do so, just indicate the substitution of values using `ENV_SUBSTITUTION_ENABLE=true` (since it is disabled by default).
@@ -178,7 +181,7 @@ Settings replaced into `/usr/local/etc/php/conf.d/default-php.ini` file (`php.in
 - `PHP_EXPOSE_PHP=On`
 - `PHP_SESSION_GC_MAXLIFETIME=1440`
 
-## Docker Compose Examples
+## Docker Compose examples
 
 [docker-compose](https://docs.docker.com/compose/) examples for [Nginx](https://hub.docker.com/_/nginx) and [Apache](https://hub.docker.com/_/httpd) servers can be found under the [./examples](./examples) directory.
 
