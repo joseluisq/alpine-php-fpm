@@ -168,8 +168,8 @@ RUN set -eux \
     && true \
 \
 # Install lz4
-    && git clone https://github.com/kjdev/php-ext-lz4 /tmp/lz4 \
-    && cd /tmp/lz4 \
+    && git clone https://github.com/kjdev/php-ext-lz4 /opt/lz4 \
+    && cd /opt/lz4 \
     && git checkout $(git tag | grep -E '^[.0-9]+$' | sort -V | tail -1) \
     && phpize \
     && ./configure --enable-lz4 --with-lz4-includedir=/usr \
@@ -226,8 +226,8 @@ RUN set -eux \
     && true \
 \
 # Install phalcon
-    && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git /tmp/phalcon \
-    && cd /tmp/phalcon/build \
+    && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git /opt/phalcon \
+    && cd /opt/phalcon/build \
     && sh ./install \
     && docker-php-ext-enable phalcon \
     && true \
@@ -345,6 +345,7 @@ RUN set -eux \
 # Clean up build packages
     && docker-php-source delete \
     && apk del .build-deps \
+    && rm -rf /tmp/* \
     && true
 
 RUN set -eux \
