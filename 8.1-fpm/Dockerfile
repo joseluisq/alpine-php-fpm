@@ -13,9 +13,10 @@ ARG SWOOLE_VERSION="5.1.1"
 # Phalcon - https://github.com/phalcon/cphalcon
 ARG PHALCON_VERSION="5.5.0"
 
+SHELL ["/bin/ash", "-euxo", "pipefail", "-c"]
+
 # Install dependencies
-RUN set -eux \
-    && apk add --no-cache \
+RUN apk add --no-cache \
         c-client \
         ca-certificates \
         freetds \
@@ -54,8 +55,7 @@ RUN set -eux \
 #############################################
 
 # Development dependencies
-RUN set -eux \
-    && apk add --no-cache --virtual .build-deps \
+RUN apk add --no-cache --virtual .build-deps \
         autoconf \
         bzip2-dev \
         cmake \
@@ -98,7 +98,6 @@ RUN set -eux \
     && ln -s /usr/lib /usr/local/lib64 \
 \
 # Enable ffi if it exists
-    && set -eux \
     && if [ -f /usr/local/etc/php/conf.d/docker-php-ext-ffi.ini ]; then \
         echo "ffi.enable = 1" >> /usr/local/etc/php/conf.d/docker-php-ext-ffi.ini; \
     fi \
@@ -348,9 +347,8 @@ RUN set -eux \
     && rm -rf /tmp/* \
     && true
 
-RUN set -eux \
 # Fix php.ini settings for enabled extensions
-    && chmod +x "$(php -r 'echo ini_get("extension_dir");')"/* \
+RUN chmod +x "$(php -r 'echo ini_get("extension_dir");')"/* \
 # Shrink binaries
     && (find /usr/local/bin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
     && (find /usr/local/lib -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
@@ -358,8 +356,7 @@ RUN set -eux \
     && true
 
 # Install Composer
-RUN set -eux \
-    && curl -LO "https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar" \
+RUN curl -LO "https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar" \
     && echo "${COMPOSER_SUM}  composer.phar" | sha256sum -c - \
     && chmod +x composer.phar \
     && mv composer.phar /usr/local/bin/composer \
@@ -371,9 +368,8 @@ COPY 8.1-fpm/php-fpm.tmpl.conf /var/data/php-fpm/php-fpm.tmpl.conf
 COPY 8.1-fpm/www.tmpl.conf /var/data/php-fpm/www.tmpl.conf
 COPY 8.1-fpm/php.tmpl.ini /var/data/php-fpm/default-php.tmpl.ini
 
-RUN set -eux \
 # PHP-FPM templates directory
-    && mkdir -p /var/data/php-fpm \
+RUN mkdir -p /var/data/php-fpm \
 # Remove few PHP-FPM default config files
     && rm -rf /usr/local/etc/php-fpm.d/zz-docker.conf \
     && rm -rf /usr/local/etc/php-fpm.d/docker.conf \
