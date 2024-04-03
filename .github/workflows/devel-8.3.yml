@@ -5,15 +5,17 @@ on:
       - master
     paths:
       - 8.3-fpm/**
+      - .github/workflows/devel-8.3.yml
   push:
     branches:
       - master
     paths:
       - 8.3-fpm/**
+      - .github/workflows/devel-8.3.yml
 
 jobs:
   php:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         build:
@@ -36,28 +38,30 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
       -
         name: Cache Docker layers
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
-          key: 8.3-fpm-${{ matrix.arch }}-buildx-${{ github.sha }}
+          key: 8.3-fpm-${{ matrix.arch }}-buildx-${{ hashFiles('8.3-fpm/**') }}
           restore-keys: |
+            8.3-fpm-${{ matrix.arch }}-buildx-${{ hashFiles('8.3-fpm/**') }}
             8.3-fpm-${{ matrix.arch }}-buildx-
       -
         name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       -
         name: Build and Test
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           push: false
+          provenance: false
           context: .
           platforms: ${{ matrix.arch }}
           file: 8.3-fpm/Dockerfile

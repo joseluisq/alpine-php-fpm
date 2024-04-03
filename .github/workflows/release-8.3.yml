@@ -7,7 +7,7 @@ on:
 
 jobs:
   docker-build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         build:
@@ -31,14 +31,14 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       -
         name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       -
         name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: joseluisq/php-fpm
           flavor: |
@@ -47,18 +47,19 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}-${{ matrix.build }}
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       -
         name: Login to DockerHub
-        uses: docker/login-action@v2 
+        uses: docker/login-action@v3 
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           push: true
+          provenance: false
           context: .
           platforms: ${{ matrix.arch }}
           file: 8.3-fpm/Dockerfile
@@ -66,7 +67,7 @@ jobs:
 
   docker-manifest:
     needs: docker-build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Set envs
         run: |
@@ -77,7 +78,7 @@ jobs:
           echo "SEMVER_MINOR=${SEMVER%.*}" >> $GITHUB_ENV
       -
         name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
