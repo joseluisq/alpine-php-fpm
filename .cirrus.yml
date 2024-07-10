@@ -1,0 +1,104 @@
+task:
+  only_if: $CIRRUS_TAG == ''
+  alias: build-linux-image
+  timeout_in: 120m
+  env:
+    DOCKER_USERNAME: ENCRYPTED[a46dbc7bd1e330a9c0f3d85b447f83e57c9858e2e87366b5bfa958b52ee2e51cebdee0a5f70e36fbe3e342b50aadf52a]
+    DOCKER_PASSWORD: ENCRYPTED[8d433bb6027eddad4813c84d0d2b694744dd24e6debbfff0078556772454898c9ac8871eb3210f51bb6180e74c0c46c0]
+  matrix:
+    - name: linux-amd64
+      env:
+        LINUX_ARCH: amd64
+        LINUX_PLATFORM: linux/amd64
+      compute_engine_instance:
+        image_project: cirrus-images
+        image: family/docker-builder
+        platform: linux
+        cpu: 8
+        memory: 8G
+    - name: linux-386
+      env:
+        LINUX_ARCH: 386
+        LINUX_PLATFORM: linux/386
+      compute_engine_instance:
+        image_project: cirrus-images
+        image: family/docker-builder
+        platform: linux
+        cpu: 8
+        memory: 8G
+    - name: linux-arm64
+      env:
+        LINUX_ARCH: arm64
+        LINUX_PLATFORM: linux/arm64
+      compute_engine_instance:
+        image_project: cirrus-images
+        image: family/docker-builder-arm64
+        architecture: arm64
+        platform: linux
+        cpu: 4
+        memory: 4G
+    - name: linux-armv6
+      env:
+        LINUX_ARCH: armv6
+        LINUX_PLATFORM: linux/arm/v6
+      compute_engine_instance:
+        image_project: cirrus-images
+        image: family/docker-builder
+        platform: linux
+        cpu: 4
+        memory: 4G
+    - name: linux-armv7
+      env:
+        LINUX_ARCH: armv7
+        LINUX_PLATFORM: linux/arm/v7
+      compute_engine_instance:
+        image_project: cirrus-images
+        image: family/docker-builder
+        platform: linux
+        cpu: 4
+        memory: 4G
+  matrix:
+    - env:
+        PHP_VERSION: 8.3
+    - env:
+        PHP_VERSION: 8.2
+    - env:
+        PHP_VERSION: 8.1
+  docker_cache:
+    folder: /tmp/.buildx-cache
+    fingerprint_key: php-${PHP_VERSION}-${LINUX_ARCH}-key
+  setup_script: |
+    docker buildx create --name multibuilder
+    docker buildx use multibuilder
+    docker buildx inspect --bootstrap
+  semver_aliases_script: |
+    if [[ -z "$CIRRUS_TAG" ]]; then echo "Script skipped!"
+    else
+      SEMVER=${##*v}
+      echo "SEMVER=${SEMVER}" >> $CIRRUS_ENV
+      echo "SEMVER_MAJOR=${SEMVER%.*.*}" >> $CIRRUS_ENV
+      echo "SEMVER_MINOR=${SEMVER%.*}" >> $CIRRUS_ENV
+    fi
+  login_script: |
+    if [[ "$PHP_VERSION" = "$SEMVER_MINOR" ]]; then
+      docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+    else
+      echo "Script skipped!"
+    fi
+  build_script: |
+    push=""
+      ## if [[ "$PHP_VERSION" = "$SEMVER_MINOR" ]]; then
+      ##   push="--push"
+      ##   echo "Docker image will be built and pushed!"
+      ## else
+      ##   echo "Push skipped!"
+      ## fi
+    docker buildx build \
+      --platform=${LINUX_PLATFORM} $push \
+      --tag joseluisq/php-fpm:${PHP_VERSION}-${LINUX_ARCH} \
+      --cache-from=type=local,src=/tmp/.buildx-cache \
+      --cache-to=type=local,dest=/tmp/.buildx-cache-new,mode=max \
+      -f ${PHP_VERSION}-fpm/Dockerfile .
+  cache_swap_script: |
+    rm -rf /tmp/.buildx-cache
+    mv /tmp/.buildx-cache-new /tmp/.buildx-cache
