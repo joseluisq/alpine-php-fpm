@@ -147,7 +147,7 @@ docker run --rm -p 8088:80 joseluisq/php-fpm:8.1 sh -c "echo '<?php phpinfo();' 
 - Additional PHP `.ini` files to load: `/usr/local/etc/php/conf.d`
 - Custom PHP `.ini` file generated (only if `ENV_SUBSTITUTION_ENABLE=true`): `/usr/local/etc/php/conf.d/default-php.ini`
 
-## Configurable environment variables
+## Configurable Environment Variables
 
 **PHP-FPM** and **PHP** configurations can be overwritten using environment variables.
 To do so, just indicate the substitution of values using `ENV_SUBSTITUTION_ENABLE=true` (since it is disabled by default).
@@ -180,6 +180,12 @@ Settings replaced into `/usr/local/etc/php/conf.d/default-php.ini` file (`php.in
 - `PHP_MEMORY_LIMIT=512M`
 - `PHP_EXPOSE_PHP=On`
 - `PHP_SESSION_GC_MAXLIFETIME=1440`
+
+### Disable PHP extensions
+
+The PHP extensions can be disabled at startup by providing the `PHP_DISABLE_EXTENSIONS` environment variable with one or more names. For example `PHP_DISABLE_EXTENSIONS=psr,exif,bz2`.
+
+Find the valid extension names by using `php -m`. For example `docker run --rm joseluisq/php-fpm:8.3 php -m | grep "exif".
 
 ## Docker Compose examples
 
