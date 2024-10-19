@@ -43,7 +43,6 @@ if [[ $extensions_count -gt 0 ]]; then
         fi
     done
 
-    echo
     echo "Verifying PHP extensions..."
 
     php -v
@@ -78,6 +77,7 @@ if [[ $extensions_count -gt 0 ]]; then
     fi
 
     echo "Tests were successful!"
+    echo
 fi
 
 exec "$@"

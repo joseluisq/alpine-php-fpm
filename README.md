@@ -89,6 +89,8 @@ However, you can still find legacy versions like `7.4.x` or `8.0.x` on [Releases
 | &nbsp;     | &nbsp; | &nbsp; | &nbsp; |
 | **Others** |        |        |        |
 | composer   |   v2.7 |   v2.7 |   v2.7 |
+| &nbsp;     | &nbsp; | &nbsp; | &nbsp; |
+| **Extensions file**   |   [8.1-fpm/extensions.txt](8.1-fpm/extensions.txt) |  [8.2-fpm/extensions.txt](8.2-fpm/extensions.txt)  |  [8.3-fpm/extensions.txt](8.3-fpm/extensions.txt)  |
 
 **Footnotes**
 
@@ -181,11 +183,11 @@ Settings replaced into `/usr/local/etc/php/conf.d/default-php.ini` file (`php.in
 - `PHP_EXPOSE_PHP=On`
 - `PHP_SESSION_GC_MAXLIFETIME=1440`
 
-### Disable PHP extensions
+### Disable PHP additional extensions
 
-The PHP extensions can be disabled at startup by providing the `PHP_DISABLE_EXTENSIONS` environment variable with one or more names. For example `PHP_DISABLE_EXTENSIONS=psr,exif,bz2`.
+The PHP additional extensions can be disabled at startup by providing the `PHP_DISABLE_EXTENSIONS` environment variable with one or more names. For example `PHP_DISABLE_EXTENSIONS=psr,exif,bz2`.
 
-Find the valid extension names by using `php -m`. For example `docker run --rm joseluisq/php-fpm:8.3 php -m | grep "exif".
+Find the valid extension names in `extensions.txt` file of every PHP version directory or by using `php -m`. For example `docker run --rm joseluisq/php-fpm:8.3 php -m | grep "exif"`.
 
 ## Docker Compose examples
 
