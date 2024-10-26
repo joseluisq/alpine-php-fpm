@@ -88,7 +88,7 @@ However, you can still find legacy versions like `7.4.x` or `8.0.x` on [Releases
 | zstd       |      ✓ |      ✓ |      ✓ |
 | &nbsp;     | &nbsp; | &nbsp; | &nbsp; |
 | **Others** |        |        |        |
-| composer   |   v2.7 |   v2.7 |   v2.8 |
+| composer   |   v2.7 |   v2.8 |   v2.8 |
 | &nbsp;     | &nbsp; | &nbsp; | &nbsp; |
 | **Extensions file**   |   [8.1-fpm/extensions.txt](8.1-fpm/extensions.txt) |  [8.2-fpm/extensions.txt](8.2-fpm/extensions.txt)  |  [8.3-fpm/extensions.txt](8.3-fpm/extensions.txt)  |
 
