@@ -49,7 +49,7 @@ However, you can still find legacy versions like `7.4.x` or `8.0.x` on [Releases
 | gd         |      ✓ |      ✓ |      ✓ |
 | gettext    |      ✓ |      ✓ |      ✓ |
 | gmp        |      ✓ |      ✓ |      ✓ |
-| imagick    |      ✓ |      ✓ |      ? |
+| imagick    |      ✓ |      ✓ |      ✓ |
 | igbinary   |      ✓ |      ✓ |      ✓ |
 | imap       |      ✓ |      ✓ |      ✓ |
 | intl       |      ✓ |      ✓ |      ✓ |
@@ -66,7 +66,7 @@ However, you can still find legacy versions like `7.4.x` or `8.0.x` on [Releases
 | pdo_pgsql  |      ✓ |      ✓ |      ✓ |
 | pdo_sqlsrv |      ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |
 | pgsql      |      ✓ |      ✓ |      ✓ |
-| phalcon    |      ✓ |      ✓ |      ? |
+| phalcon    |      ✓ |      ✓ |      ✓ |
 | psr        |      ✓ |      ✓ |      ✓ |
 | redis      |      ✓ |      ✓ |      ✓ |
 | rdkafka    |      ✓ |      ✓ |      ✓ |

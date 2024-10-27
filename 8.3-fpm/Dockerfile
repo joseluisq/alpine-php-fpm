@@ -13,6 +13,9 @@ ARG SWOOLE_VERSION="5.1.5"
 # # Phalcon - https://github.com/phalcon/cphalcon
 ARG PHALCON_VERSION="5.8.0"
 
+# Imagick - https://github.com/Imagick/imagick
+ARG IMAGICK_COMMIT="28f27044e435a2b203e32675e942eb8de620ee58"
+
 # Install dependencies
 RUN set -eux \
     && apk add --no-cache \
@@ -154,10 +157,18 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) imap \
     && true \
 \
-# # Install imagick
-#     && pecl install imagick \
-#     && docker-php-ext-enable imagick \
-#     && true \
+# Install imagick from source (temporarily)
+    && mkdir -p /opt/imagick \
+    && cd /opt/imagick \
+    && git init \
+    && git remote add origin https://github.com/Imagick/imagick.git \
+    && git fetch origin ${IMAGICK_COMMIT} \
+    && git checkout ${IMAGICK_COMMIT} \
+    && phpize && ./configure \
+    && make -j$(nproc) \
+    && make -j$(nproc) install \
+    && docker-php-ext-enable imagick \
+    && true \
 \
 # Install igbinary
     && pecl install igbinary \
