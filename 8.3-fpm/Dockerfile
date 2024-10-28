@@ -1,17 +1,20 @@
-FROM php:8.3.12-fpm-alpine3.19
+FROM php:8.3.13-fpm-alpine3.19
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.3 with essential extensions on top of Alpine Linux."
 
 # Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.7.9"
-ARG COMPOSER_SUM="b6de5e65c199d80ba11897fbe1364e063e858d483f6a81a176c4d60f2b1d6347"
+ARG COMPOSER_VERSION="2.8.1"
+ARG COMPOSER_SUM="930b376fbd2147a623ea7b704eb9d3b8b0d6072992207aa0535aa21f6f05378e"
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="5.1.4"
+ARG SWOOLE_VERSION="5.1.5"
 
 # # Phalcon - https://github.com/phalcon/cphalcon
-# ARG PHALCON_VERSION="5.7.0"
+ARG PHALCON_VERSION="5.8.0"
+
+# Imagick - https://github.com/Imagick/imagick
+ARG IMAGICK_COMMIT="28f27044e435a2b203e32675e942eb8de620ee58"
 
 # Install dependencies
 RUN set -eux \
@@ -154,10 +157,18 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) imap \
     && true \
 \
-# # Install imagick
-#     && pecl install imagick \
-#     && docker-php-ext-enable imagick \
-#     && true \
+# Install imagick from source (temporarily)
+    && mkdir -p /opt/imagick \
+    && cd /opt/imagick \
+    && git init \
+    && git remote add origin https://github.com/Imagick/imagick.git \
+    && git fetch origin ${IMAGICK_COMMIT} \
+    && git checkout ${IMAGICK_COMMIT} \
+    && phpize && ./configure \
+    && make -j$(nproc) \
+    && make -j$(nproc) install \
+    && docker-php-ext-enable imagick \
+    && true \
 \
 # Install igbinary
     && pecl install igbinary \
@@ -219,13 +230,13 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) pcntl \
     && true \
 \
-# # Install phalcon
-#     && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git /opt/phalcon \
-#     && cd /opt/phalcon/build \
-#     && sh ./install \
-#     && docker-php-ext-enable phalcon \
-#     && true \
-# \
+# Install phalcon
+    && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git /opt/phalcon \
+    && cd /opt/phalcon/build \
+    && sh ./install \
+    && docker-php-ext-enable phalcon \
+    && true \
+\
 # Install pdo_pgsql
     && docker-php-ext-install -j$(nproc) pdo_pgsql \
     && true \
