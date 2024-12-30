@@ -1,4 +1,4 @@
-FROM php:8.4.1-fpm-alpine3.20
+FROM php:8.4.2-fpm-alpine3.20
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.4 with essential extensions on top of Alpine Linux."
@@ -16,6 +16,9 @@ ARG SWOOLE_VERSION="6.0.0"
 # # Imagick - https://github.com/Imagick/imagick
 # ARG IMAGICK_COMMIT="28f27044e435a2b203e32675e942eb8de620ee58"
 
+# PSR - https://github.com/jbboehr/php-psr
+ARG PSR_COMMIT="44cebb62d14846686de58022366a8eaf37e47c6a"
+
 # Install dependencies
 RUN set -eux \
     && apk add --no-cache \
@@ -26,8 +29,8 @@ RUN set -eux \
         gettext \
         gmp \
         icu-libs \
-        imagemagick \
-        imap \
+        # imagemagick \
+        # imap \
         libffi \
         libgmpxx \
         libintl \
@@ -71,8 +74,8 @@ RUN set -eux \
         git \
         gmp-dev \
         icu-dev \
-        imagemagick-dev \
-        imap-dev \
+        # imagemagick-dev \
+        # imap-dev \
         krb5-dev \
         libc-dev \
         libjpeg-turbo-dev \
@@ -152,11 +155,11 @@ RUN set -eux \
     && docker-php-ext-install -j$(nproc) exif \
     && true \
 \
-# Install imap
-    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl --with-imap \
-    && docker-php-ext-install -j$(nproc) imap \
-    && true \
-\
+# # Install imap
+#     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl --with-imap \
+#     && docker-php-ext-install -j$(nproc) imap \
+#     && true \
+# \
 # # Install imagick from source (temporarily)
 #     && mkdir -p /opt/imagick \
 #     && cd /opt/imagick \
@@ -218,7 +221,7 @@ RUN set -eux \
     && true \
 \
 # Install pdo_mysql
-    && docker-php-ext-configure pdo_mysql --with-zlib-dir=/usr \
+    && docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install -j$(nproc) pdo_mysql \
     && true \
 \
@@ -258,7 +261,15 @@ RUN set -eux \
     fi \
 \
 # Install psr
-    && pecl install psr \
+    && mkdir -p /opt/psr \
+    && cd /opt/psr \
+    && git init \
+    && git remote add origin https://github.com/jbboehr/php-psr.git \
+    && git fetch origin ${PSR_COMMIT} \
+    && git checkout ${PSR_COMMIT} \
+    && phpize && ./configure \
+    && make -j$(nproc) \
+    && make -j$(nproc) install \
     && docker-php-ext-enable psr \
     && true \
 \
