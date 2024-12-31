@@ -1,14 +1,14 @@
-FROM php:8.1.30-fpm-alpine3.19
+FROM php:8.1.31-fpm-alpine3.19
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.1 with essential extensions on top of Alpine Linux."
 
 # Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.7.9"
-ARG COMPOSER_SUM="b6de5e65c199d80ba11897fbe1364e063e858d483f6a81a176c4d60f2b1d6347"
+ARG COMPOSER_VERSION="2.8.4"
+ARG COMPOSER_SUM="c4c4e2e1beab0ea04e0bd042a5dbba9feda1fbf5eda0d36203958edd343c0a8a"
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="5.1.4"
+ARG SWOOLE_VERSION="5.1.6"
 
 # Phalcon - https://github.com/phalcon/cphalcon
 ARG PHALCON_VERSION="5.8.0"

@@ -7,7 +7,6 @@ gd
 gettext
 gmp
 igbinary
-imap
 intl
 lz4
 memcache
