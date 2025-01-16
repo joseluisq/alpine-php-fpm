@@ -7,7 +7,6 @@ on:
 
 jobs:
   docker-build:
-    runs-on: ubuntu-22.04
     strategy:
       matrix:
         build:
@@ -19,14 +18,20 @@ jobs:
         include:
           - build: amd64
             arch: linux/amd64
+            os: ubuntu-22.04
           - build: 386
             arch: linux/386
+            os: ubuntu-22.04
           - build: arm64
             arch: linux/arm64
+            os: ubuntu-22.04-arm
           - build: armv6
             arch: linux/arm/v6
+            os: ubuntu-22.04-arm
           - build: armv7
             arch: linux/arm/v7
+            os: ubuntu-22.04-arm
+    runs-on: ${{ matrix.os }}
     name: PHP 8.4 (${{ matrix.build }})
     steps:
       -
@@ -56,7 +61,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
           provenance: false
