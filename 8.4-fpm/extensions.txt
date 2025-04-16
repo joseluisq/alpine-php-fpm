@@ -21,6 +21,7 @@ pdo_mysql
 pdo_pgsql
 pdo_sqlsrv
 pgsql
+phalcon
 psr
 rdkafka
 redis
