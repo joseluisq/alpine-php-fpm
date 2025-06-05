@@ -1,20 +1,20 @@
-FROM php:8.4.6-fpm-alpine3.20
+FROM php:8.4.7-fpm-alpine3.20
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.4 with essential extensions on top of Alpine Linux."
 
 # Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.8.8"
-ARG COMPOSER_SUM="957263e284b9f7a13d7f475dc65f3614d151b0c4dcc7e8761f7e7f749447fb68"
+ARG COMPOSER_VERSION="2.8.9"
+ARG COMPOSER_SUM="8e8829ec2b97fcb05158236984bc252bef902e7b8ff65555a1eeda4ec13fb82b"
 
 # Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="6.0.2"
 
 # Phalcon - https://github.com/phalcon/cphalcon
-ARG PHALCON_VERSION="5.9.2"
+ARG PHALCON_VERSION="5.9.3"
 
-# # Imagick - https://github.com/Imagick/imagick
-# ARG IMAGICK_COMMIT="28f27044e435a2b203e32675e942eb8de620ee58"
+# Imagick - https://github.com/Imagick/imagick
+ARG IMAGICK_COMMIT="b47e91c83b0eb8db951794d0ed363ae20748b795"
 
 # PSR - https://github.com/jbboehr/php-psr
 ARG PSR_COMMIT="44cebb62d14846686de58022366a8eaf37e47c6a"
@@ -29,7 +29,7 @@ RUN set -eux \
         gettext \
         gmp \
         icu-libs \
-        # imagemagick \
+        imagemagick \
         # imap \
         libffi \
         libgmpxx \
@@ -74,7 +74,7 @@ RUN set -eux \
         git \
         gmp-dev \
         icu-dev \
-        # imagemagick-dev \
+        imagemagick-dev \
         # imap-dev \
         krb5-dev \
         libc-dev \
@@ -160,18 +160,18 @@ RUN set -eux \
 #     && docker-php-ext-install -j$(nproc) imap \
 #     && true \
 # \
-# # Install imagick from source (temporarily)
-#     && mkdir -p /opt/imagick \
-#     && cd /opt/imagick \
-#     && git init \
-#     && git remote add origin https://github.com/Imagick/imagick.git \
-#     && git fetch origin ${IMAGICK_COMMIT} \
-#     && git checkout ${IMAGICK_COMMIT} \
-#     && phpize && ./configure \
-#     && make -j$(nproc) \
-#     && make -j$(nproc) install \
-#     && docker-php-ext-enable imagick \
-#     && true \
+# Install imagick from source (temporarily)
+    && mkdir -p /opt/imagick \
+    && cd /opt/imagick \
+    && git init \
+    && git remote add origin https://github.com/Imagick/imagick.git \
+    && git fetch origin ${IMAGICK_COMMIT} \
+    && git checkout ${IMAGICK_COMMIT} \
+    && phpize && ./configure \
+    && make -j$(nproc) \
+    && make -j$(nproc) install \
+    && docker-php-ext-enable imagick \
+    && true \
 \
 # Install igbinary
     && pecl install igbinary \
