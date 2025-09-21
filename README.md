@@ -66,7 +66,7 @@ However, you can still find legacy versions like `7.4.x` or `8.0.x` on [Releases
 | pdo_pgsql  |      ✓ |      ✓ |      ✓ |      ✓ |
 | pdo_sqlsrv |      ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |
 | pgsql      |      ✓ |      ✓ |      ✓ |      ✓ |
-| phalcon    |      ✓ |      ✓ |      ✓ |      ✓ |
+| phalcon    |      ✓ <sup>(i686/x86_64 only)</sub> |     ✓ <sup>(i686/x86_64 only)</sub> |     ✓ <sup>(i686/x86_64 only)</sub> |     ✓ <sup>(i686/x86_64 only)</sub> |
 | psr        |      ✓ |      ✓ |      ✓ |      ✓ |
 | redis      |      ✓ |      ✓ |      ✓ |      ✓ |
 | rdkafka    |      ✓ |      ✓ |      ✓ |      ✓ |
