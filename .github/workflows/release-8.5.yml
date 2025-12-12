@@ -1,9 +1,9 @@
-name: release-v8.4
+name: release-v8.5
 on:
   push:
     tags:
-    - 'v8.4.[0-9]+'
-    - 'v8.4.[0-9]+-beta.[0-9]+'
+    - 'v8.5.[0-9]+'
+    - 'v8.5.[0-9]+-beta.[0-9]+'
 
 jobs:
   docker-build:
@@ -32,7 +32,7 @@ jobs:
             arch: linux/arm/v7
             os: ubuntu-22.04-arm
     runs-on: ${{ matrix.os }}
-    name: PHP 8.4 (${{ matrix.build }})
+    name: PHP 8.5 (${{ matrix.build }})
     steps:
       -
         name: Checkout
@@ -47,7 +47,7 @@ jobs:
         with:
           images: joseluisq/php-fpm
           flavor: |
-            latest=false
+            latest=true
           tags: |
             type=semver,pattern={{major}}.{{minor}}-${{ matrix.build }}
       -
@@ -67,7 +67,7 @@ jobs:
           provenance: false
           context: .
           platforms: ${{ matrix.arch }}
-          file: 8.4-fpm/Dockerfile
+          file: 8.5-fpm/Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
 
   docker-manifest:
@@ -99,6 +99,17 @@ jobs:
               --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
           docker manifest push joseluisq/php-fpm:$SEMVER_MINOR
       -
+        name: Push latest (PHP 8.5 or newer)
+        run: |
+          docker manifest create \
+            joseluisq/php-fpm:latest \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-amd64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-386 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-arm64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
+          docker manifest push joseluisq/php-fpm:latest
+      -
         name: Pull all images
         run: |
           docker pull joseluisq/php-fpm:$SEMVER_MINOR-amd64
@@ -117,3 +128,14 @@ jobs:
               --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
               --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
           docker manifest push joseluisq/php-fpm:$SEMVER
+      -
+        name: Push semver major alias (PHP 8.5 or newer)
+        run: |
+          docker manifest create \
+            joseluisq/php-fpm:$SEMVER_MAJOR \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-amd64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-386 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-arm64 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv6 \
+              --amend joseluisq/php-fpm:$SEMVER_MINOR-armv7
+          docker manifest push joseluisq/php-fpm:$SEMVER_MAJOR
