@@ -34,7 +34,7 @@ RUN set -eux \
         libpng \
         libpq \
         librdkafka \
-        libsasl2 \
+        libsasl \
         libssh2 \
         libstdc++ \
         libtool \
