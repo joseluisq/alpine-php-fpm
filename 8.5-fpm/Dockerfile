@@ -40,6 +40,7 @@ RUN set -eux \
         libzip \
         lz4-libs \
         make \
+        memcached \
         rabbitmq-c \
         tidyhtml \
         tzdata \
