@@ -18,6 +18,7 @@ RUN set -eux \
     && apk add --no-cache \
         c-client \
         ca-certificates \
+        cyrus-sasl \
         freetds \
         freetype \
         gettext \
@@ -29,9 +30,11 @@ RUN set -eux \
         libgmpxx \
         libintl \
         libjpeg-turbo \
+        libmemcached-libs \
         libpng \
         libpq \
         librdkafka \
+        libsasl2 \
         libssh2 \
         libstdc++ \
         libtool \
@@ -40,7 +43,6 @@ RUN set -eux \
         libzip \
         lz4-libs \
         make \
-        memcached \
         rabbitmq-c \
         tidyhtml \
         tzdata \
