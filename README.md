@@ -11,11 +11,11 @@
   <h1 align="center">Alpine PHP-FPM</h1>
 
   <h4 align="center">
-    Lightweight & optimized <a href="https://www.docker.com/blog/how-to-rapidly-build-multi-architecture-images-with-buildx/">Multi-Arch Docker Images</a> (<code>x86_64</code>/<code>arm</code>/<code>arm64</code>) for <a href="https://www.php.net/manual/en/install.fpm.php">PHP-FPM</a> (PHP <a href="https://www.php.net/ChangeLog-8.php#PHP_8_1">8.1</a>, <a href="https://www.php.net/ChangeLog-8.php#PHP_8_2">8.2</a>, <a href="https://www.php.net/ChangeLog-8.php#PHP_8_3">8.3</a>, <a href="https://www.php.net/ChangeLog-8.php#PHP_8_4">8.4</a>) with essential extensions on top of latest Alpine Linux. 🐘
+    Lightweight & optimized <a href="https://www.docker.com/blog/how-to-rapidly-build-multi-architecture-images-with-buildx/">Multi-Arch Docker Images</a> (<code>x86_64</code>/<code>arm</code>/<code>arm64</code>) for <a href="https://www.php.net/manual/en/install.fpm.php">PHP-FPM</a> (PHP <a href="https://www.php.net/ChangeLog-8.php#PHP_8_1">8.1</a>, <a href="https://www.php.net/ChangeLog-8.php#PHP_8_2">8.2</a>, <a href="https://www.php.net/ChangeLog-8.php#PHP_8_3">8.3</a>, <a href="https://www.php.net/ChangeLog-8.php#PHP_8_4">8.4</a>, <a href="https://www.php.net/ChangeLog-8.php#PHP_8_5">8.5</a>) with essential extensions on top of latest Alpine Linux. 🐘
   </h4>
 
   <div align="center">
-    <a href="https://github.com/joseluisq/alpine-php-fpm/actions/workflows/devel-8.4.yml" title="devel 8.4 (latest)"><img src="https://github.com/joseluisq/alpine-php-fpm/actions/workflows/devel-8.4.yml/badge.svg"></a> 
+    <a href="https://github.com/joseluisq/alpine-php-fpm/actions/workflows/devel-8.5.yml" title="devel 8.5 (latest)"><img src="https://github.com/joseluisq/alpine-php-fpm/actions/workflows/devel-8.5.yml/badge.svg"></a> 
     <a href="https://hub.docker.com/r/joseluisq/php-fpm/" title="Docker Image Version (tag latest semver)"><img src="https://img.shields.io/docker/v/joseluisq/php-fpm/8"></a> 
     <a href="https://hub.docker.com/r/joseluisq/php-fpm/tags" title="Docker Image Size (tag)"><img src="https://img.shields.io/docker/image-size/joseluisq/php-fpm/8"></a> 
     <a href="https://hub.docker.com/r/joseluisq/php-fpm/" title="Docker Image"><img src="https://img.shields.io/docker/pulls/joseluisq/php-fpm.svg"></a> 
@@ -24,9 +24,9 @@
 
 ## Stable versions
 
-|   v8.1 |   v8.2 |   v8.3 |   v8.4 |
-| -----: | -----: | -----: | -----: |
-| ![Docker Image 8.1 (tag 8.1 semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.1)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.1) | ![Docker Image 8.2 (tag 8.2 semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.2)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.2) | ![Docker Image 8.3 (tag 8.3 semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.3)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.3) | ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.4)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.4) |
+|   v8.1 |   v8.2 |   v8.3 |   v8.4 |   v8.5 |
+| -----: | -----: | -----: | -----: | -----: |
+| ![Docker Image 8.1 (tag 8.1 semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.1)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.1) | ![Docker Image 8.2 (tag 8.2 semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.2)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.2) | ![Docker Image 8.3 (tag 8.3 semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.3)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.3) | ![Docker Image 8.4 (tag 8.4 semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.4)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.4) | ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/joseluisq/php-fpm/8.5)<br> ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/joseluisq/php-fpm/8.5) |
 
 ### PHP versions support
 
@@ -39,58 +39,59 @@ However, you can still find legacy versions like `7.4.x` or `8.0.x` on [Releases
 
 ## Additional extensions
 
-| Extension  |   v8.1 |   v8.2 |   v8.3 |   v8.4 |
-| ---------- | -----: | -----: | -----: | -----: |
-| amqp       |      ✓ |      ✓ |      ✓ |      ✓ |
-| apcu       |      ✓ |      ✓ |      ✓ |      ✓ |
-| bcmath     |      ✓ |      ✓ |      ✓ |      ✓ |
-| bz2        |      ✓ |      ✓ |      ✓ |      ✓ |
-| exif       |      ✓ |      ✓ |      ✓ |      ✓ |
-| gd         |      ✓ |      ✓ |      ✓ |      ✓ |
-| gettext    |      ✓ |      ✓ |      ✓ |      ✓ |
-| gmp        |      ✓ |      ✓ |      ✓ |      ✓ |
-| imagick    |      ✓ |      ✓ |      ✓ |      ✓ |
-| igbinary   |      ✓ |      ✓ |      ✓ |      ✓ |
-| imap       |      ✓ |      ✓ |      ✓ |      ? |
-| intl       |      ✓ |      ✓ |      ✓ |      ✓ |
-| lz4        |      ✓ |      ✓ |      ✓ |      ✓ |
-| memcache   |      ✓ |      ✓ |      ✓ |      ✓ |
-| mongodb    |      ✓ |      ✓ |      ✓ |      ✓ |
-| msgpack    |      ✓ |      ✓ |      ✓ |      ✓ |
-| mysqli     |      ✓ |      ✓ |      ✓ |      ✓ |
-| oauth      |      ✓ |      ✓ |      ✓ |      ✓ |
-| opcache    |      ✓ |      ✓ |      ✓ |      ✓ |
-| pcntl      |      ✓ |      ✓ |      ✓ |      ✓ |
-| pdo_dblib  |      ✓ |      ✓ |      ✓ |      ✓ |
-| pdo_mysql  |      ✓ |      ✓ |      ✓ |      ✓ |
-| pdo_pgsql  |      ✓ |      ✓ |      ✓ |      ✓ |
-| pdo_sqlsrv |      ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |
-| pgsql      |      ✓ |      ✓ |      ✓ |      ✓ |
-| phalcon    |      ✓ |      ✓ |      ✓ |      ✓ |
-| psr        |      ✓ |      ✓ |      ✓ |      ✓ |
-| redis      |      ✓ |      ✓ |      ✓ |      ✓ |
-| rdkafka    |      ✓ |      ✓ |      ✓ |      ✓ |
-| soap       |      ✓ |      ✓ |      ✓ |      ✓ |
-| sockets    |      ✓ |      ✓ |      ✓ |      ✓ |
-| sqlsrv     |      ✓ <sup>(64-bit only)</sub> |    ✓ <sup>(64-bit only)</sub> |    ✓ <sup>(64-bit only)</sub> |    ✓ <sup>(64-bit only)</sub> |
-| ssh2       |      ✓ |      ✓ |      ✓ |
-| swoole     |      ✓ <sup>(64-bit only)</sub> |      ✓ <sup>(64-bit only)</sub> |      ✓ <sup>(64-bit only)</sub> |      ✓ <sup>(64-bit only)</sub> |
-| sysvmsg    |      ✓ |      ✓ |      ✓ |      ✓ |
-| sysvsem    |      ✓ |      ✓ |      ✓ |      ✓ |
-| sysvshm    |      ✓ |      ✓ |      ✓ |      ✓ |
-| tidy       |      ✓ |      ✓ |      ✓ |      ✓ |
-| uuid       |      ✓ |      ✓ |      ✓ |      ✓ |
-| vips       |      ✓ |      ✓ |      ✓ |      ✓ |
-| xdebug     |      ✓ |      ✓ |      ✓ |      ✓ |
-| xsl        |      ✓ |      ✓ |      ✓ |      ✓ |
-| yaml       |      ✓ |      ✓ |      ✓ |      ✓ |
-| zip        |      ✓ |      ✓ |      ✓ |      ✓ |
-| zstd       |      ✓ |      ✓ |      ✓ |      ✓ |
-| &nbsp;     | &nbsp; | &nbsp; | &nbsp; | &nbsp; |
-| **Others** |        |        |        |        |
-| composer   |   v2.8 |   v2.8 |   v2.8 |   v2.8 |
-| &nbsp;     | &nbsp; | &nbsp; | &nbsp; | &nbsp; |
-| **Extensions file**   |   [8.1-fpm](8.1-fpm) |  [8.2-fpm](8.2-fpm)  |  [8.3-fpm](8.3-fpm/extensions.txt)  |  [8.4-fpm](8.4-fpm/extensions.txt)  |
+| Extension  |   v8.1 |   v8.2 |   v8.3 |   v8.4 |   v8.5 |
+| ---------- | -----: | -----: | -----: | -----: | -----: |
+| amqp       |      ✓ |      ✓ |      ✓ |      ✓ |     ? |
+| apcu       |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| bcmath     |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| bz2        |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| exif       |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| gd         |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| gettext    |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| gmp        |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| imagick    |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| igbinary   |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| imap       |      ✓ |      ✓ |      ✓ |      ? |     ? |
+| intl       |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| lz4        |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| memcache   |      ✓ |      ✓ |      ✓ |      ✓ |     ? |
+| memcached  |      ? |      ? |      ? |      ? |     ✓ |
+| mongodb    |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| msgpack    |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| mysqli     |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| oauth      |      ✓ |      ✓ |      ✓ |      ✓ |     ? |
+| opcache    |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| pcntl      |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| pdo_dblib  |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| pdo_mysql  |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| pdo_pgsql  |      ✓ |      ✓ |      ✓ |      ✓ |     ✓ |
+| pdo_sqlsrv |      ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |     ✓ <sup>(64-bit only)</sub> |
+| pgsql      |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| phalcon    |      ✓ |      ✓ |      ✓ |      ✓ |      ? |
+| psr        |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| redis      |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| rdkafka    |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| soap       |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| sockets    |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| sqlsrv     |      ✓ <sup>(64-bit only)</sub> |    ✓ <sup>(64-bit only)</sub> |    ✓ <sup>(64-bit only)</sub> |    ✓ <sup>(64-bit only)</sub> |    ✓ <sup>(64-bit only)</sub> |
+| ssh2       |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| swoole     |      ✓ <sup>(64-bit only)</sub> |      ✓ <sup>(64-bit only)</sub> |      ✓ <sup>(64-bit only)</sub> |      ✓ <sup>(64-bit only)</sub> |      ? |
+| sysvmsg    |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| sysvsem    |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| sysvshm    |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| tidy       |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| uuid       |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| vips       |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| xdebug     |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| xsl        |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| yaml       |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| zip        |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| zstd       |      ✓ |      ✓ |      ✓ |      ✓ |      ✓ |
+| &nbsp;     | &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp; |
+| **Others** |        |        |        |        |        |
+| composer   |   v2.8 |   v2.8 |   v2.8 |   v2.8 |   v2.9 |
+| &nbsp;     | &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp; |
+| **Extensions file**   |   [8.1-fpm](8.1-fpm) |  [8.2-fpm](8.2-fpm)  |  [8.3-fpm](8.3-fpm/extensions.txt)  |  [8.4-fpm](8.4-fpm/extensions.txt)  |  [8.5-fpm](8.5-fpm/extensions.txt)  |
 
 **Footnotes**
 
@@ -102,7 +103,7 @@ However, you can still find legacy versions like `7.4.x` or `8.0.x` on [Releases
 If you want to know the whole list of the included extensions then type `php -m` as follows.
 
 ```sh
-docker run --rm joseluisq/php-fpm:8.4 php -m
+docker run --rm joseluisq/php-fpm:8.5 php -m
 ```
 
 Or use `php -i` to get more detailed information.
@@ -110,6 +111,8 @@ Or use `php -i` to get more detailed information.
 ## Usage
 
 ```sh
+docker pull joseluisq/php-fpm:8.5
+# Or
 docker pull joseluisq/php-fpm:8.4
 # Or
 docker pull joseluisq/php-fpm:8.3
@@ -124,6 +127,8 @@ docker pull joseluisq/php-fpm:8.1
 ### Dockerfile
 
 ```Dockerfile
+FROM joseluisq/php-fpm:8.5
+# Or
 FROM joseluisq/php-fpm:8.4
 # Or
 FROM joseluisq/php-fpm:8.3
@@ -138,6 +143,8 @@ FROM joseluisq/php-fpm:8.1
 To give a Docker image a quick try, just execute any of those commands and then navigate to [localhost:8088](http://localhost:8088)
 
 ```sh
+docker run --rm -p 8088:80 joseluisq/php-fpm:8.5 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
+# Or
 docker run --rm -p 8088:80 joseluisq/php-fpm:8.4 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
 # Or
 docker run --rm -p 8088:80 joseluisq/php-fpm:8.3 sh -c "echo '<?php phpinfo();' > index.php; php -S [::]:80 -t ."
