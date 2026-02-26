@@ -11,7 +11,7 @@ ARG COMPOSER_SUM="28dbb6bd8bef31479c7985b774c130a8bda37dbe63c35b56f6cb6bc3774275
 ARG SWOOLE_VERSION="5.1.8"
 
 # Phalcon - https://github.com/phalcon/cphalcon
-ARG PHALCON_VERSION="5.9.3"
+ARG PHALCON_VERSION="5.9.2"
 
 # Install dependencies
 RUN set -eux \
