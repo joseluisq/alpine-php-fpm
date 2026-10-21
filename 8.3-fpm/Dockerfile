@@ -233,7 +233,11 @@ RUN set -eux \
 # Install phalcon
     && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git /opt/phalcon \
     && cd /opt/phalcon/build \
+# Fix 32-bit builds (GCC >= 14 errors on incompatible pointer types)
+    && sed -i 's/unsigned long \*position/zend_ulong *position/' phalcon/phalcon.zep.c \
     && sh ./install \
+# The install script ignores build errors, so make sure the module exists
+    && test -f "$(php-config --extension-dir)/phalcon.so" \
     && docker-php-ext-enable phalcon \
     && true \
 \
