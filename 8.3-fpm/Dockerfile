@@ -1,4 +1,4 @@
-FROM php:8.3.21-fpm-alpine3.20
+FROM php:8.3.35-fpm-alpine3.24
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.3 with essential extensions on top of Alpine Linux."
