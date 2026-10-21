@@ -1,17 +1,17 @@
-FROM php:8.3.21-fpm-alpine3.20
+FROM php:8.3.36-fpm-alpine3.24
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
     Description="PHP-FPM v8.3 with essential extensions on top of Alpine Linux."
 
 # Composer - https://getcomposer.org/download/
-ARG COMPOSER_VERSION="2.8.9"
-ARG COMPOSER_SUM="8e8829ec2b97fcb05158236984bc252bef902e7b8ff65555a1eeda4ec13fb82b"
+ARG COMPOSER_VERSION="2.10.3"
+ARG COMPOSER_SUM="7a2d379d5b8ffdaa028580ef26494c36d2feef4b178d3dd1473a4dbc5e17c8d6"
 
 # Swoole - https://github.com/swoole/swoole-src
 ARG SWOOLE_VERSION="6.0.2"
 
 # Phalcon - https://github.com/phalcon/cphalcon
-ARG PHALCON_VERSION="5.9.3"
+ARG PHALCON_VERSION="5.23.0"
 
 # Imagick - https://github.com/Imagick/imagick
 ARG IMAGICK_COMMIT="b47e91c83b0eb8db951794d0ed363ae20748b795"
@@ -233,7 +233,16 @@ RUN set -eux \
 # Install phalcon
     && git clone --depth=1 --branch=v${PHALCON_VERSION} https://github.com/phalcon/cphalcon.git /opt/phalcon \
     && cd /opt/phalcon/build \
-    && sh ./install \
+# Fix 32-bit builds (GCC >= 14 errors on incompatible pointer types)
+    && sed -i 's/unsigned long \*position/zend_ulong *position/' phalcon/phalcon.zep.c \
+# Keep cc1 within the 32-bit address space: GCC sizes its GC thresholds from host RAM
+    && PHALCON_CFLAGS="" \
+    && if [ "$(getconf LONG_BIT)" = "32" ]; then \
+        PHALCON_CFLAGS="-O2 -fomit-frame-pointer --param ggc-min-expand=20 --param ggc-min-heapsize=32768"; \
+    fi \
+    && CFLAGS="$PHALCON_CFLAGS" sh ./install \
+# The install script ignores build errors, so make sure the module exists
+    && test -f "$(php-config --extension-dir)/phalcon.so" \
     && docker-php-ext-enable phalcon \
     && true \
 \
@@ -382,6 +391,8 @@ RUN set -eux \
 # Remove few PHP-FPM default config files
     && rm -rf /usr/local/etc/php-fpm.d/zz-docker.conf \
     && rm -rf /usr/local/etc/php-fpm.d/docker.conf \
+# Newer base images moved the default `listen` from www.conf into docker.conf, so restore it
+    && sed -i "s/^;listen = 127.0.0.1:9000$/listen = 127.0.0.1:9000/" /usr/local/etc/php-fpm.d/www.conf \
 \
 # Perform PHP-FPM testing
     && echo "Performing PHP-FPM tests..." \
