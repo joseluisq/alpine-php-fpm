@@ -235,7 +235,12 @@ RUN set -eux \
     && cd /opt/phalcon/build \
 # Fix 32-bit builds (GCC >= 14 errors on incompatible pointer types)
     && sed -i 's/unsigned long \*position/zend_ulong *position/' phalcon/phalcon.zep.c \
-    && sh ./install \
+# Keep cc1 within the 32-bit address space: GCC sizes its GC thresholds from host RAM
+    && PHALCON_CFLAGS="" \
+    && if [ "$(getconf LONG_BIT)" = "32" ]; then \
+        PHALCON_CFLAGS="-O2 -fomit-frame-pointer --param ggc-min-expand=20 --param ggc-min-heapsize=32768"; \
+    fi \
+    && CFLAGS="$PHALCON_CFLAGS" sh ./install \
 # The install script ignores build errors, so make sure the module exists
     && test -f "$(php-config --extension-dir)/phalcon.so" \
     && docker-php-ext-enable phalcon \
