@@ -291,6 +291,7 @@ RUN --mount=type=bind,from=pie,source=/pie,target=/usr/local/bin/pie \
         --enable-redis-zstd \
         --enable-redis-msgpack \
         --enable-redis-lz4 \
+        --with-liblz4=yes \
     && true \
 \
 # Install rdkafka
