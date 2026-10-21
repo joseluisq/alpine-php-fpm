@@ -285,13 +285,6 @@ RUN --mount=type=bind,from=pie,source=/pie,target=/usr/local/bin/pie \
         true; \
     fi \
 \
-# Install psr (no PIE package)
-    && curl -fsSL --retry 5 --retry-all-errors -o /tmp/psr.tgz https://pecl.php.net/get/psr-${PSR_VERSION}.tgz \
-    && mkdir -p /usr/src/php/ext/psr \
-    && tar xzf /tmp/psr.tgz --strip-components=1 -C /usr/src/php/ext/psr \
-    && docker-php-ext-install -j$(nproc) psr \
-    && true \
-\
 # Install redis
     && pie install phpredis/phpredis \
         --enable-redis-igbinary \
@@ -375,6 +368,14 @@ RUN --mount=type=bind,from=pie,source=/pie,target=/usr/local/bin/pie \
 \
 # Install zstd
     && pie install kjdev/zstd \
+    && true \
+\
+# Install psr (no PIE package)
+# Keep it after every `pie install`: PIE refuses to run while ext-psr is loaded
+    && curl -fsSL --retry 5 --retry-all-errors -o /tmp/psr.tgz https://pecl.php.net/get/psr-${PSR_VERSION}.tgz \
+    && mkdir -p /usr/src/php/ext/psr \
+    && tar xzf /tmp/psr.tgz --strip-components=1 -C /usr/src/php/ext/psr \
+    && docker-php-ext-install -j$(nproc) psr \
     && true \
 \
 # Clean up build packages
