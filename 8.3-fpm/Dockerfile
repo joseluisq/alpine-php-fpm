@@ -391,6 +391,8 @@ RUN set -eux \
 # Remove few PHP-FPM default config files
     && rm -rf /usr/local/etc/php-fpm.d/zz-docker.conf \
     && rm -rf /usr/local/etc/php-fpm.d/docker.conf \
+# Newer base images moved the default `listen` from www.conf into docker.conf, so restore it
+    && sed -i "s/^;listen = 127.0.0.1:9000$/listen = 127.0.0.1:9000/" /usr/local/etc/php-fpm.d/www.conf \
 \
 # Perform PHP-FPM testing
     && echo "Performing PHP-FPM tests..." \
