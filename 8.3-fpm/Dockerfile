@@ -1,3 +1,9 @@
+# PIE (PHP Installer for Extensions) - https://github.com/php/pie
+ARG PIE_VERSION="1.5.2"
+
+# The PIE image only holds a PHAR and isn't published for 32-bit targets, so use the build platform
+FROM --platform=$BUILDPLATFORM ghcr.io/php/pie:${PIE_VERSION}-bin AS pie
+
 FROM php:8.3.36-fpm-alpine3.24
 
 LABEL Maintainer="Jose Quintana <joseluisq.net>" \
@@ -8,13 +14,20 @@ ARG COMPOSER_VERSION="2.10.3"
 ARG COMPOSER_SUM="7a2d379d5b8ffdaa028580ef26494c36d2feef4b178d3dd1473a4dbc5e17c8d6"
 
 # Swoole - https://github.com/swoole/swoole-src
-ARG SWOOLE_VERSION="6.0.2"
+ARG SWOOLE_VERSION="6.2.3"
 
 # Phalcon - https://github.com/phalcon/cphalcon
 ARG PHALCON_VERSION="5.23.0"
 
 # Imagick - https://github.com/Imagick/imagick
 ARG IMAGICK_COMMIT="b47e91c83b0eb8db951794d0ed363ae20748b795"
+
+# PECL extensions without a PIE package - https://pecl.php.net
+ARG MEMCACHE_VERSION="8.2"
+ARG OAUTH_VERSION="2.0.10"
+ARG PSR_VERSION="1.2.0"
+ARG SSH2_VERSION="1.3.1"
+ARG VIPS_VERSION="1.0.13"
 
 # Install dependencies
 RUN set -eux \
@@ -57,7 +70,8 @@ RUN set -eux \
 #############################################
 
 # Development dependencies
-RUN set -eux \
+RUN --mount=type=bind,from=pie,source=/pie,target=/usr/local/bin/pie \
+    set -eux \
     && apk add --no-cache --virtual .build-deps \
         autoconf \
         bzip2-dev \
@@ -92,6 +106,7 @@ RUN set -eux \
         rabbitmq-c-dev \
         tidyhtml-dev \
         unixodbc-dev \
+        unzip \
         vips-dev \
         yaml-dev \
         zlib-dev \
@@ -105,6 +120,9 @@ RUN set -eux \
     && if [ -f /usr/local/etc/php/conf.d/docker-php-ext-ffi.ini ]; then \
         echo "ffi.enable = 1" >> /usr/local/etc/php/conf.d/docker-php-ext-ffi.ini; \
     fi \
+\
+# PHP sources, also used to build the PECL extensions that have no PIE package
+    && docker-php-source extract \
 \
 ################################
 # Install PHP extensions
@@ -123,13 +141,11 @@ RUN set -eux \
     && true \
 \
 # Install amqp
-    && pecl install amqp \
-    && docker-php-ext-enable amqp \
+    && pie install php-amqp/php-amqp \
     && true \
 \
 # Install apcu
-    && pecl install apcu \
-    && docker-php-ext-enable apcu \
+    && pie install apcu/apcu \
     && true \
 \
 # Install gettext
@@ -171,8 +187,9 @@ RUN set -eux \
     && true \
 \
 # Install igbinary
-    && pecl install igbinary \
-    && docker-php-ext-enable igbinary \
+# igbinary only has a release candidate on Packagist (also what PECL ships as stable)
+    && pie install "igbinary/igbinary:^3.2.17@RC" \
+    && true \
 \
 # Install intl
     && docker-php-ext-install -j$(nproc) intl \
@@ -189,28 +206,30 @@ RUN set -eux \
     && docker-php-ext-enable lz4 \
     && true \
 \
-# Install memcache
-    && pecl install memcache \
-    && docker-php-ext-enable memcache \
+# Install memcache (no PIE package)
+    && curl -fsSL --retry 5 --retry-all-errors -o /tmp/memcache.tgz https://pecl.php.net/get/memcache-${MEMCACHE_VERSION}.tgz \
+    && mkdir -p /usr/src/php/ext/memcache \
+    && tar xzf /tmp/memcache.tgz --strip-components=1 -C /usr/src/php/ext/memcache \
+    && docker-php-ext-install -j$(nproc) memcache \
     && true \
 \
 # Install mongodb
-    && pecl install mongodb \
-    && docker-php-ext-enable mongodb \
+    && pie install mongodb/mongodb-extension \
     && true \
 \
 # Install msgpack
-    && pecl install msgpack \
-    && docker-php-ext-enable msgpack \
+    && pie install msgpack/msgpack-php \
     && true \
 \
 # Install mysqli
     && docker-php-ext-install -j$(nproc) mysqli \
     && true \
 \
-# Install oauth
-    && pecl install oauth \
-    && docker-php-ext-enable oauth \
+# Install oauth (no PIE package)
+    && curl -fsSL --retry 5 --retry-all-errors -o /tmp/oauth.tgz https://pecl.php.net/get/oauth-${OAUTH_VERSION}.tgz \
+    && mkdir -p /usr/src/php/ext/oauth \
+    && tar xzf /tmp/oauth.tgz --strip-components=1 -C /usr/src/php/ext/oauth \
+    && docker-php-ext-install -j$(nproc) oauth \
     && true \
 \
 # Install opcache
@@ -257,39 +276,35 @@ RUN set -eux \
 # ONLY 64-bit targets
     && if [ "$(uname -m)" = "x86_64" ] || [ "$(uname -m)" = "aarch64" ]; then \
     # Install sqlsrv
-        pecl install sqlsrv; \
-        docker-php-ext-enable sqlsrv; \
+        pie install microsoft/sqlsrv; \
         true; \
     # Install pdo_sqlsrv
-        pecl install pdo_sqlsrv; \
-        docker-php-ext-enable pdo_sqlsrv; \
+        pie install microsoft/pdo_sqlsrv; \
         true; \
     fi \
 \
-# Install psr
-    && pecl install psr \
-    && docker-php-ext-enable psr \
-    && true \
-\
 # Install redis
-    && pecl install --configureoptions \
-        'enable-redis-igbinary="yes" enable-redis-zstd="yes" enable-redis-msgpack="yes" enable-redis-lz4="yes"' \
-        redis \
-    && docker-php-ext-enable redis \
+    && pie install phpredis/phpredis \
+        --enable-redis-igbinary \
+        --enable-redis-zstd \
+        --enable-redis-msgpack \
+        --enable-redis-lz4 \
+        --with-liblz4=yes \
     && true \
 \
 # Install rdkafka
-    && pecl install rdkafka \
-    && docker-php-ext-enable rdkafka \
+    && pie install rdkafka/rdkafka \
     && true \
 \
 # Install soap
     && docker-php-ext-install -j$(nproc) soap \
     && true \
 \
-# Install ssh2
-    && pecl install ssh2-1.3.1 \
-    && docker-php-ext-enable ssh2 \
+# Install ssh2 (no PIE package)
+    && curl -fsSL --retry 5 --retry-all-errors -o /tmp/ssh2.tgz https://pecl.php.net/get/ssh2-${SSH2_VERSION}.tgz \
+    && mkdir -p /usr/src/php/ext/ssh2 \
+    && tar xzf /tmp/ssh2.tgz --strip-components=1 -C /usr/src/php/ext/ssh2 \
+    && docker-php-ext-install -j$(nproc) ssh2 \
     && true \
 \
 # Install sockets, sysvmsg, sysvsem, sysvshm (also needed by swoole)
@@ -323,8 +338,7 @@ RUN set -eux \
     && true \
 \
 # Install uuid
-    && pecl install uuid \
-    && docker-php-ext-enable uuid \
+    && pie install pecl/uuid \
     && true \
 \
 # Install xsl
@@ -332,18 +346,18 @@ RUN set -eux \
     && true \
 \
 # Install xdebug
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
+    && pie install xdebug/xdebug \
     && true \
 \
 # Install yaml
-    && pecl install yaml \
-    && docker-php-ext-enable yaml \
+    && pie install pecl/yaml \
     && true \
 \
-# Install vips
-    && pecl install vips \
-    && docker-php-ext-enable vips \
+# Install vips (no PIE package)
+    && curl -fsSL --retry 5 --retry-all-errors -o /tmp/vips.tgz https://pecl.php.net/get/vips-${VIPS_VERSION}.tgz \
+    && mkdir -p /usr/src/php/ext/vips \
+    && tar xzf /tmp/vips.tgz --strip-components=1 -C /usr/src/php/ext/vips \
+    && docker-php-ext-install -j$(nproc) vips \
     && true \
 \
 # Install zip
@@ -352,14 +366,21 @@ RUN set -eux \
     && true \
 \
 # Install zstd
-    && pecl install zstd \
-    && docker-php-ext-enable zstd \
+    && pie install kjdev/zstd \
+    && true \
+\
+# Install psr (no PIE package)
+# Keep it after every `pie install`: PIE refuses to run while ext-psr is loaded
+    && curl -fsSL --retry 5 --retry-all-errors -o /tmp/psr.tgz https://pecl.php.net/get/psr-${PSR_VERSION}.tgz \
+    && mkdir -p /usr/src/php/ext/psr \
+    && tar xzf /tmp/psr.tgz --strip-components=1 -C /usr/src/php/ext/psr \
+    && docker-php-ext-install -j$(nproc) psr \
     && true \
 \
 # Clean up build packages
     && docker-php-source delete \
     && apk del .build-deps \
-    && rm -rf /tmp/* \
+    && rm -rf /tmp/* /root/.pie /root/.composer/cache \
     && true
 
 RUN set -eux \
