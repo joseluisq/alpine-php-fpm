@@ -382,7 +382,7 @@ RUN --mount=type=bind,from=pie,source=/pie,target=/usr/local/bin/pie \
 # Clean up build packages
     && docker-php-source delete \
     && apk del .build-deps \
-    && rm -rf /tmp/* \
+    && rm -rf /tmp/* /root/.pie /root/.composer/cache \
     && true
 
 RUN set -eux \
