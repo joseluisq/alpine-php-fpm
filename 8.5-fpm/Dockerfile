@@ -19,9 +19,6 @@ ARG SWOOLE_VERSION="6.2.3"
 # Phalcon - https://github.com/phalcon/cphalcon
 ARG PHALCON_VERSION="5.23.0"
 
-# Imagick - https://github.com/Imagick/imagick
-ARG IMAGICK_COMMIT="b47e91c83b0eb8db951794d0ed363ae20748b795"
-
 # PSR - https://github.com/jbboehr/php-psr
 ARG PSR_COMMIT="44cebb62d14846686de58022366a8eaf37e47c6a"
 
@@ -178,17 +175,8 @@ RUN --mount=type=bind,from=pie,source=/pie,target=/usr/local/bin/pie \
     && docker-php-ext-install -j$(nproc) imap \
     && true \
 \
-# Install imagick from source (temporarily)
-    && mkdir -p /opt/imagick \
-    && cd /opt/imagick \
-    && git init \
-    && git remote add origin https://github.com/Imagick/imagick.git \
-    && git fetch origin ${IMAGICK_COMMIT} \
-    && git checkout ${IMAGICK_COMMIT} \
-    && phpize && ./configure \
-    && make -j$(nproc) \
-    && make -j$(nproc) install \
-    && docker-php-ext-enable imagick \
+# Install imagick (3.8.1+ supports PHP 8.5)
+    && pie install imagick/imagick \
     && true \
 \
 # Install igbinary
